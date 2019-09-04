@@ -10,9 +10,9 @@ import java.util.Date;
  * 
  */
 @Entity
-@NamedQuery(name="Illness.findAll", query="SELECT i FROM Illness i")
+//@NamedQuery(name="Illness.findAll", query="SELECT i FROM Illness i")
 public class Illness implements Serializable {
-	private static final long serialVersionUID = 1L;
+//	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name="illness_id")
@@ -31,7 +31,9 @@ public class Illness implements Serializable {
 
 	private String season;
 
+
 	//uni-directional many-to-one association to IllnessType
+
 	@ManyToOne
 	@JoinColumn(name="illness_type_id")
 	private IllnessType illnessType;
@@ -54,6 +56,7 @@ public class Illness implements Serializable {
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
+
 
 	public String getDescription() {
 		return this.description;
@@ -94,6 +97,7 @@ public class Illness implements Serializable {
 	public void setSeason(String season) {
 		this.season = season;
 	}
+
 
 	public IllnessType getIllnessType() {
 		return this.illnessType;

@@ -17,11 +17,14 @@ public class IllnessType implements Serializable {
 
 	@Id
 	@Column(name="illness_type_id")
+
 	private Integer illnessTypeId;
+
 
 	private String createdBy;
 
 	private String modifiedBy;
+
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modifiedDate;
@@ -29,6 +32,7 @@ public class IllnessType implements Serializable {
 	private String name;
 
 	private String note;
+
 
 	public IllnessType() {
 	}
@@ -38,6 +42,7 @@ public class IllnessType implements Serializable {
 	}
 
 	public void setIllnessTypeId(Integer illnessTypeId) {
+
 		this.illnessTypeId = illnessTypeId;
 	}
 

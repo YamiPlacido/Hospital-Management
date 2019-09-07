@@ -4,8 +4,6 @@
 		<class>com.hospital.model.Appointment</class>
 		<class>com.hospital.model.Credential</class>
 		<class>com.hospital.model.Diagnosi</class>
-		<class>com.hospital.model.Doctor</class>
-		<class>com.hospital.model.DoctorPosition</class>
 		<class>com.hospital.model.Examination</class>
 		<class>com.hospital.model.ExaminationResult</class>
 		<class>com.hospital.model.Examinator</class>
@@ -18,7 +16,6 @@
 		<class>com.hospital.model.Prescription</class>
 		<class>com.hospital.model.PrescriptionMedicine</class>
 		<class>com.hospital.model.Role</class>
-		<class>com.hospital.model.Speciality</class>
 		<class>com.hospital.model.SpecialityIllnessType</class>
 		<class>com.hospital.model.Symptom</class>
 		<class>com.hospital.model.UserGroup</class>

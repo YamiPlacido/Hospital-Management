@@ -4,7 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-
+import com.hospital.entity.Doctor;
 
 /**
  * The persistent class for the appointment database table.

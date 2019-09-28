@@ -21,6 +21,9 @@ public class Diagnosi implements Serializable {
 
 	private String createdBy;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdDate;
+
 	private String degree;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -32,15 +35,15 @@ public class Diagnosi implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modifiedDate;
 
-	//uni-directional many-to-one association to Illness
-	@ManyToOne
-	@JoinColumn(name="illness_id")
-	private Illness illness;
-
 	//uni-directional many-to-one association to Appointment
 	@ManyToOne
 	@JoinColumn(name="app_id")
 	private Appointment appointment;
+
+	//uni-directional many-to-one association to Illness
+	@ManyToOne
+	@JoinColumn(name="illness_id")
+	private Illness illness;
 
 	public Diagnosi() {
 	}
@@ -59,6 +62,14 @@ public class Diagnosi implements Serializable {
 
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
+	}
+
+	public Date getCreatedDate() {
+		return this.createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
 	}
 
 	public String getDegree() {
@@ -93,20 +104,20 @@ public class Diagnosi implements Serializable {
 		this.modifiedDate = modifiedDate;
 	}
 
-	public Illness getIllness() {
-		return this.illness;
-	}
-
-	public void setIllness(Illness illness) {
-		this.illness = illness;
-	}
-
 	public Appointment getAppointment() {
 		return this.appointment;
 	}
 
 	public void setAppointment(Appointment appointment) {
 		this.appointment = appointment;
+	}
+
+	public Illness getIllness() {
+		return this.illness;
+	}
+
+	public void setIllness(Illness illness) {
+		this.illness = illness;
 	}
 
 }

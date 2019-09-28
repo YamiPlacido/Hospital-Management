@@ -21,6 +21,9 @@ public class Examination implements Serializable {
 	private String createdBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdDate;
+
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
 
 	private String modifiedBy;
@@ -33,20 +36,20 @@ public class Examination implements Serializable {
 
 	private byte status;
 
-	//uni-directional many-to-one association to Patient
+	//uni-directional many-to-one association to Appointment
 	@ManyToOne
-	@JoinColumn(name="patient_id")
-	private Patient patient;
+	@JoinColumn(name="app_id")
+	private Appointment appointment;
 
 	//uni-directional many-to-one association to Employee
 	@ManyToOne
 	@JoinColumn(name="employee_id")
 	private Employee employee;
 
-	//uni-directional many-to-one association to Appointment
+	//uni-directional many-to-one association to Patient
 	@ManyToOne
-	@JoinColumn(name="app_id")
-	private Appointment appointment;
+	@JoinColumn(name="patient_id")
+	private Patient patient;
 
 	public Examination() {
 	}
@@ -65,6 +68,14 @@ public class Examination implements Serializable {
 
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
+	}
+
+	public Date getCreatedDate() {
+		return this.createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
 	}
 
 	public Date getDate() {
@@ -107,12 +118,12 @@ public class Examination implements Serializable {
 		this.status = status;
 	}
 
-	public Patient getPatient() {
-		return this.patient;
+	public Appointment getAppointment() {
+		return this.appointment;
 	}
 
-	public void setPatient(Patient patient) {
-		this.patient = patient;
+	public void setAppointment(Appointment appointment) {
+		this.appointment = appointment;
 	}
 
 	public Employee getEmployee() {
@@ -123,12 +134,12 @@ public class Examination implements Serializable {
 		this.employee = employee;
 	}
 
-	public Appointment getAppointment() {
-		return this.appointment;
+	public Patient getPatient() {
+		return this.patient;
 	}
 
-	public void setAppointment(Appointment appointment) {
-		this.appointment = appointment;
+	public void setPatient(Patient patient) {
+		this.patient = patient;
 	}
 
 }

@@ -21,20 +21,23 @@ public class PatientIllnessType implements Serializable {
 
 	private String createdBy;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdDate;
+
 	private String modifiedBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modifiedDate;
 
-	//uni-directional many-to-one association to Patient
-	@ManyToOne
-	@JoinColumn(name="patient_id")
-	private Patient patient;
-
 	//uni-directional many-to-one association to IllnessType
 	@ManyToOne
 	@JoinColumn(name="illness_type_id")
 	private IllnessType illnessType;
+
+	//uni-directional many-to-one association to Patient
+	@ManyToOne
+	@JoinColumn(name="patient_id")
+	private Patient patient;
 
 	public PatientIllnessType() {
 	}
@@ -55,6 +58,14 @@ public class PatientIllnessType implements Serializable {
 		this.createdBy = createdBy;
 	}
 
+	public Date getCreatedDate() {
+		return this.createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
 	public String getModifiedBy() {
 		return this.modifiedBy;
 	}
@@ -71,20 +82,20 @@ public class PatientIllnessType implements Serializable {
 		this.modifiedDate = modifiedDate;
 	}
 
-	public Patient getPatient() {
-		return this.patient;
-	}
-
-	public void setPatient(Patient patient) {
-		this.patient = patient;
-	}
-
 	public IllnessType getIllnessType() {
 		return this.illnessType;
 	}
 
 	public void setIllnessType(IllnessType illnessType) {
 		this.illnessType = illnessType;
+	}
+
+	public Patient getPatient() {
+		return this.patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
 	}
 
 }

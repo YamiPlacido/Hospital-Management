@@ -24,6 +24,9 @@ public class Employee implements Serializable {
 
 	private String createdBy;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdDate;
+
 	@Temporal(TemporalType.DATE)
 	private Date dob;
 
@@ -43,15 +46,15 @@ public class Employee implements Serializable {
 
 	private String status;
 
-	//uni-directional many-to-one association to Speciality
-	@ManyToOne
-	@JoinColumn(name="speciality_id")
-	private Speciality speciality;
-
 	//uni-directional many-to-one association to EmployeePosition
 	@ManyToOne
 	@JoinColumn(name="employee_position_id")
 	private EmployeePosition employeePosition;
+
+	//uni-directional many-to-one association to Speciality
+	@ManyToOne
+	@JoinColumn(name="speciality_id")
+	private Speciality speciality;
 
 	public Employee() {
 	}
@@ -86,6 +89,14 @@ public class Employee implements Serializable {
 
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
+	}
+
+	public Date getCreatedDate() {
+		return this.createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
 	}
 
 	public Date getDob() {
@@ -152,20 +163,20 @@ public class Employee implements Serializable {
 		this.status = status;
 	}
 
-	public Speciality getSpeciality() {
-		return this.speciality;
-	}
-
-	public void setSpeciality(Speciality speciality) {
-		this.speciality = speciality;
-	}
-
 	public EmployeePosition getEmployeePosition() {
 		return this.employeePosition;
 	}
 
 	public void setEmployeePosition(EmployeePosition employeePosition) {
 		this.employeePosition = employeePosition;
+	}
+
+	public Speciality getSpeciality() {
+		return this.speciality;
+	}
+
+	public void setSpeciality(Speciality speciality) {
+		this.speciality = speciality;
 	}
 
 }

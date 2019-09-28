@@ -21,6 +21,9 @@ public class Appointment implements Serializable {
 
 	private String createdBy;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdDate;
+
 	@Temporal(TemporalType.DATE)
 	private Date date;
 
@@ -38,15 +41,15 @@ public class Appointment implements Serializable {
 
 	private Time time;
 
-	//uni-directional many-to-one association to Patient
-	@ManyToOne
-	@JoinColumn(name="patient_id")
-	private Patient patient;
-
 	//uni-directional many-to-one association to Employee
 	@ManyToOne
 	@JoinColumn(name="employee_id")
 	private Employee employee;
+
+	//uni-directional many-to-one association to Patient
+	@ManyToOne
+	@JoinColumn(name="patient_id")
+	private Patient patient;
 
 	public Appointment() {
 	}
@@ -65,6 +68,14 @@ public class Appointment implements Serializable {
 
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
+	}
+
+	public Date getCreatedDate() {
+		return this.createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
 	}
 
 	public Date getDate() {
@@ -123,20 +134,20 @@ public class Appointment implements Serializable {
 		this.time = time;
 	}
 
-	public Patient getPatient() {
-		return this.patient;
-	}
-
-	public void setPatient(Patient patient) {
-		this.patient = patient;
-	}
-
 	public Employee getEmployee() {
 		return this.employee;
 	}
 
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
+	}
+
+	public Patient getPatient() {
+		return this.patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
 	}
 
 }

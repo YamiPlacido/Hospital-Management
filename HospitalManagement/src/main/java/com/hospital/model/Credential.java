@@ -28,15 +28,15 @@ public class Credential implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modifiedDate;
 
-	//uni-directional many-to-one association to UserGroup
-	@ManyToOne
-	@JoinColumn(name="user_group_id")
-	private UserGroup userGroup;
-
 	//uni-directional many-to-one association to Role
 	@ManyToOne
 	@JoinColumn(name="role_id")
 	private Role role;
+
+	//uni-directional many-to-one association to UserGroup
+	@ManyToOne
+	@JoinColumn(name="user_group_id")
+	private UserGroup userGroup;
 
 	public Credential() {
 	}
@@ -81,20 +81,20 @@ public class Credential implements Serializable {
 		this.modifiedDate = modifiedDate;
 	}
 
-	public UserGroup getUserGroup() {
-		return this.userGroup;
-	}
-
-	public void setUserGroup(UserGroup userGroup) {
-		this.userGroup = userGroup;
-	}
-
 	public Role getRole() {
 		return this.role;
 	}
 
 	public void setRole(Role role) {
 		this.role = role;
+	}
+
+	public UserGroup getUserGroup() {
+		return this.userGroup;
+	}
+
+	public void setUserGroup(UserGroup userGroup) {
+		this.userGroup = userGroup;
 	}
 
 }

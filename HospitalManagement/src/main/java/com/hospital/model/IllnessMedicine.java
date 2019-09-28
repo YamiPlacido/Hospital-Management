@@ -21,6 +21,9 @@ public class IllnessMedicine implements Serializable {
 
 	private String createdBy;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdDate;
+
 	private String modifiedBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -53,6 +56,14 @@ public class IllnessMedicine implements Serializable {
 
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
+	}
+
+	public Date getCreatedDate() {
+		return this.createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
 	}
 
 	public String getModifiedBy() {

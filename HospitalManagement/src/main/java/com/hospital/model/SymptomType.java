@@ -6,24 +6,20 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the speciality database table.
+ * The persistent class for the symptom_type database table.
  * 
  */
 @Entity
-@NamedQuery(name="Speciality.findAll", query="SELECT s FROM Speciality s")
-public class Speciality implements Serializable {
+@Table(name="symptom_type")
+@NamedQuery(name="SymptomType.findAll", query="SELECT s FROM SymptomType s")
+public class SymptomType implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="speciality_id")
-	private int specialityId;
+	@Column(name="symptom_type_id")
+	private Integer symptomTypeId;
 
 	private String createdBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdDate;
-
-	private String description;
 
 	private String modifiedBy;
 
@@ -34,15 +30,15 @@ public class Speciality implements Serializable {
 
 	private String note;
 
-	public Speciality() {
+	public SymptomType() {
 	}
 
-	public int getSpecialityId() {
-		return this.specialityId;
+	public Integer getSymptomTypeId() {
+		return this.symptomTypeId;
 	}
 
-	public void setSpecialityId(int specialityId) {
-		this.specialityId = specialityId;
+	public void setSymptomTypeId(Integer symptomTypeId) {
+		this.symptomTypeId = symptomTypeId;
 	}
 
 	public String getCreatedBy() {
@@ -51,22 +47,6 @@ public class Speciality implements Serializable {
 
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
-	}
-
-	public Date getCreatedDate() {
-		return this.createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public String getDescription() {
-		return this.description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
 	}
 
 	public String getModifiedBy() {

@@ -3,6 +3,7 @@ package com.hospital.model;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.math.BigInteger;
 
 
@@ -17,22 +18,28 @@ public class PrescriptionMedicine implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="pm_id")
 	private int pmId;
 
+	private String createdBy;
+
 	private String dosage;
+
+	private String modifiedBy;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date modifiedDate;
 
 	private BigDecimal price;
 
 	private BigInteger quantity;
 
-	//bi-directional many-to-one association to Appointment
+	//uni-directional many-to-one association to Appointment
 	@ManyToOne
 	@JoinColumn(name="app_id")
 	private Appointment appointment;
 
-	//bi-directional many-to-one association to Medicine
+	//uni-directional many-to-one association to Medicine
 	@ManyToOne
 	@JoinColumn(name="medicine_id")
 	private Medicine medicine;
@@ -48,12 +55,36 @@ public class PrescriptionMedicine implements Serializable {
 		this.pmId = pmId;
 	}
 
+	public String getCreatedBy() {
+		return this.createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
 	public String getDosage() {
 		return this.dosage;
 	}
 
 	public void setDosage(String dosage) {
 		this.dosage = dosage;
+	}
+
+	public String getModifiedBy() {
+		return this.modifiedBy;
+	}
+
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	public Date getModifiedDate() {
+		return this.modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
 	}
 
 	public BigDecimal getPrice() {

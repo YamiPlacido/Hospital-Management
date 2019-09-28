@@ -3,9 +3,9 @@ package com.hospital.model;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.sql.Timestamp;
 import java.math.BigInteger;
-import java.util.List;
 
 
 /**
@@ -18,11 +18,17 @@ public class Medicine implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="medicine_id")
-	private String medicineId;
+	private Integer medicineId;
+
+	private String createdBy;
 
 	private String function;
+
+	private String modifiedBy;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date modifiedDate;
 
 	private String name;
 
@@ -35,23 +41,23 @@ public class Medicine implements Serializable {
 	@Column(name="stock_date")
 	private Timestamp stockDate;
 
-	//bi-directional many-to-one association to MedicineIllness
-	@OneToMany(mappedBy="medicine")
-	private List<MedicineIllness> medicineIllnesses;
-
-	//bi-directional many-to-one association to PrescriptionMedicine
-	@OneToMany(mappedBy="medicine")
-	private List<PrescriptionMedicine> prescriptionMedicines;
-
 	public Medicine() {
 	}
 
-	public String getMedicineId() {
+	public Integer getMedicineId() {
 		return this.medicineId;
 	}
 
-	public void setMedicineId(String medicineId) {
+	public void setMedicineId(Integer medicineId) {
 		this.medicineId = medicineId;
+	}
+
+	public String getCreatedBy() {
+		return this.createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
 	}
 
 	public String getFunction() {
@@ -60,6 +66,22 @@ public class Medicine implements Serializable {
 
 	public void setFunction(String function) {
 		this.function = function;
+	}
+
+	public String getModifiedBy() {
+		return this.modifiedBy;
+	}
+
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	public Date getModifiedDate() {
+		return this.modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
 	}
 
 	public String getName() {
@@ -100,50 +122,6 @@ public class Medicine implements Serializable {
 
 	public void setStockDate(Timestamp stockDate) {
 		this.stockDate = stockDate;
-	}
-
-	public List<MedicineIllness> getMedicineIllnesses() {
-		return this.medicineIllnesses;
-	}
-
-	public void setMedicineIllnesses(List<MedicineIllness> medicineIllnesses) {
-		this.medicineIllnesses = medicineIllnesses;
-	}
-
-	public MedicineIllness addMedicineIllness(MedicineIllness medicineIllness) {
-		getMedicineIllnesses().add(medicineIllness);
-		medicineIllness.setMedicine(this);
-
-		return medicineIllness;
-	}
-
-	public MedicineIllness removeMedicineIllness(MedicineIllness medicineIllness) {
-		getMedicineIllnesses().remove(medicineIllness);
-		medicineIllness.setMedicine(null);
-
-		return medicineIllness;
-	}
-
-	public List<PrescriptionMedicine> getPrescriptionMedicines() {
-		return this.prescriptionMedicines;
-	}
-
-	public void setPrescriptionMedicines(List<PrescriptionMedicine> prescriptionMedicines) {
-		this.prescriptionMedicines = prescriptionMedicines;
-	}
-
-	public PrescriptionMedicine addPrescriptionMedicine(PrescriptionMedicine prescriptionMedicine) {
-		getPrescriptionMedicines().add(prescriptionMedicine);
-		prescriptionMedicine.setMedicine(this);
-
-		return prescriptionMedicine;
-	}
-
-	public PrescriptionMedicine removePrescriptionMedicine(PrescriptionMedicine prescriptionMedicine) {
-		getPrescriptionMedicines().remove(prescriptionMedicine);
-		prescriptionMedicine.setMedicine(null);
-
-		return prescriptionMedicine;
 	}
 
 }

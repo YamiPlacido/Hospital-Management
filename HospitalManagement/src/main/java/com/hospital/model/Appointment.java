@@ -2,8 +2,8 @@ package com.hospital.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.sql.Time;
 import java.util.Date;
-import java.util.List;
 
 
 /**
@@ -16,45 +16,37 @@ public class Appointment implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="app_id")
 	private int appId;
 
-	@Temporal(TemporalType.TIMESTAMP)
+	private String createdBy;
+
+	@Temporal(TemporalType.DATE)
 	private Date date;
 
 	private String location;
+
+	private String modifiedBy;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date modifiedDate;
 
 	@Lob
 	private String note;
 
 	private byte status;
 
-	//bi-directional many-to-one association to Doctor
-	@ManyToOne
-	@JoinColumn(name="doctor_id")
-	private Doctor doctor;
+	private Time time;
 
-	//bi-directional many-to-one association to Patient
+	//uni-directional many-to-one association to Patient
 	@ManyToOne
 	@JoinColumn(name="patient_id")
 	private Patient patient;
 
-	//bi-directional many-to-one association to Diagnosi
-	@OneToMany(mappedBy="appointment")
-	private List<Diagnosi> diagnosis;
-
-	//bi-directional many-to-one association to Examination
-	@OneToMany(mappedBy="appointment")
-	private List<Examination> examinations;
-
-	//bi-directional one-to-one association to Prescription
-	@OneToOne(mappedBy="appointment")
-	private Prescription prescription;
-
-	//bi-directional many-to-one association to PrescriptionMedicine
-	@OneToMany(mappedBy="appointment")
-	private List<PrescriptionMedicine> prescriptionMedicines;
+	//uni-directional many-to-one association to Employee
+	@ManyToOne
+	@JoinColumn(name="employee_id")
+	private Employee employee;
 
 	public Appointment() {
 	}
@@ -65,6 +57,14 @@ public class Appointment implements Serializable {
 
 	public void setAppId(int appId) {
 		this.appId = appId;
+	}
+
+	public String getCreatedBy() {
+		return this.createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
 	}
 
 	public Date getDate() {
@@ -83,6 +83,22 @@ public class Appointment implements Serializable {
 		this.location = location;
 	}
 
+	public String getModifiedBy() {
+		return this.modifiedBy;
+	}
+
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	public Date getModifiedDate() {
+		return this.modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+
 	public String getNote() {
 		return this.note;
 	}
@@ -99,12 +115,12 @@ public class Appointment implements Serializable {
 		this.status = status;
 	}
 
-	public Doctor getDoctor() {
-		return this.doctor;
+	public Time getTime() {
+		return this.time;
 	}
 
-	public void setDoctor(Doctor doctor) {
-		this.doctor = doctor;
+	public void setTime(Time time) {
+		this.time = time;
 	}
 
 	public Patient getPatient() {
@@ -115,78 +131,12 @@ public class Appointment implements Serializable {
 		this.patient = patient;
 	}
 
-	public List<Diagnosi> getDiagnosis() {
-		return this.diagnosis;
+	public Employee getEmployee() {
+		return this.employee;
 	}
 
-	public void setDiagnosis(List<Diagnosi> diagnosis) {
-		this.diagnosis = diagnosis;
-	}
-
-	public Diagnosi addDiagnosi(Diagnosi diagnosi) {
-		getDiagnosis().add(diagnosi);
-		diagnosi.setAppointment(this);
-
-		return diagnosi;
-	}
-
-	public Diagnosi removeDiagnosi(Diagnosi diagnosi) {
-		getDiagnosis().remove(diagnosi);
-		diagnosi.setAppointment(null);
-
-		return diagnosi;
-	}
-
-	public List<Examination> getExaminations() {
-		return this.examinations;
-	}
-
-	public void setExaminations(List<Examination> examinations) {
-		this.examinations = examinations;
-	}
-
-	public Examination addExamination(Examination examination) {
-		getExaminations().add(examination);
-		examination.setAppointment(this);
-
-		return examination;
-	}
-
-	public Examination removeExamination(Examination examination) {
-		getExaminations().remove(examination);
-		examination.setAppointment(null);
-
-		return examination;
-	}
-
-	public Prescription getPrescription() {
-		return this.prescription;
-	}
-
-	public void setPrescription(Prescription prescription) {
-		this.prescription = prescription;
-	}
-
-	public List<PrescriptionMedicine> getPrescriptionMedicines() {
-		return this.prescriptionMedicines;
-	}
-
-	public void setPrescriptionMedicines(List<PrescriptionMedicine> prescriptionMedicines) {
-		this.prescriptionMedicines = prescriptionMedicines;
-	}
-
-	public PrescriptionMedicine addPrescriptionMedicine(PrescriptionMedicine prescriptionMedicine) {
-		getPrescriptionMedicines().add(prescriptionMedicine);
-		prescriptionMedicine.setAppointment(this);
-
-		return prescriptionMedicine;
-	}
-
-	public PrescriptionMedicine removePrescriptionMedicine(PrescriptionMedicine prescriptionMedicine) {
-		getPrescriptionMedicines().remove(prescriptionMedicine);
-		prescriptionMedicine.setAppointment(null);
-
-		return prescriptionMedicine;
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 
 }

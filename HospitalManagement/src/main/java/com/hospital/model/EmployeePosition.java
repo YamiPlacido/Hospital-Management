@@ -6,21 +6,24 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the illness database table.
+ * The persistent class for the employee_position database table.
  * 
  */
 @Entity
-@NamedQuery(name="Illness.findAll", query="SELECT i FROM Illness i")
-public class Illness implements Serializable {
+@Table(name="employee_position")
+@NamedQuery(name="EmployeePosition.findAll", query="SELECT e FROM EmployeePosition e")
+public class EmployeePosition implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="illness_id")
-	private Integer illnessId;
+	@Column(name="employee_position_id")
+	private int employeePositionId;
 
 	private String createdBy;
 
 	private String description;
+
+	private byte disable;
 
 	private String modifiedBy;
 
@@ -29,22 +32,15 @@ public class Illness implements Serializable {
 
 	private String name;
 
-	private String season;
-
-	//uni-directional many-to-one association to IllnessType
-	@ManyToOne
-	@JoinColumn(name="illness_type_id")
-	private IllnessType illnessType;
-
-	public Illness() {
+	public EmployeePosition() {
 	}
 
-	public Integer getIllnessId() {
-		return this.illnessId;
+	public int getEmployeePositionId() {
+		return this.employeePositionId;
 	}
 
-	public void setIllnessId(Integer illnessId) {
-		this.illnessId = illnessId;
+	public void setEmployeePositionId(int employeePositionId) {
+		this.employeePositionId = employeePositionId;
 	}
 
 	public String getCreatedBy() {
@@ -61,6 +57,14 @@ public class Illness implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public byte getDisable() {
+		return this.disable;
+	}
+
+	public void setDisable(byte disable) {
+		this.disable = disable;
 	}
 
 	public String getModifiedBy() {
@@ -85,22 +89,6 @@ public class Illness implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getSeason() {
-		return this.season;
-	}
-
-	public void setSeason(String season) {
-		this.season = season;
-	}
-
-	public IllnessType getIllnessType() {
-		return this.illnessType;
-	}
-
-	public void setIllnessType(IllnessType illnessType) {
-		this.illnessType = illnessType;
 	}
 
 }

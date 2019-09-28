@@ -3,32 +3,37 @@ package com.hospital.model;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 
 /**
- * The persistent class for the doctor database table.
+ * The persistent class for the employee database table.
  * 
  */
 @Entity
-@NamedQuery(name="Doctor.findAll", query="SELECT d FROM Doctor d")
-public class Doctor implements Serializable {
+@NamedQuery(name="Employee.findAll", query="SELECT e FROM Employee e")
+public class Employee implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="doctor_id")
-	private int doctorId;
+	@Column(name="employee_id")
+	private int employeeId;
 
 	private String address;
 
 	private String code;
+
+	private String createdBy;
 
 	@Temporal(TemporalType.DATE)
 	private Date dob;
 
 	@Column(name="image_path")
 	private String imagePath;
+
+	private String modifiedBy;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date modifiedDate;
 
 	private String name;
 
@@ -38,29 +43,25 @@ public class Doctor implements Serializable {
 
 	private String status;
 
-	//bi-directional many-to-one association to Appointment
-	@OneToMany(mappedBy="doctor")
-	private List<Appointment> appointments;
-
-	//bi-directional many-to-one association to DoctorPosition
-	@ManyToOne
-	@JoinColumn(name="position_id")
-	private DoctorPosition doctorPosition;
-
-	//bi-directional many-to-one association to Speciality
+	//uni-directional many-to-one association to Speciality
 	@ManyToOne
 	@JoinColumn(name="speciality_id")
 	private Speciality speciality;
 
-	public Doctor() {
+	//uni-directional many-to-one association to EmployeePosition
+	@ManyToOne
+	@JoinColumn(name="employee_position_id")
+	private EmployeePosition employeePosition;
+
+	public Employee() {
 	}
 
-	public int getDoctorId() {
-		return this.doctorId;
+	public int getEmployeeId() {
+		return this.employeeId;
 	}
 
-	public void setDoctorId(int doctorId) {
-		this.doctorId = doctorId;
+	public void setEmployeeId(int employeeId) {
+		this.employeeId = employeeId;
 	}
 
 	public String getAddress() {
@@ -79,6 +80,14 @@ public class Doctor implements Serializable {
 		this.code = code;
 	}
 
+	public String getCreatedBy() {
+		return this.createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
 	public Date getDob() {
 		return this.dob;
 	}
@@ -93,6 +102,22 @@ public class Doctor implements Serializable {
 
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
+	}
+
+	public String getModifiedBy() {
+		return this.modifiedBy;
+	}
+
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	public Date getModifiedDate() {
+		return this.modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
 	}
 
 	public String getName() {
@@ -127,42 +152,20 @@ public class Doctor implements Serializable {
 		this.status = status;
 	}
 
-	public List<Appointment> getAppointments() {
-		return this.appointments;
-	}
-
-	public void setAppointments(List<Appointment> appointments) {
-		this.appointments = appointments;
-	}
-
-	public Appointment addAppointment(Appointment appointment) {
-		getAppointments().add(appointment);
-		appointment.setDoctor(this);
-
-		return appointment;
-	}
-
-	public Appointment removeAppointment(Appointment appointment) {
-		getAppointments().remove(appointment);
-		appointment.setDoctor(null);
-
-		return appointment;
-	}
-
-	public DoctorPosition getDoctorPosition() {
-		return this.doctorPosition;
-	}
-
-	public void setDoctorPosition(DoctorPosition doctorPosition) {
-		this.doctorPosition = doctorPosition;
-	}
-
 	public Speciality getSpeciality() {
 		return this.speciality;
 	}
 
 	public void setSpeciality(Speciality speciality) {
 		this.speciality = speciality;
+	}
+
+	public EmployeePosition getEmployeePosition() {
+		return this.employeePosition;
+	}
+
+	public void setEmployeePosition(EmployeePosition employeePosition) {
+		this.employeePosition = employeePosition;
 	}
 
 }

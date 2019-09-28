@@ -2,7 +2,8 @@ package com.hospital.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
+import java.util.Date;
+import java.math.BigInteger;
 
 
 /**
@@ -15,29 +16,47 @@ public class Symptom implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="symptom_id")
-	private String symptomId;
+	private Integer symptomId;
+
+	private String createdBy;
 
 	private String degree;
 
 	private String description;
 
+	private String modifiedBy;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date modifiedDate;
+
 	private String name;
 
-	//bi-directional many-to-one association to IllnessSymptom
-	@OneToMany(mappedBy="symptom")
-	private List<IllnessSymptom> illnessSymptoms;
+	@Column(name="symptom_type_id")
+	private BigInteger symptomTypeId;
+
+	//uni-directional many-to-one association to Examination
+	@ManyToOne
+	@JoinColumn(name="ex_id")
+	private Examination examination;
 
 	public Symptom() {
 	}
 
-	public String getSymptomId() {
+	public Integer getSymptomId() {
 		return this.symptomId;
 	}
 
-	public void setSymptomId(String symptomId) {
+	public void setSymptomId(Integer symptomId) {
 		this.symptomId = symptomId;
+	}
+
+	public String getCreatedBy() {
+		return this.createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
 	}
 
 	public String getDegree() {
@@ -56,6 +75,22 @@ public class Symptom implements Serializable {
 		this.description = description;
 	}
 
+	public String getModifiedBy() {
+		return this.modifiedBy;
+	}
+
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	public Date getModifiedDate() {
+		return this.modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+
 	public String getName() {
 		return this.name;
 	}
@@ -64,26 +99,20 @@ public class Symptom implements Serializable {
 		this.name = name;
 	}
 
-	public List<IllnessSymptom> getIllnessSymptoms() {
-		return this.illnessSymptoms;
+	public BigInteger getSymptomTypeId() {
+		return this.symptomTypeId;
 	}
 
-	public void setIllnessSymptoms(List<IllnessSymptom> illnessSymptoms) {
-		this.illnessSymptoms = illnessSymptoms;
+	public void setSymptomTypeId(BigInteger symptomTypeId) {
+		this.symptomTypeId = symptomTypeId;
 	}
 
-	public IllnessSymptom addIllnessSymptom(IllnessSymptom illnessSymptom) {
-		getIllnessSymptoms().add(illnessSymptom);
-		illnessSymptom.setSymptom(this);
-
-		return illnessSymptom;
+	public Examination getExamination() {
+		return this.examination;
 	}
 
-	public IllnessSymptom removeIllnessSymptom(IllnessSymptom illnessSymptom) {
-		getIllnessSymptoms().remove(illnessSymptom);
-		illnessSymptom.setSymptom(null);
-
-		return illnessSymptom;
+	public void setExamination(Examination examination) {
+		this.examination = examination;
 	}
 
 }

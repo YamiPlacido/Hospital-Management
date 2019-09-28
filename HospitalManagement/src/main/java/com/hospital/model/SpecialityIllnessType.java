@@ -2,6 +2,7 @@ package com.hospital.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.Date;
 
 
 /**
@@ -15,37 +16,59 @@ public class SpecialityIllnessType implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="speciality_illness_type_id")
-	private String specialityIllnessTypeId;
+	private Integer specialityIllnessTypeId;
 
-	//bi-directional many-to-one association to IllnessType
-	@ManyToOne
-	@JoinColumn(name="illness_type_id")
-	private IllnessType illnessType;
+	private String createdBy;
 
-	//bi-directional many-to-one association to Speciality
+	private String modifiedBy;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date modifiedDate;
+
+	//uni-directional many-to-one association to Speciality
 	@ManyToOne
 	@JoinColumn(name="speciality_id")
 	private Speciality speciality;
 
+	//uni-directional many-to-one association to IllnessType
+	@ManyToOne
+	@JoinColumn(name="illness_type_id")
+	private IllnessType illnessType;
+
 	public SpecialityIllnessType() {
 	}
 
-	public String getSpecialityIllnessTypeId() {
+	public Integer getSpecialityIllnessTypeId() {
 		return this.specialityIllnessTypeId;
 	}
 
-	public void setSpecialityIllnessTypeId(String specialityIllnessTypeId) {
+	public void setSpecialityIllnessTypeId(Integer specialityIllnessTypeId) {
 		this.specialityIllnessTypeId = specialityIllnessTypeId;
 	}
 
-	public IllnessType getIllnessType() {
-		return this.illnessType;
+	public String getCreatedBy() {
+		return this.createdBy;
 	}
 
-	public void setIllnessType(IllnessType illnessType) {
-		this.illnessType = illnessType;
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public String getModifiedBy() {
+		return this.modifiedBy;
+	}
+
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	public Date getModifiedDate() {
+		return this.modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
 	}
 
 	public Speciality getSpeciality() {
@@ -54,6 +77,14 @@ public class SpecialityIllnessType implements Serializable {
 
 	public void setSpeciality(Speciality speciality) {
 		this.speciality = speciality;
+	}
+
+	public IllnessType getIllnessType() {
+		return this.illnessType;
+	}
+
+	public void setIllnessType(IllnessType illnessType) {
+		this.illnessType = illnessType;
 	}
 
 }

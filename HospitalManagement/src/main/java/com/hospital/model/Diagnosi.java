@@ -16,9 +16,10 @@ public class Diagnosi implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="diagnosis_id")
 	private int diagnosisId;
+
+	private String createdBy;
 
 	private String degree;
 
@@ -26,15 +27,20 @@ public class Diagnosi implements Serializable {
 	@Column(name="dianogsis_time")
 	private Date dianogsisTime;
 
-	//bi-directional many-to-one association to Appointment
-	@ManyToOne
-	@JoinColumn(name="app_id")
-	private Appointment appointment;
+	private String modifiedBy;
 
-	//bi-directional many-to-one association to Illness
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date modifiedDate;
+
+	//uni-directional many-to-one association to Illness
 	@ManyToOne
 	@JoinColumn(name="illness_id")
 	private Illness illness;
+
+	//uni-directional many-to-one association to Appointment
+	@ManyToOne
+	@JoinColumn(name="app_id")
+	private Appointment appointment;
 
 	public Diagnosi() {
 	}
@@ -45,6 +51,14 @@ public class Diagnosi implements Serializable {
 
 	public void setDiagnosisId(int diagnosisId) {
 		this.diagnosisId = diagnosisId;
+	}
+
+	public String getCreatedBy() {
+		return this.createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
 	}
 
 	public String getDegree() {
@@ -63,12 +77,20 @@ public class Diagnosi implements Serializable {
 		this.dianogsisTime = dianogsisTime;
 	}
 
-	public Appointment getAppointment() {
-		return this.appointment;
+	public String getModifiedBy() {
+		return this.modifiedBy;
 	}
 
-	public void setAppointment(Appointment appointment) {
-		this.appointment = appointment;
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	public Date getModifiedDate() {
+		return this.modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
 	}
 
 	public Illness getIllness() {
@@ -77,6 +99,14 @@ public class Diagnosi implements Serializable {
 
 	public void setIllness(Illness illness) {
 		this.illness = illness;
+	}
+
+	public Appointment getAppointment() {
+		return this.appointment;
+	}
+
+	public void setAppointment(Appointment appointment) {
+		this.appointment = appointment;
 	}
 
 }

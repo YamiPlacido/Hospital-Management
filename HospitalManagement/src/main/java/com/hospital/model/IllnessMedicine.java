@@ -6,18 +6,18 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the illness_symptom database table.
+ * The persistent class for the illness_medicine database table.
  * 
  */
 @Entity
-@Table(name="illness_symptom")
-@NamedQuery(name="IllnessSymptom.findAll", query="SELECT i FROM IllnessSymptom i")
-public class IllnessSymptom implements Serializable {
+@Table(name="illness_medicine")
+@NamedQuery(name="IllnessMedicine.findAll", query="SELECT i FROM IllnessMedicine i")
+public class IllnessMedicine implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="illness_symptom_id")
-	private int illnessSymptomId;
+	@Column(name="illness_medicine_id")
+	private int illnessMedicineId;
 
 	private String createdBy;
 
@@ -36,15 +36,15 @@ public class IllnessSymptom implements Serializable {
 	@JoinColumn(name="symptom_id")
 	private Symptom symptom;
 
-	public IllnessSymptom() {
+	public IllnessMedicine() {
 	}
 
-	public int getIllnessSymptomId() {
-		return this.illnessSymptomId;
+	public int getIllnessMedicineId() {
+		return this.illnessMedicineId;
 	}
 
-	public void setIllnessSymptomId(int illnessSymptomId) {
-		this.illnessSymptomId = illnessSymptomId;
+	public void setIllnessMedicineId(int illnessMedicineId) {
+		this.illnessMedicineId = illnessMedicineId;
 	}
 
 	public String getCreatedBy() {

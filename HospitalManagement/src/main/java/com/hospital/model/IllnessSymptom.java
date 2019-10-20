@@ -23,10 +23,12 @@ public class IllnessSymptom implements Serializable {
 	private String createdBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
+
 	@Column(name="created_date")
 	private Date createdDate;
 
 	@Column(name="modified_by")
+
 	private String modifiedBy;
 
 	@Temporal(TemporalType.TIMESTAMP)

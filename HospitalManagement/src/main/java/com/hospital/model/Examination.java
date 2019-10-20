@@ -22,7 +22,9 @@ public class Examination implements Serializable {
 	private String createdBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
+
 	@Column(name="created_date")
+
 	private Date createdDate;
 
 	@Temporal(TemporalType.TIMESTAMP)

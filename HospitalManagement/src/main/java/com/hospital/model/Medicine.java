@@ -25,7 +25,9 @@ public class Medicine implements Serializable {
 	private String createdBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
+
 	@Column(name="created_date")
+
 	private Date createdDate;
 
 	private String function;

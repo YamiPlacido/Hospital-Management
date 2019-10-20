@@ -23,7 +23,9 @@ public class EmployeePosition implements Serializable {
 	private String createdBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
+
 	@Column(name="created_date")
+  
 	private Date createdDate;
 
 	private String description;

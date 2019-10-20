@@ -23,6 +23,7 @@ public class SpecialityIllnessType implements Serializable {
 	private String createdBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
+
 	@Column(name="created_date")
 	private Date createdDate;
 

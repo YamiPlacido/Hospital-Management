@@ -1,0 +1,82 @@
+package sent;
+
+import com.hospital.model.Examination;
+import com.hospital.repo.EmployeeRepository;
+import com.hospital.repo.ExaminationRepository;
+import com.hospital.service.MailService;
+import com.hospital.service.PDFExport;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
+
+@RestController
+@RequestMapping(value = "/admin/examinator")
+public class ExaminatorController {
+    @Autowired
+    EmployeeRepository employeeRepository;
+    @Autowired
+    ExaminationRepository examinationRepository;
+    @Autowired
+    PDFExport pdfExport;
+    @Autowired
+    MailService mailService;
+
+    @RequestMapping(value = "/examinations", method = RequestMethod.GET)
+    public ModelAndView viewAllExamToday() {
+        ModelAndView mav = new ModelAndView("doctor/examinator-exams");
+        return mav;
+    }
+
+    @ResponseBody
+    @GetMapping(value = "/api/examinations/{examinator_id}")
+    public List<Examination> viewAllTodayAppointmentAPI(@PathVariable("examinator_id") int id) {
+        return employeeRepository.findUnfinishedExaminationsByExaminatorId(id);
+    }
+
+    @ResponseBody
+    @GetMapping(value = "/api/examination/{examination_id}")
+    public Examination viewExaminationById(@PathVariable("examination_id") int id) {
+        return examinationRepository.findById(id).get();
+    }
+
+    //edit Examination content
+    @ResponseBody
+    @PostMapping("/api/examination/content")
+    public void editExamContent(
+            @RequestParam("ex_id") int ex_id,
+            @RequestParam(value = "content", required = false) String content) {
+        Examination ex = examinationRepository.findById(ex_id).get();
+        ex.setContent(content);
+        examinationRepository.save(ex);
+    }
+
+	//edit Examination result
+	@ResponseBody
+	@PostMapping("/api/examination/result")
+	public void editExamResult(
+			@RequestParam("ex_id") int ex_id,
+			@RequestParam(value = "content", required = false) String content) {
+		Examination ex = examinationRepository.findById(ex_id).get();
+		ex.setResult(content);
+		examinationRepository.save(ex);
+	}
+
+    //finish Examination content
+    @ResponseBody
+    @PostMapping("/api/examination")
+    public void finishExamination(
+            @RequestParam("ex_id") int ex_id,
+            @RequestParam(value = "content", required = false) String content) {
+        Examination ex = examinationRepository.findById(ex_id).get();
+        ex.setStatus("FINISH");
+        examinationRepository.save(ex);
+        pdfExport.createPDF();
+//        mailService.sendSimpleEmail("hello@yahoo.com","autum7k@yahoo.com","From Spring boot","Hi");
+    }
+
+}
+
+
+

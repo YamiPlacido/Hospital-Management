@@ -26,8 +26,8 @@ public class Symptom implements Serializable {
 	private String name;
 
 	//bi-directional many-to-one association to IllnessSymptom
-	@OneToMany(mappedBy="symptom")
-	private List<IllnessSymptom> illnessSymptoms;
+//	@OneToMany(fetch = FetchType.LAZY,mappedBy="symptom")
+//	private List<IllnessSymptom> illnessSymptoms;
 
 	public Symptom() {
 	}
@@ -64,26 +64,26 @@ public class Symptom implements Serializable {
 		this.name = name;
 	}
 
-	public List<IllnessSymptom> getIllnessSymptoms() {
-		return this.illnessSymptoms;
-	}
-
-	public void setIllnessSymptoms(List<IllnessSymptom> illnessSymptoms) {
-		this.illnessSymptoms = illnessSymptoms;
-	}
-
-	public IllnessSymptom addIllnessSymptom(IllnessSymptom illnessSymptom) {
-		getIllnessSymptoms().add(illnessSymptom);
-		illnessSymptom.setSymptom(this);
-
-		return illnessSymptom;
-	}
-
-	public IllnessSymptom removeIllnessSymptom(IllnessSymptom illnessSymptom) {
-		getIllnessSymptoms().remove(illnessSymptom);
-		illnessSymptom.setSymptom(null);
-
-		return illnessSymptom;
-	}
+//	public List<IllnessSymptom> getIllnessSymptoms() {
+//		return this.illnessSymptoms;
+//	}
+//
+//	public void setIllnessSymptoms(List<IllnessSymptom> illnessSymptoms) {
+//		this.illnessSymptoms = illnessSymptoms;
+//	}
+//
+//	public IllnessSymptom addIllnessSymptom(IllnessSymptom illnessSymptom) {
+//		getIllnessSymptoms().add(illnessSymptom);
+//		illnessSymptom.setSymptom(this);
+//
+//		return illnessSymptom;
+//	}
+//
+//	public IllnessSymptom removeIllnessSymptom(IllnessSymptom illnessSymptom) {
+//		getIllnessSymptoms().remove(illnessSymptom);
+//		illnessSymptom.setSymptom(null);
+//
+//		return illnessSymptom;
+//	}
 
 }

@@ -16,8 +16,12 @@
 <link rel="stylesheet" type="text/css"
 	href="/assets/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+
+<link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap4.min.css">
+<!--	<link rel="stylesheet" href="/assets/css/dist/ui/trumbowyg.css">-->
 <link rel="stylesheet" type="text/css" href="/assets/css/phuong.css">
-<!--[if lt IE 9]>
+<link rel="stylesheet" type="text/css" href="/assets/css/multi-select.css">
+	<!--[if lt IE 9]>
 		<script src="/assets/js/html5shiv.min.js"></script>
 		<script src="/assets/js/respond.min.js"></script>
 	<![endif]-->
@@ -176,13 +180,22 @@
 						<li><a href="departments.html"><i
 								class="fa fa-hospital-o"></i> <span>Departments</span></a></li>
 						<li class="submenu"><a href="#"><i class="fa fa-user"></i>
-								<span> Employees </span> <span class="menu-arrow"></span></a>
+								<span> Employee </span> <span class="menu-arrow"></span></a>
+							<ul style="display: none;">
+								<li><a href="/admin/doctor">Admin</a></li>
+								<li><a href="/admin/doctor/appointments">Doctor</a></li>
+								<li><a href="/admin/examinator/examinations">Examinator</a></li>
+							</ul>
+						</li>
+						<li class="submenu"><a href="#"><i class="fa fa-user"></i>
+							<span> Employees </span> <span class="menu-arrow"></span></a>
 							<ul style="display: none;">
 								<li><a href="employees.html">Employees List</a></li>
 								<li><a href="leaves.html">Leaves</a></li>
 								<li><a href="holidays.html">Holidays</a></li>
 								<li><a href="attendance.html">Attendance</a></li>
-							</ul></li>
+							</ul>
+						</li>
 						<li class="submenu"><a href="#"><i class="fa fa-money"></i>
 								<span> Accounts </span> <span class="menu-arrow"></span></a>
 							<ul style="display: none;">
@@ -501,13 +514,23 @@
 		</div>
 	</div>
 	<div class="sidebar-overlay" data-reff=""></div>
-	<script src="/assets/js/jquery-3.2.1.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!--	<script src="/assets/js/jquery-3.2.1.min.js"></script>-->
 	<script src="/assets/js/popper.min.js"></script>
 	<script src="/assets/js/bootstrap.min.js"></script>
 	<script src="/assets/js/jquery.slimscroll.js"></script>
 	<script src="/assets/js/Chart.bundle.js"></script>
 	<script src="/assets/js/chart.js"></script>
 	<script src="/assets/js/app.js"></script>
+
+	<script src="/assets/js/dataTables.bootstrap4.min.js"></script>
+	<script src="/assets/js/jquery.dataTables.min.js"></script>
+	<script src="/assets/js/jquery.multi-select.js"></script>
+	<script src="/assets/js/jquery.quicksearch.js"></script>
+<!--	<script src="/assets/js/adapters/jquery.js"></script>-->
+<!--	<script src="https://cdn.ckeditor.com/4.13.0/standard-all/ckeditor.js"></script>-->
+	<script src="//cdn.ckeditor.com/4.13.0/basic/ckeditor.js"></script>
+	<script src="/assets/js/atmosphere.js"></script>
 	<script src="/assets/js/phuong.js"></script>
 </body>
 </html>

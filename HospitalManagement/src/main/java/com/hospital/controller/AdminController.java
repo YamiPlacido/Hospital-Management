@@ -1,20 +1,6 @@
-package sent;
 
-import com.hospital.model.Speciality;
-import com.hospital.repo.EmployeeRepository;
-import com.hospital.repo.PositionRepository;
-import com.hospital.repo.SpecialityRepository;
-import com.hospital.service.HelperService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
+package com.hospital.controller;
 
-import javax.validation.Valid;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -24,6 +10,26 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import javax.validation.Valid;
+
+import com.hospital.model.Employee;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.hospital.model.Position;
+import com.hospital.model.Speciality;
+import com.hospital.repo.EmployeeRepository;
+import com.hospital.repo.PositionRepository;
+import com.hospital.repo.SpecialityRepository;
+import com.hospital.service.HelperService;
 
 @Controller
 @RequestMapping(value = "/admin")

@@ -1,12 +1,15 @@
-package sent;
+
+package com.hospital.controller;
 
 import com.hospital.model.Examination;
-import com.hospital.repo.EmployeeRepository;
 import com.hospital.repo.ExaminationRepository;
 import com.hospital.service.MailService;
 import com.hospital.service.PDFExport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import com.hospital.repo.EmployeeRepository;
+
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;

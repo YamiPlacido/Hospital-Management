@@ -1,15 +1,18 @@
-package sent;
+package com.hospital.controller;
+
 
 import com.hospital.model.*;
 import com.hospital.repo.*;
 import com.hospital.service.HelperService;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
 
 
 @Controller

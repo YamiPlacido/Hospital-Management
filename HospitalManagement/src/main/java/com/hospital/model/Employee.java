@@ -1,72 +1,82 @@
 package com.hospital.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-/**
- * The persistent class for the employee database table.
- * 
- */
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
-@NamedQuery(name="Employee.findAll", query="SELECT e FROM Employee e")
+
 public class Employee implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="employee_id")
 	private int employeeId;
-
+	
+	@NotNull(message = "First name cannot be null")
+	@Size(min = 2, max = 50, message 
+    = "Address must be between 2 and 50 characters")
+	private String firstName;
+	
+	@NotEmpty(message = "Last name cannot be null")
+	private String lastName;
+	
+//	@Size(min = 6, max = 50, message
+//		    = "Password must be between 6 and 50 characters")
+//	private String password;
+	
+	@Size(min = 5, max = 100, message 
+		      = "Address must be between 5 and 100 characters")
 	private String address;
 
 	private String code;
 
-	@Column(name="created_by")
-	private String createdBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
-
-	@Column(name="created_date")
-
-	private Date createdDate;
-
+	@Email(message = "Email should be valid")
+	private String email;
+	
+	private Character gender;
+	
 	@Temporal(TemporalType.DATE)
+	@DateTimeFormat (pattern="YYYY-MM-dd")
 	private Date dob;
 
 	@Column(name="image_path")
 	private String imagePath;
-
-	@Column(name="modified_by")
-	private String modifiedBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="modified_date")
-	private Date modifiedDate;
-
-	private String name;
 
 	private String note;
 
 	private String phone;
 
 	private String status;
-
-	//uni-directional many-to-one association to EmployeePosition
+	
+	//bi-directional many-to-one association to DoctorPosition
 	@ManyToOne
-	@JoinColumn(name="employee_position_id")
-	private EmployeePosition employeePosition;
+	@JoinColumn(name="position_id")
+	private Position position;
 
-	//uni-directional many-to-one association to Speciality
+	//bi-directional many-to-one association to Speciality
 	@ManyToOne
 	@JoinColumn(name="speciality_id")
 	private Speciality speciality;
 
-	public Employee() {
-	}
-
 	public int getEmployeeId() {
-		return this.employeeId;
+		return employeeId;
 	}
 
 	public void setEmployeeId(int employeeId) {
@@ -74,7 +84,7 @@ public class Employee implements Serializable {
 	}
 
 	public String getAddress() {
-		return this.address;
+		return address;
 	}
 
 	public void setAddress(String address) {
@@ -82,31 +92,15 @@ public class Employee implements Serializable {
 	}
 
 	public String getCode() {
-		return this.code;
+		return code;
 	}
 
 	public void setCode(String code) {
 		this.code = code;
 	}
 
-	public String getCreatedBy() {
-		return this.createdBy;
-	}
-
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public Date getCreatedDate() {
-		return this.createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
 	public Date getDob() {
-		return this.dob;
+		return dob;
 	}
 
 	public void setDob(Date dob) {
@@ -114,39 +108,15 @@ public class Employee implements Serializable {
 	}
 
 	public String getImagePath() {
-		return this.imagePath;
+		return imagePath;
 	}
 
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
 	}
 
-	public String getModifiedBy() {
-		return this.modifiedBy;
-	}
-
-	public void setModifiedBy(String modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
-
-	public Date getModifiedDate() {
-		return this.modifiedDate;
-	}
-
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
-
-	public String getName() {
-		return this.name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public String getNote() {
-		return this.note;
+		return note;
 	}
 
 	public void setNote(String note) {
@@ -154,7 +124,7 @@ public class Employee implements Serializable {
 	}
 
 	public String getPhone() {
-		return this.phone;
+		return phone;
 	}
 
 	public void setPhone(String phone) {
@@ -162,27 +132,61 @@ public class Employee implements Serializable {
 	}
 
 	public String getStatus() {
-		return this.status;
+		return status;
 	}
 
 	public void setStatus(String status) {
 		this.status = status;
 	}
 
-	public EmployeePosition getEmployeePosition() {
-		return this.employeePosition;
+	
+
+	public Position getPosition() {
+		return position;
 	}
 
-	public void setEmployeePosition(EmployeePosition employeePosition) {
-		this.employeePosition = employeePosition;
+	public void setPosition(Position position) {
+		this.position = position;
 	}
 
 	public Speciality getSpeciality() {
-		return this.speciality;
+		return speciality;
 	}
 
 	public void setSpeciality(Speciality speciality) {
 		this.speciality = speciality;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public Character getGender() {
+		return gender;
+	}
+
+	public void setGender(Character gender) {
+		this.gender = gender;
+	}
+	
 }

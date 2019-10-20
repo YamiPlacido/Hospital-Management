@@ -26,7 +26,7 @@ public class IllnessServiceImpl implements IllnessService {
 	}
 
 	@Override
-	public Illness GetIllnessByID(long id) {
+	public Illness GetIllnessByID(Integer id) {
 		Illness illness = illnessRepo.findById(id).get();
 		return illness;
 	}
@@ -37,7 +37,7 @@ public class IllnessServiceImpl implements IllnessService {
 	}
 
 	@Override
-	public void Delete(long id) {
+	public void Delete(Integer id) {
 		illnessRepo.deleteById(id);
 	}
 

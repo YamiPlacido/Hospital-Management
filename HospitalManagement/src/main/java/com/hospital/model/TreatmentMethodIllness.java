@@ -15,32 +15,43 @@ import java.util.Date;
 public class TreatmentMethodIllness implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private TreatmentMethodIllnessPK id;
+	@Id
+	@Column(name="treatment_method_illness_id")
+	private int treatmentMethodIllnessId;
 
+	@Column(name="created_by")
 	private String createdBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="created_date")
 	private Date createdDate;
 
-	private String detail;
-
+	@Column(name="modified_by")
 	private String modifiedBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="modified_date")
 	private Date modifiedDate;
 
-	private String name;
+	//uni-directional many-to-one association to Illness
+	@ManyToOne
+	@JoinColumn(name="illness_id")
+	private Illness illness;
+
+	//uni-directional many-to-one association to TreatmentMethod
+	@ManyToOne
+	@JoinColumn(name="treatment_method_id")
+	private TreatmentMethod treatmentMethod;
 
 	public TreatmentMethodIllness() {
 	}
 
-	public TreatmentMethodIllnessPK getId() {
-		return this.id;
+	public int getTreatmentMethodIllnessId() {
+		return this.treatmentMethodIllnessId;
 	}
 
-	public void setId(TreatmentMethodIllnessPK id) {
-		this.id = id;
+	public void setTreatmentMethodIllnessId(int treatmentMethodIllnessId) {
+		this.treatmentMethodIllnessId = treatmentMethodIllnessId;
 	}
 
 	public String getCreatedBy() {
@@ -59,14 +70,6 @@ public class TreatmentMethodIllness implements Serializable {
 		this.createdDate = createdDate;
 	}
 
-	public String getDetail() {
-		return this.detail;
-	}
-
-	public void setDetail(String detail) {
-		this.detail = detail;
-	}
-
 	public String getModifiedBy() {
 		return this.modifiedBy;
 	}
@@ -83,12 +86,20 @@ public class TreatmentMethodIllness implements Serializable {
 		this.modifiedDate = modifiedDate;
 	}
 
-	public String getName() {
-		return this.name;
+	public Illness getIllness() {
+		return this.illness;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setIllness(Illness illness) {
+		this.illness = illness;
+	}
+
+	public TreatmentMethod getTreatmentMethod() {
+		return this.treatmentMethod;
+	}
+
+	public void setTreatmentMethod(TreatmentMethod treatmentMethod) {
+		this.treatmentMethod = treatmentMethod;
 	}
 
 }

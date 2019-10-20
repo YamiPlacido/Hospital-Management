@@ -18,22 +18,23 @@ public class Treatment implements Serializable {
 	@Column(name="treatment_id")
 	private int treatmentId;
 
+	@Column(name="created_by")
 	private String createdBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="created_date")
 	private Date createdDate;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="followup_date")
 	private Date followupDate;
 
+	@Column(name="modified_by")
 	private String modifiedBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="modified_date")
 	private Date modifiedDate;
-
-	@Column(name="treatment_method_illness_id")
-	private int treatmentMethodIllnessId;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="treatment_time")
@@ -44,15 +45,15 @@ public class Treatment implements Serializable {
 	@JoinColumn(name="app_id")
 	private Appointment appointment;
 
-	//uni-directional many-to-one association to Employee
+	//uni-directional many-to-one association to Illness
 	@ManyToOne
-	@JoinColumn(name="employee_id")
-	private Employee employee;
+	@JoinColumn(name="illness_id")
+	private Illness illness;
 
-	//uni-directional many-to-one association to Patient
+	//uni-directional many-to-one association to TreatmentMethod
 	@ManyToOne
-	@JoinColumn(name="patient_id")
-	private Patient patient;
+	@JoinColumn(name="treatment_method_id")
+	private TreatmentMethod treatmentMethod;
 
 	public Treatment() {
 	}
@@ -105,14 +106,6 @@ public class Treatment implements Serializable {
 		this.modifiedDate = modifiedDate;
 	}
 
-	public int getTreatmentMethodIllnessId() {
-		return this.treatmentMethodIllnessId;
-	}
-
-	public void setTreatmentMethodIllnessId(int treatmentMethodIllnessId) {
-		this.treatmentMethodIllnessId = treatmentMethodIllnessId;
-	}
-
 	public Date getTreatmentTime() {
 		return this.treatmentTime;
 	}
@@ -129,20 +122,20 @@ public class Treatment implements Serializable {
 		this.appointment = appointment;
 	}
 
-	public Employee getEmployee() {
-		return this.employee;
+	public Illness getIllness() {
+		return this.illness;
 	}
 
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
+	public void setIllness(Illness illness) {
+		this.illness = illness;
 	}
 
-	public Patient getPatient() {
-		return this.patient;
+	public TreatmentMethod getTreatmentMethod() {
+		return this.treatmentMethod;
 	}
 
-	public void setPatient(Patient patient) {
-		this.patient = patient;
+	public void setTreatmentMethod(TreatmentMethod treatmentMethod) {
+		this.treatmentMethod = treatmentMethod;
 	}
 
 }

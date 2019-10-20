@@ -19,9 +19,11 @@ public class Diagnosi implements Serializable {
 	@Column(name="diagnosis_id")
 	private int diagnosisId;
 
+	@Column(name="created_by")
 	private String createdBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="created_date")
 	private Date createdDate;
 
 	private String degree;
@@ -30,9 +32,11 @@ public class Diagnosi implements Serializable {
 	@Column(name="dianogsis_time")
 	private Date dianogsisTime;
 
+	@Column(name="modified_by")
 	private String modifiedBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="modified_date")
 	private Date modifiedDate;
 
 	//uni-directional many-to-one association to Appointment

@@ -18,23 +18,30 @@ public class Examination implements Serializable {
 	@Column(name="ex_id")
 	private int exId;
 
+	@Column(name="created_by")
 	private String createdBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="created_date")
 	private Date createdDate;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
 
+	@Column(name="modified_by")
 	private String modifiedBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="modified_date")
 	private Date modifiedDate;
 
 	@Lob
 	private String note;
 
 	private byte status;
+
+	@Column(name="symptom_id")
+	private int symptomId;
 
 	//uni-directional many-to-one association to Appointment
 	@ManyToOne
@@ -116,6 +123,14 @@ public class Examination implements Serializable {
 
 	public void setStatus(byte status) {
 		this.status = status;
+	}
+
+	public int getSymptomId() {
+		return this.symptomId;
+	}
+
+	public void setSymptomId(int symptomId) {
+		this.symptomId = symptomId;
 	}
 
 	public Appointment getAppointment() {

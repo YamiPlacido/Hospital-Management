@@ -8,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import com.hospital.model.Illness;
 import com.hospital.model.IllnessType;
 
-public interface IllnessRepository extends CrudRepository<Illness, Long> {
+public interface IllnessRepository extends CrudRepository<Illness, Integer> {
 	
 	@Query(value = "select t from IllnessType t")
 	public List<IllnessType> ListAllIllnessType();

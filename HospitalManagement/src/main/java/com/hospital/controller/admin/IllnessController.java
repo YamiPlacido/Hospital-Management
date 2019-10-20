@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.hospital.model.Diagnosi;
 import com.hospital.model.Illness;
 import com.hospital.model.IllnessType;
 import com.hospital.service.IllnessService;
@@ -34,6 +35,13 @@ public class IllnessController {
 		return listIllness;
 	}
 	
+	@RequestMapping(value = "/getIllnessByID/{id}", produces = org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Object getIllnessByID(@PathVariable Integer id) {
+		Illness illness = iservice.GetIllnessByID(id);
+		return illness;
+	}
+	
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView Create() {
 		ModelAndView mv = new ModelAndView("illness/illness-form");
@@ -45,7 +53,7 @@ public class IllnessController {
 	}
 	
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
-	public ModelAndView Update(@PathVariable long id) {
+	public ModelAndView Update(@PathVariable Integer id) {
 		ModelAndView mv = new ModelAndView("illness/illness-form");
 		List<IllnessType> illnessType = iservice.ListAllIllnessType();
 		Illness illness = iservice.GetIllnessByID(id);
@@ -66,7 +74,7 @@ public class IllnessController {
 	
 	@RequestMapping(value="/delete", method = RequestMethod.POST)
 	@ResponseBody
-	public Object Delete(long id) {
+	public Object Delete(Integer id) {
 		try {
 			iservice.Delete(id);
 		}catch(Exception ex) {

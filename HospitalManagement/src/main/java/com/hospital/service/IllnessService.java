@@ -9,11 +9,11 @@ public interface IllnessService {
 	
 	public List<Illness> ListAllIllness();
 	
-	public Illness GetIllnessByID(long id);
+	public Illness GetIllnessByID(Integer id);
 	
 	public void SaveData(Illness illnesss);
 	
-	public void Delete(long id);
+	public void Delete(Integer id);
 	
 	public List<IllnessType> ListAllIllnessType();
 }

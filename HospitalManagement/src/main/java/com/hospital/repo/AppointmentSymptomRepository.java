@@ -1,7 +1,6 @@
 package com.hospital.repo;
 
-import com.hospital.entity.Appointment;
-import com.hospital.entity.AppointmentSymptom;
+import com.hospital.model.AppointmentSymptom;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

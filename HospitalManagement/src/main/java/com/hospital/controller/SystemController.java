@@ -1,12 +1,11 @@
 package com.hospital.controller;
 
-import com.hospital.entity.ExaminationType;
-import com.hospital.entity.Speciality;
+import com.hospital.model.ExaminationType;
+import com.hospital.model.Speciality;
 import com.hospital.model.Symptom;
 import com.hospital.repo.EmployeeRepository;
 import com.hospital.repo.SpecialityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;

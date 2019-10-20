@@ -1,5 +1,7 @@
 package com.hospital.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
@@ -11,7 +13,7 @@ import java.util.List;
  * 
  */
 @Entity
-@NamedQuery(name="Patient.findAll", query="SELECT p FROM Patient p")
+//@NamedQuery(name="Patient.findAll", query="SELECT p FROM Patient p")
 public class Patient implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -40,11 +42,13 @@ public class Patient implements Serializable {
 	private String phone;
 
 	//bi-directional many-to-one association to Appointment
-	@OneToMany(mappedBy="patient")
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY,mappedBy="patient")
 	private List<Appointment> appointments;
 
 	//bi-directional many-to-one association to Examination
-	@OneToMany(mappedBy="patient")
+	@JsonIgnore
+	@OneToMany //(mappedBy="patient")
 	private List<Examination> examinations;
 
 	public Patient() {

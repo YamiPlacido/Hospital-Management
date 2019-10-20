@@ -1,6 +1,5 @@
 package com.hospital.service;
 
-import com.hospital.entity.Examination;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;

@@ -1,7 +1,5 @@
 package com.hospital.model;
 
-import com.hospital.entity.Appointment;
-
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;

@@ -1,7 +1,7 @@
 package com.hospital.repo;
 
-import com.hospital.entity.Appointment;
-import com.hospital.entity.Examination;
+import com.hospital.model.Appointment;
+import com.hospital.model.Examination;
 
 import java.util.List;
 

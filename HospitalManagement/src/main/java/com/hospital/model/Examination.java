@@ -1,5 +1,7 @@
 package com.hospital.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
@@ -10,32 +12,48 @@ import java.util.Date;
  * 
  */
 @Entity
-@NamedQuery(name="Examination.findAll", query="SELECT e FROM Examination e")
+//@NamedQuery(name="Examination.findAll", query="SELECT e FROM Examination e")
 public class Examination implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ex_id")
-	private int exId;
+	private int id;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
 
 	@Lob
 	private String note;
+	private String content;
+	private String result;
+	private String stage;
 
-	private byte status;
+	@Column(name="image_path_1")
+	private String image_path_1;
+	@Column(name="image_path_2")
+	private String image_path_2;
+	@Column(name="image_path_3")
+	private String image_path_3;
+
+	private String status;
 
 	//bi-directional many-to-one association to Appointment
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="app_id")
 	private Appointment appointment;
 
+	@ManyToOne
+	@JoinColumn(name="examination_type_id")
+	private ExaminationType examinationType;
+
 	//bi-directional many-to-one association to Examinator
+//	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="examinator_id")
-	private Examinator examinator;
+	private Employee examinator;
 
 	//bi-directional many-to-one association to Patient
 	@ManyToOne
@@ -45,12 +63,28 @@ public class Examination implements Serializable {
 	public Examination() {
 	}
 
-	public int getExId() {
-		return this.exId;
+	public int getId() {
+		return id;
 	}
 
-	public void setExId(int exId) {
-		this.exId = exId;
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public ExaminationType getExaminationType() {
+		return examinationType;
+	}
+
+	public void setExaminationType(ExaminationType examinationType) {
+		this.examinationType = examinationType;
+	}
+
+	public void setExaminator(Employee examinator) {
+		this.examinator = examinator;
+	}
+
+	public Employee getExaminator() {
+		return examinator;
 	}
 
 	public Date getDate() {
@@ -69,11 +103,11 @@ public class Examination implements Serializable {
 		this.note = note;
 	}
 
-	public byte getStatus() {
-		return this.status;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setStatus(byte status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
@@ -85,14 +119,6 @@ public class Examination implements Serializable {
 		this.appointment = appointment;
 	}
 
-	public Examinator getExaminator() {
-		return this.examinator;
-	}
-
-	public void setExaminator(Examinator examinator) {
-		this.examinator = examinator;
-	}
-
 	public Patient getPatient() {
 		return this.patient;
 	}
@@ -101,4 +127,51 @@ public class Examination implements Serializable {
 		this.patient = patient;
 	}
 
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
+	}
+
+	public String getStage() {
+		return stage;
+	}
+
+	public void setStage(String stage) {
+		this.stage = stage;
+	}
+
+	public String getImage_path_1() {
+		return image_path_1;
+	}
+
+	public void setImage_path_1(String image_path_1) {
+		this.image_path_1 = image_path_1;
+	}
+
+	public String getImage_path_2() {
+		return image_path_2;
+	}
+
+	public void setImage_path_2(String image_path_2) {
+		this.image_path_2 = image_path_2;
+	}
+
+	public String getImage_path_3() {
+		return image_path_3;
+	}
+
+	public void setImage_path_3(String image_path_3) {
+		this.image_path_3 = image_path_3;
+	}
 }

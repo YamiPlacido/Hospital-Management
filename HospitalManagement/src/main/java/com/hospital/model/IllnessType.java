@@ -2,7 +2,7 @@ package com.hospital.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
+import java.util.Date;
 
 
 /**
@@ -16,31 +16,69 @@ public class IllnessType implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="illness_type_id")
-	private String illnessTypeId;
+	private Integer illnessTypeId;
+
+	@Column(name="created_by")
+	private String createdBy;
+
+	@Temporal(TemporalType.TIMESTAMP)
+
+	@Column(name="created_date")
+	private Date createdDate;
+
+	@Column(name="modified_by")
+	private String modifiedBy;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="modified_date")
+	private Date modifiedDate;
 
 	private String name;
 
 	private String note;
 
-	//bi-directional many-to-one association to Illness
-	@OneToMany(mappedBy="illnessType")
-	private List<Illness> illnesses;
-
-	//bi-directional many-to-one association to SpecialityIllnessType
-	@OneToMany(mappedBy="illnessType")
-	private List<SpecialityIllnessType> specialityIllnessTypes;
-
 	public IllnessType() {
 	}
 
-	public String getIllnessTypeId() {
+	public Integer getIllnessTypeId() {
 		return this.illnessTypeId;
 	}
 
-	public void setIllnessTypeId(String illnessTypeId) {
+	public void setIllnessTypeId(Integer illnessTypeId) {
 		this.illnessTypeId = illnessTypeId;
+	}
+
+	public String getCreatedBy() {
+		return this.createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Date getCreatedDate() {
+		return this.createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public String getModifiedBy() {
+		return this.modifiedBy;
+	}
+
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	public Date getModifiedDate() {
+		return this.modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
 	}
 
 	public String getName() {
@@ -57,50 +95,6 @@ public class IllnessType implements Serializable {
 
 	public void setNote(String note) {
 		this.note = note;
-	}
-
-	public List<Illness> getIllnesses() {
-		return this.illnesses;
-	}
-
-	public void setIllnesses(List<Illness> illnesses) {
-		this.illnesses = illnesses;
-	}
-
-	public Illness addIllness(Illness illness) {
-		getIllnesses().add(illness);
-		illness.setIllnessType(this);
-
-		return illness;
-	}
-
-	public Illness removeIllness(Illness illness) {
-		getIllnesses().remove(illness);
-		illness.setIllnessType(null);
-
-		return illness;
-	}
-
-	public List<SpecialityIllnessType> getSpecialityIllnessTypes() {
-		return this.specialityIllnessTypes;
-	}
-
-	public void setSpecialityIllnessTypes(List<SpecialityIllnessType> specialityIllnessTypes) {
-		this.specialityIllnessTypes = specialityIllnessTypes;
-	}
-
-	public SpecialityIllnessType addSpecialityIllnessType(SpecialityIllnessType specialityIllnessType) {
-		getSpecialityIllnessTypes().add(specialityIllnessType);
-		specialityIllnessType.setIllnessType(this);
-
-		return specialityIllnessType;
-	}
-
-	public SpecialityIllnessType removeSpecialityIllnessType(SpecialityIllnessType specialityIllnessType) {
-		getSpecialityIllnessTypes().remove(specialityIllnessType);
-		specialityIllnessType.setIllnessType(null);
-
-		return specialityIllnessType;
 	}
 
 }

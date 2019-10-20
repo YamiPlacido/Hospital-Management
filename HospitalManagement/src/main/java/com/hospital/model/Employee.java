@@ -20,6 +20,7 @@ import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
+
 public class Employee implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -57,7 +58,7 @@ public class Employee implements Serializable {
 
 	@Column(name="image_path")
 	private String imagePath;
-	
+
 	private String note;
 
 	private String phone;

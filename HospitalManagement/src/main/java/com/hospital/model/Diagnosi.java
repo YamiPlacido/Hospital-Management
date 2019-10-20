@@ -16,9 +16,17 @@ public class Diagnosi implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="diagnosis_id")
 	private int diagnosisId;
+
+	@Column(name="created_by")
+	private String createdBy;
+
+	@Temporal(TemporalType.TIMESTAMP)
+
+	@Column(name="created_date")
+  
+	private Date createdDate;
 
 	private String degree;
 
@@ -26,12 +34,19 @@ public class Diagnosi implements Serializable {
 	@Column(name="dianogsis_time")
 	private Date dianogsisTime;
 
-	//bi-directional many-to-one association to Appointment
+	@Column(name="modified_by")
+	private String modifiedBy;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="modified_date")
+	private Date modifiedDate;
+
+	//uni-directional many-to-one association to Appointment
 	@ManyToOne
 	@JoinColumn(name="app_id")
 	private Appointment appointment;
 
-	//bi-directional many-to-one association to Illness
+	//uni-directional many-to-one association to Illness
 	@ManyToOne
 	@JoinColumn(name="illness_id")
 	private Illness illness;
@@ -45,6 +60,22 @@ public class Diagnosi implements Serializable {
 
 	public void setDiagnosisId(int diagnosisId) {
 		this.diagnosisId = diagnosisId;
+	}
+
+	public String getCreatedBy() {
+		return this.createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Date getCreatedDate() {
+		return this.createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
 	}
 
 	public String getDegree() {
@@ -61,6 +92,22 @@ public class Diagnosi implements Serializable {
 
 	public void setDianogsisTime(Date dianogsisTime) {
 		this.dianogsisTime = dianogsisTime;
+	}
+
+	public String getModifiedBy() {
+		return this.modifiedBy;
+	}
+
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	public Date getModifiedDate() {
+		return this.modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
 	}
 
 	public Appointment getAppointment() {

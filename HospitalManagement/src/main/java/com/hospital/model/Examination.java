@@ -17,12 +17,27 @@ public class Examination implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ex_id")
 	private int id;
 
+	@Column(name="created_by")
+	private String createdBy;
+
+	@Temporal(TemporalType.TIMESTAMP)
+
+	@Column(name="created_date")
+
+	private Date createdDate;
+
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
+
+	@Column(name="modified_by")
+	private String modifiedBy;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="modified_date")
+	private Date modifiedDate;
 
 	@Lob
 	private String note;
@@ -41,6 +56,10 @@ public class Examination implements Serializable {
 
 	//bi-directional many-to-one association to Appointment
 	@JsonIgnore
+	@Column(name="symptom_id")
+	private int symptomId;
+
+	//uni-directional many-to-one association to Appointment
 	@ManyToOne
 	@JoinColumn(name="app_id")
 	private Appointment appointment;
@@ -55,7 +74,7 @@ public class Examination implements Serializable {
 	@JoinColumn(name="examinator_id")
 	private Employee examinator;
 
-	//bi-directional many-to-one association to Patient
+	//uni-directional many-to-one association to Patient
 	@ManyToOne
 	@JoinColumn(name="patient_id")
 	private Patient patient;
@@ -87,12 +106,44 @@ public class Examination implements Serializable {
 		return examinator;
 	}
 
+	public String getCreatedBy() {
+		return this.createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Date getCreatedDate() {
+		return this.createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
 	public Date getDate() {
 		return this.date;
 	}
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public String getModifiedBy() {
+		return this.modifiedBy;
+	}
+
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	public Date getModifiedDate() {
+		return this.modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
 	}
 
 	public String getNote() {
@@ -109,6 +160,14 @@ public class Examination implements Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public int getSymptomId() {
+		return this.symptomId;
+	}
+
+	public void setSymptomId(int symptomId) {
+		this.symptomId = symptomId;
 	}
 
 	public Appointment getAppointment() {

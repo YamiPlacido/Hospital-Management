@@ -2,7 +2,8 @@ package com.hospital.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-;
+
+import java.util.Date;
 
 
 /**
@@ -16,16 +17,30 @@ public class SpecialityIllnessType implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="speciality_illness_type_id")
-	private String specialityIllnessTypeId;
+	private Integer specialityIllnessTypeId;
 
-	//bi-directional many-to-one association to IllnessType
+	@Column(name="created_by")
+	private String createdBy;
+
+	@Temporal(TemporalType.TIMESTAMP)
+
+	@Column(name="created_date")
+	private Date createdDate;
+
+	@Column(name="modified_by")
+	private String modifiedBy;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="modified_date")
+	private Date modifiedDate;
+
+	//uni-directional many-to-one association to IllnessType
 	@ManyToOne
 	@JoinColumn(name="illness_type_id")
 	private IllnessType illnessType;
 
-	//bi-directional many-to-one association to Speciality
+	//uni-directional many-to-one association to Speciality
 	@ManyToOne
 	@JoinColumn(name="speciality_id")
 	private Speciality speciality;
@@ -33,12 +48,44 @@ public class SpecialityIllnessType implements Serializable {
 	public SpecialityIllnessType() {
 	}
 
-	public String getSpecialityIllnessTypeId() {
+	public Integer getSpecialityIllnessTypeId() {
 		return this.specialityIllnessTypeId;
 	}
 
-	public void setSpecialityIllnessTypeId(String specialityIllnessTypeId) {
+	public void setSpecialityIllnessTypeId(Integer specialityIllnessTypeId) {
 		this.specialityIllnessTypeId = specialityIllnessTypeId;
+	}
+
+	public String getCreatedBy() {
+		return this.createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Date getCreatedDate() {
+		return this.createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public String getModifiedBy() {
+		return this.modifiedBy;
+	}
+
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	public Date getModifiedDate() {
+		return this.modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
 	}
 
 	public IllnessType getIllnessType() {

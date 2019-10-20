@@ -2,7 +2,7 @@ package com.hospital.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
+import java.util.Date;
 
 
 /**
@@ -15,23 +15,28 @@ public class Speciality implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="speciality_id")
 	private int specialityId;
 
+	@Column(name="created_by")
+	private String createdBy;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="created_date")
+	private Date createdDate;
+
 	private String description;
+
+	@Column(name="modified_by")
+	private String modifiedBy;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="modified_date")
+	private Date modifiedDate;
 
 	private String name;
 
 	private String note;
-
-	//bi-directional many-to-one association to Doctor
-	@OneToMany(mappedBy="speciality")
-	private List<Doctor> doctors;
-
-	//bi-directional many-to-one association to SpecialityIllnessType
-	@OneToMany(mappedBy="speciality")
-	private List<SpecialityIllnessType> specialityIllnessTypes;
 
 	public Speciality() {
 	}
@@ -44,12 +49,44 @@ public class Speciality implements Serializable {
 		this.specialityId = specialityId;
 	}
 
+	public String getCreatedBy() {
+		return this.createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Date getCreatedDate() {
+		return this.createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
 	public String getDescription() {
 		return this.description;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getModifiedBy() {
+		return this.modifiedBy;
+	}
+
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	public Date getModifiedDate() {
+		return this.modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
 	}
 
 	public String getName() {
@@ -66,50 +103,6 @@ public class Speciality implements Serializable {
 
 	public void setNote(String note) {
 		this.note = note;
-	}
-
-	public List<Doctor> getDoctors() {
-		return this.doctors;
-	}
-
-	public void setDoctors(List<Doctor> doctors) {
-		this.doctors = doctors;
-	}
-
-	public Doctor addDoctor(Doctor doctor) {
-		getDoctors().add(doctor);
-		doctor.setSpeciality(this);
-
-		return doctor;
-	}
-
-	public Doctor removeDoctor(Doctor doctor) {
-		getDoctors().remove(doctor);
-		doctor.setSpeciality(null);
-
-		return doctor;
-	}
-
-	public List<SpecialityIllnessType> getSpecialityIllnessTypes() {
-		return this.specialityIllnessTypes;
-	}
-
-	public void setSpecialityIllnessTypes(List<SpecialityIllnessType> specialityIllnessTypes) {
-		this.specialityIllnessTypes = specialityIllnessTypes;
-	}
-
-	public SpecialityIllnessType addSpecialityIllnessType(SpecialityIllnessType specialityIllnessType) {
-		getSpecialityIllnessTypes().add(specialityIllnessType);
-		specialityIllnessType.setSpeciality(this);
-
-		return specialityIllnessType;
-	}
-
-	public SpecialityIllnessType removeSpecialityIllnessType(SpecialityIllnessType specialityIllnessType) {
-		getSpecialityIllnessTypes().remove(specialityIllnessType);
-		specialityIllnessType.setSpeciality(null);
-
-		return specialityIllnessType;
 	}
 
 }

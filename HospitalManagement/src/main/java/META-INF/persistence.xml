@@ -4,21 +4,27 @@
 		<class>com.hospital.model.Appointment</class>
 		<class>com.hospital.model.Credential</class>
 		<class>com.hospital.model.Diagnosi</class>
+		<class>com.hospital.model.Employee</class>
+		<class>com.hospital.model.EmployeePosition</class>
 		<class>com.hospital.model.Examination</class>
-		<class>com.hospital.model.ExaminationResult</class>
-		<class>com.hospital.model.Examinator</class>
 		<class>com.hospital.model.Illness</class>
+		<class>com.hospital.model.IllnessMedicine</class>
 		<class>com.hospital.model.IllnessSymptom</class>
 		<class>com.hospital.model.IllnessType</class>
 		<class>com.hospital.model.Medicine</class>
 		<class>com.hospital.model.MedicineIllness</class>
 		<class>com.hospital.model.Patient</class>
+		<class>com.hospital.model.PatientIllnessType</class>
 		<class>com.hospital.model.Prescription</class>
 		<class>com.hospital.model.PrescriptionMedicine</class>
 		<class>com.hospital.model.Role</class>
 		<class>com.hospital.model.SpecialityIllnessType</class>
 		<class>com.hospital.model.Symptom</class>
+		<class>com.hospital.model.SymptomType</class>
+		<class>com.hospital.model.Treatment</class>
+		<class>com.hospital.model.TreatmentMethodIllness</class>
 		<class>com.hospital.model.UserGroup</class>
 		<class>com.hospital.model.User</class>
+		<class>com.hospital.model.TreatmentMethod</class>
 	</persistence-unit>
 </persistence>

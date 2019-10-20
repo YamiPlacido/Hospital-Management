@@ -16,11 +16,17 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="user_id")
-	private String userId;
+	private Integer userId;
 
 	private String address;
+
+	@Column(name="created_by")
+	private String createdBy;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="created_date")
+	private Date createdDate;
 
 	@Temporal(TemporalType.DATE)
 	private Date dob;
@@ -33,11 +39,18 @@ public class User implements Serializable {
 	@Column(name="last_name")
 	private String lastName;
 
+	@Column(name="modified_by")
+	private String modifiedBy;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="modified_date")
+	private Date modifiedDate;
+
 	private String name;
 
 	private String password;
 
-	//bi-directional many-to-one association to UserGroup
+	//uni-directional many-to-one association to UserGroup
 	@ManyToOne
 	@JoinColumn(name="user_group_id")
 	private UserGroup userGroup;
@@ -45,11 +58,11 @@ public class User implements Serializable {
 	public User() {
 	}
 
-	public String getUserId() {
+	public Integer getUserId() {
 		return this.userId;
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 
@@ -59,6 +72,22 @@ public class User implements Serializable {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public String getCreatedBy() {
+		return this.createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Date getCreatedDate() {
+		return this.createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
 	}
 
 	public Date getDob() {
@@ -91,6 +120,22 @@ public class User implements Serializable {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public String getModifiedBy() {
+		return this.modifiedBy;
+	}
+
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	public Date getModifiedDate() {
+		return this.modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
 	}
 
 	public String getName() {

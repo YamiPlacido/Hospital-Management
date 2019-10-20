@@ -2,7 +2,7 @@ package com.hospital.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
+import java.util.Date;
 
 
 /**
@@ -15,42 +15,61 @@ public class Illness implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="illness_id")
-	private String illnessId;
+	private Integer illnessId;
+
+	@Column(name="created_by")
+	private String createdBy;
+
+	@Temporal(TemporalType.TIMESTAMP)
+
+	@Column(name="created_date")
+
+	private Date createdDate;
 
 	private String description;
+
+	@Column(name="modified_by")
+	private String modifiedBy;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="modified_date")
+	private Date modifiedDate;
 
 	private String name;
 
 	private String season;
 
-	//bi-directional many-to-one association to Diagnosi
-	@OneToMany(mappedBy="illness")
-	private List<Diagnosi> diagnosis;
-
-	//bi-directional many-to-one association to IllnessType
+	//uni-directional many-to-one association to IllnessType
 	@ManyToOne
 	@JoinColumn(name="illness_type_id")
 	private IllnessType illnessType;
 
-	//bi-directional many-to-one association to IllnessSymptom
-	@OneToMany(mappedBy="illness")
-	private List<IllnessSymptom> illnessSymptoms;
-
-	//bi-directional many-to-one association to MedicineIllness
-	@OneToMany(mappedBy="illness")
-	private List<MedicineIllness> medicineIllnesses;
-
 	public Illness() {
 	}
 
-	public String getIllnessId() {
+	public Integer getIllnessId() {
 		return this.illnessId;
 	}
 
-	public void setIllnessId(String illnessId) {
+	public void setIllnessId(Integer illnessId) {
 		this.illnessId = illnessId;
+	}
+
+	public String getCreatedBy() {
+		return this.createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Date getCreatedDate() {
+		return this.createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
 	}
 
 	public String getDescription() {
@@ -59,6 +78,22 @@ public class Illness implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getModifiedBy() {
+		return this.modifiedBy;
+	}
+
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	public Date getModifiedDate() {
+		return this.modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
 	}
 
 	public String getName() {
@@ -77,78 +112,12 @@ public class Illness implements Serializable {
 		this.season = season;
 	}
 
-	public List<Diagnosi> getDiagnosis() {
-		return this.diagnosis;
-	}
-
-	public void setDiagnosis(List<Diagnosi> diagnosis) {
-		this.diagnosis = diagnosis;
-	}
-
-	public Diagnosi addDiagnosi(Diagnosi diagnosi) {
-		getDiagnosis().add(diagnosi);
-		diagnosi.setIllness(this);
-
-		return diagnosi;
-	}
-
-	public Diagnosi removeDiagnosi(Diagnosi diagnosi) {
-		getDiagnosis().remove(diagnosi);
-		diagnosi.setIllness(null);
-
-		return diagnosi;
-	}
-
 	public IllnessType getIllnessType() {
 		return this.illnessType;
 	}
 
 	public void setIllnessType(IllnessType illnessType) {
 		this.illnessType = illnessType;
-	}
-
-	public List<IllnessSymptom> getIllnessSymptoms() {
-		return this.illnessSymptoms;
-	}
-
-	public void setIllnessSymptoms(List<IllnessSymptom> illnessSymptoms) {
-		this.illnessSymptoms = illnessSymptoms;
-	}
-
-	public IllnessSymptom addIllnessSymptom(IllnessSymptom illnessSymptom) {
-		getIllnessSymptoms().add(illnessSymptom);
-		illnessSymptom.setIllness(this);
-
-		return illnessSymptom;
-	}
-
-	public IllnessSymptom removeIllnessSymptom(IllnessSymptom illnessSymptom) {
-		getIllnessSymptoms().remove(illnessSymptom);
-		illnessSymptom.setIllness(null);
-
-		return illnessSymptom;
-	}
-
-	public List<MedicineIllness> getMedicineIllnesses() {
-		return this.medicineIllnesses;
-	}
-
-	public void setMedicineIllnesses(List<MedicineIllness> medicineIllnesses) {
-		this.medicineIllnesses = medicineIllnesses;
-	}
-
-	public MedicineIllness addMedicineIllness(MedicineIllness medicineIllness) {
-		getMedicineIllnesses().add(medicineIllness);
-		medicineIllness.setIllness(this);
-
-		return medicineIllness;
-	}
-
-	public MedicineIllness removeMedicineIllness(MedicineIllness medicineIllness) {
-		getMedicineIllnesses().remove(medicineIllness);
-		medicineIllness.setIllness(null);
-
-		return medicineIllness;
 	}
 
 }

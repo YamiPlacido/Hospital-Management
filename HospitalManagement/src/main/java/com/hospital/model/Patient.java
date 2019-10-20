@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 
 /**
@@ -18,11 +17,18 @@ public class Patient implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="patient_id")
 	private int patientId;
 
 	private String address;
+
+	@Column(name="created_by")
+	private String createdBy;
+
+	@Temporal(TemporalType.TIMESTAMP)
+
+	@Column(name="created_date")
+	private Date createdDate;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dob;
@@ -33,6 +39,13 @@ public class Patient implements Serializable {
 	@Column(name="image_url")
 	private byte[] imageUrl;
 
+	@Column(name="modified_by")
+	private String modifiedBy;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="modified_date")
+	private Date modifiedDate;
+
 	private String name;
 
 	@Lob
@@ -40,16 +53,6 @@ public class Patient implements Serializable {
 	private String patientNote;
 
 	private String phone;
-
-	//bi-directional many-to-one association to Appointment
-	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY,mappedBy="patient")
-	private List<Appointment> appointments;
-
-	//bi-directional many-to-one association to Examination
-	@JsonIgnore
-	@OneToMany //(mappedBy="patient")
-	private List<Examination> examinations;
 
 	public Patient() {
 	}
@@ -68,6 +71,22 @@ public class Patient implements Serializable {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public String getCreatedBy() {
+		return this.createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Date getCreatedDate() {
+		return this.createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
 	}
 
 	public Date getDob() {
@@ -94,6 +113,22 @@ public class Patient implements Serializable {
 		this.imageUrl = imageUrl;
 	}
 
+	public String getModifiedBy() {
+		return this.modifiedBy;
+	}
+
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	public Date getModifiedDate() {
+		return this.modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+
 	public String getName() {
 		return this.name;
 	}
@@ -116,50 +151,6 @@ public class Patient implements Serializable {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
-	}
-
-	public List<Appointment> getAppointments() {
-		return this.appointments;
-	}
-
-	public void setAppointments(List<Appointment> appointments) {
-		this.appointments = appointments;
-	}
-
-	public Appointment addAppointment(Appointment appointment) {
-		getAppointments().add(appointment);
-		appointment.setPatient(this);
-
-		return appointment;
-	}
-
-	public Appointment removeAppointment(Appointment appointment) {
-		getAppointments().remove(appointment);
-		appointment.setPatient(null);
-
-		return appointment;
-	}
-
-	public List<Examination> getExaminations() {
-		return this.examinations;
-	}
-
-	public void setExaminations(List<Examination> examinations) {
-		this.examinations = examinations;
-	}
-
-	public Examination addExamination(Examination examination) {
-		getExaminations().add(examination);
-		examination.setPatient(this);
-
-		return examination;
-	}
-
-	public Examination removeExamination(Examination examination) {
-		getExaminations().remove(examination);
-		examination.setPatient(null);
-
-		return examination;
 	}
 
 }

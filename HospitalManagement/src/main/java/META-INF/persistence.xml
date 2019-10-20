@@ -24,8 +24,8 @@
 		<class>com.hospital.model.SymptomType</class>
 		<class>com.hospital.model.Treatment</class>
 		<class>com.hospital.model.TreatmentMethodIllness</class>
-		<class>com.hospital.model.TreatmentMethodIllnessPK</class>
 		<class>com.hospital.model.UserGroup</class>
 		<class>com.hospital.model.User</class>
+		<class>com.hospital.model.TreatmentMethod</class>
 	</persistence-unit>
 </persistence>

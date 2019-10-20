@@ -20,9 +20,12 @@ public class Patient implements Serializable {
 
 	private String address;
 
+	@Column(name="created_by")
 	private String createdBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
+
+	@Column(name="created_date")
 	private Date createdDate;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -34,9 +37,11 @@ public class Patient implements Serializable {
 	@Column(name="image_url")
 	private byte[] imageUrl;
 
+	@Column(name="modified_by")
 	private String modifiedBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="modified_date")
 	private Date modifiedDate;
 
 	private String name;

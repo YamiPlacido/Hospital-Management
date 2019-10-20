@@ -18,14 +18,18 @@ public class Credential implements Serializable {
 	@Column(name="credential_id")
 	private Integer credentialId;
 
+	@Column(name="created_by")
 	private String createdBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="created_date")
 	private Date createdDate;
 
+	@Column(name="modified_by")
 	private String modifiedBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="modified_date")
 	private Date modifiedDate;
 
 	//uni-directional many-to-one association to Role

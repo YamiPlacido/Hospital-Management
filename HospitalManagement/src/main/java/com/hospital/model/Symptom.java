@@ -19,18 +19,23 @@ public class Symptom implements Serializable {
 	@Column(name="symptom_id")
 	private Integer symptomId;
 
+	@Column(name="created_by")
 	private String createdBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
+
+	@Column(name="created_date")
 	private Date createdDate;
 
 	private String degree;
 
 	private String description;
 
+	@Column(name="modified_by")
 	private String modifiedBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="modified_date")
 	private Date modifiedDate;
 
 	private String name;

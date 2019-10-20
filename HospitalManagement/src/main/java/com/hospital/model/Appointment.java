@@ -19,9 +19,12 @@ public class Appointment implements Serializable {
 	@Column(name="app_id")
 	private int appId;
 
+	@Column(name="created_by")
 	private String createdBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
+
+	@Column(name="created_date")
 	private Date createdDate;
 
 	@Temporal(TemporalType.DATE)
@@ -29,9 +32,11 @@ public class Appointment implements Serializable {
 
 	private String location;
 
+	@Column(name="modified_by")
 	private String modifiedBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="modified_date")
 	private Date modifiedDate;
 
 	@Lob

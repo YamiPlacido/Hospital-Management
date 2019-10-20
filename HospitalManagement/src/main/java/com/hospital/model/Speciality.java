@@ -18,16 +18,20 @@ public class Speciality implements Serializable {
 	@Column(name="speciality_id")
 	private int specialityId;
 
+	@Column(name="created_by")
 	private String createdBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="created_date")
 	private Date createdDate;
 
 	private String description;
 
+	@Column(name="modified_by")
 	private String modifiedBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="modified_date")
 	private Date modifiedDate;
 
 	private String name;

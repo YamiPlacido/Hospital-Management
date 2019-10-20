@@ -5,13 +5,14 @@ import javax.persistence.*;
 import java.sql.Time;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * The persistent class for the appointment database table.
  * 
  */
 @Entity
-@NamedQuery(name="Appointment.findAll", query="SELECT a FROM Appointment a")
+//@NamedQuery(name="Appointment.findAll", query="SELECT a FROM Appointment a")
 public class Appointment implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -44,17 +45,36 @@ public class Appointment implements Serializable {
 
 	private byte status;
 
-	private Time time;
-
-	//uni-directional many-to-one association to Employee
-	@ManyToOne
+	//bi-directional many-to-one association to Doctor
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="employee_id")
 	private Employee employee;
 
-	//uni-directional many-to-one association to Patient
-	@ManyToOne
+	//bi-directional many-to-one association to Patient
+//	@JsonIgnore
+	@ManyToOne()
 	@JoinColumn(name="patient_id")
 	private Patient patient;
+
+	//bi-directional many-to-one association to Examination
+	@ManyToMany
+	@JoinTable(
+			name = "appointment_examination",
+			joinColumns = @JoinColumn(name = "app_id"),
+			inverseJoinColumns = @JoinColumn(name = "ex_id"))
+	private List<Examination> examinations;
+
+	//bi-directional many-to-one association to Examination
+//	@JsonIgnore
+	@ManyToMany
+	@JoinTable(
+			name = "appointment_symptom",
+			joinColumns = @JoinColumn(name = "app_id"),
+			inverseJoinColumns = @JoinColumn(name = "symptom_id"))
+	private List<Symptom> symptoms;
+
+	private Time time;
 
 	public Appointment() {
 	}
@@ -83,6 +103,17 @@ public class Appointment implements Serializable {
 		this.createdDate = createdDate;
 	}
 
+	public void setStatus(byte status) {
+		this.status = status;
+	}
+
+	public Employee getEmployee() {
+		return this.employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+
 	public Date getDate() {
 		return this.date;
 	}
@@ -107,6 +138,17 @@ public class Appointment implements Serializable {
 		this.modifiedBy = modifiedBy;
 	}
 
+	public List<Symptom> getSymptoms() {
+		return symptoms;
+	}
+
+	public void setSymptoms(List<Symptom> symptoms) {
+		this.symptoms = symptoms;
+	}
+
+	public List<Examination> getExaminations() {
+		return examinations;
+
 	public Date getModifiedDate() {
 		return this.modifiedDate;
 	}
@@ -122,7 +164,6 @@ public class Appointment implements Serializable {
 	public void setNote(String note) {
 		this.note = note;
 	}
-
 	public byte getStatus() {
 		return this.status;
 	}

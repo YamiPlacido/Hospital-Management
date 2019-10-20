@@ -18,7 +18,6 @@
 		<class>com.hospital.model.Prescription</class>
 		<class>com.hospital.model.PrescriptionMedicine</class>
 		<class>com.hospital.model.Role</class>
-		<class>com.hospital.model.Speciality</class>
 		<class>com.hospital.model.SpecialityIllnessType</class>
 		<class>com.hospital.model.Symptom</class>
 		<class>com.hospital.model.SymptomType</class>

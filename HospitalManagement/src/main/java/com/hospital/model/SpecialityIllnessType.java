@@ -2,6 +2,7 @@ package com.hospital.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.Date;
 
 

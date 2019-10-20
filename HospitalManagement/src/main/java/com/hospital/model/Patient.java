@@ -1,5 +1,7 @@
 package com.hospital.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
@@ -10,7 +12,7 @@ import java.util.Date;
  * 
  */
 @Entity
-@NamedQuery(name="Patient.findAll", query="SELECT p FROM Patient p")
+//@NamedQuery(name="Patient.findAll", query="SELECT p FROM Patient p")
 public class Patient implements Serializable {
 	private static final long serialVersionUID = 1L;
 

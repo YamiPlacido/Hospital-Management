@@ -3,6 +3,7 @@ package com.hospital.controller;
 
 import com.hospital.model.*;
 import com.hospital.repo.*;
+import com.hospital.repository.AppointmentRepository;
 import com.hospital.service.HelperService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -141,17 +142,17 @@ public class DoctorController {
 		}
 	}
 
-	@ResponseBody
-	@GetMapping(value = "/api/appointments/symptom/{app_id}")
-	public List<Symptom> getSymptomsByAppointment(@PathVariable("app_id") int id){
-		return appointmentRepository.findById(id).get().getSymptoms();
-	}
-
-	@ResponseBody
-	@GetMapping(value = "/api/appointments/examination/{app_id}")
-	public List<Examination> getExaminationByAppointment(@PathVariable("app_id") int id){
-		return appointmentRepository.findById(id).get().getExaminations();
-	}
+//	@ResponseBody
+//	@GetMapping(value = "/api/appointments/symptom/{app_id}")
+//	public List<Symptom> getSymptomsByAppointment(@PathVariable("app_id") int id){
+//		return appointmentRepository.findById(id).get().getSymptoms();
+//	}
+//
+//	@ResponseBody
+//	@GetMapping(value = "/api/appointments/examination/{app_id}")
+//	public List<Examination> getExaminationByAppointment(@PathVariable("app_id") int id){
+//		return appointmentRepository.findById(id).get().getExaminations();
+//	}
 
 	public void editAppointmentSymptom(int id){
 		todayAppointment = employeeRepository.findAppointmentByDoctorId(id);

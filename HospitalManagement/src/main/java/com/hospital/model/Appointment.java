@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * 
  */
 @Entity
+@Table(name="appointment")
 //@NamedQuery(name="Appointment.findAll", query="SELECT a FROM Appointment a")
 public class Appointment implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -47,8 +48,8 @@ public class Appointment implements Serializable {
 	private byte status;
 
 	//bi-directional many-to-one association to Doctor
-	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY)
+//	@JsonIgnore
+	@ManyToOne()
 	@JoinColumn(name="employee_id")
 	private Employee employee;
 
@@ -59,23 +60,9 @@ public class Appointment implements Serializable {
 	private Patient patient;
 
 	//bi-directional many-to-one association to Examination
-	@ManyToMany
-	@JoinTable(
-			name = "appointment_examination",
-			joinColumns = @JoinColumn(name = "app_id"),
-			inverseJoinColumns = @JoinColumn(name = "ex_id"))
-	private List<Examination> examinations;
-
-	//bi-directional many-to-one association to Examination
-//	@JsonIgnore
-	@ManyToMany
-	@JoinTable(
-			name = "appointment_symptom",
-			joinColumns = @JoinColumn(name = "app_id"),
-			inverseJoinColumns = @JoinColumn(name = "symptom_id"))
-	private List<Symptom> symptoms;
 
 	private Time time;
+	
 
 	public Appointment() {
 	}
@@ -114,7 +101,8 @@ public class Appointment implements Serializable {
 
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
-
+	}
+	
 	public Date getDate() {
 		return this.date;
 	}
@@ -138,18 +126,7 @@ public class Appointment implements Serializable {
 	public void setModifiedBy(String modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
-
-	public List<Symptom> getSymptoms() {
-		return symptoms;
-	}
-
-	public void setSymptoms(List<Symptom> symptoms) {
-		this.symptoms = symptoms;
-	}
-
-	public List<Examination> getExaminations() {
-		return examinations;
-
+	
 	public Date getModifiedDate() {
 		return this.modifiedDate;
 	}
@@ -169,10 +146,6 @@ public class Appointment implements Serializable {
 		return this.status;
 	}
 
-	public void setStatus(byte status) {
-		this.status = status;
-	}
-
 	public Time getTime() {
 		return this.time;
 	}
@@ -181,13 +154,6 @@ public class Appointment implements Serializable {
 		this.time = time;
 	}
 
-	public Employee getEmployee() {
-		return this.employee;
-	}
-
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
-	}
 
 	public Patient getPatient() {
 		return this.patient;

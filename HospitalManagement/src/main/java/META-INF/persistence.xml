@@ -26,5 +26,10 @@
 		<class>com.hospital.model.UserGroup</class>
 		<class>com.hospital.model.User</class>
 		<class>com.hospital.model.TreatmentMethod</class>
+		<class>com.hospital.model.AppointmentExamination</class>
+		<class>com.hospital.model.AppointmentSymptom</class>
+		<class>com.hospital.model.ExaminationType</class>
+		<class>com.hospital.model.Position</class>
+		<class>com.hospital.model.Speciality</class>
 	</persistence-unit>
 </persistence>

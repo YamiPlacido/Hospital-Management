@@ -35,8 +35,29 @@ public class Speciality implements Serializable {
 	private Date modifiedDate;
 
 	private String name;
-
-	private String note;
+	
+	//uni-directional many-to-one association to IllnessType
+	@ManyToOne
+	@JoinColumn(name="position_id")
+	private EmployeePosition position;
+	
+	private int status;
+	
+	public EmployeePosition getPosition() {
+		return position;
+	}
+	
+	public void setPosition(EmployeePosition position) {
+		this.position = position;
+	}
+	
+	public int getStatus() {
+		return status;
+	}
+	
+	public void setStatus(int status) {
+		this.status = status;
+	}
 
 	public Speciality() {
 	}
@@ -97,12 +118,5 @@ public class Speciality implements Serializable {
 		this.name = name;
 	}
 
-	public String getNote() {
-		return this.note;
-	}
-
-	public void setNote(String note) {
-		this.note = note;
-	}
 
 }

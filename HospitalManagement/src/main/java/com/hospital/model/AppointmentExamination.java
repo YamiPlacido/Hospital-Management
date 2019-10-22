@@ -1,44 +1,52 @@
 package com.hospital.model;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import javax.persistence.*;
 
+/**
+ * The persistent class for the appointment_examination database table.
+ * 
+ */
 @Entity
+@Table(name = "appointment_examination")
+@NamedQuery(name = "AppointmentExamination.findAll", query = "SELECT a FROM AppointmentExamination a")
 public class AppointmentExamination implements Serializable {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name="id")
-    private int id;
+	@Id
+	private int id;
 
-    @Column(name="app_id")
-    private int appointmentId;
+	@Column(name = "app_id")
+	private int appointmentId;
 
-    @Column(name="ex_id")
-    private int examinationId;
+	@Column(name = "ex_id")
+	private int examinationId;
 
-    public int getId() {
-        return id;
-    }
+	public AppointmentExamination() {
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public int getId() {
+		return this.id;
+	}
 
-    public int getAppointmentId() {
-        return appointmentId;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public void setAppointmentId(int appointmentId) {
-        this.appointmentId = appointmentId;
-    }
+	public int getAppointmentId() {
+		return appointmentId;
+	}
 
-    public int getExaminationId() {
-        return examinationId;
-    }
+	public void setAppointmentId(int appointmentId) {
+		this.appointmentId = appointmentId;
+	}
 
-    public void setExaminationId(int examinationId) {
-        this.examinationId = examinationId;
-    }
+	public int getExaminationId() {
+		return examinationId;
+	}
+	
+	public void setExaminationId(int examinationId) {
+		this.examinationId = examinationId;
+	}
+
 }

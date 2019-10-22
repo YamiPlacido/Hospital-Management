@@ -21,5 +21,4 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer>, Em
     @Query("SELECT e FROM ExaminationType et LEFT JOIN Employee e ON et.speciality.specialityId = e.speciality.specialityId" +
             " WHERE et.id = :id")
     public List<Employee> findExaminatorsByExaminationType(@Param("id") int examination_type_id);
-
 }

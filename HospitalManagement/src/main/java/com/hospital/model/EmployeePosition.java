@@ -16,8 +16,8 @@ public class EmployeePosition implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="employee_position_id")
-	private int employeePositionId;
+	@Column(name="position_id")
+	private int positionId;
 
 	@Column(name="created_by")
 	private String createdBy;
@@ -30,7 +30,7 @@ public class EmployeePosition implements Serializable {
 
 	private String description;
 
-	private byte disable;
+	private String status;
 
 	@Column(name="modified_by")
 	private String modifiedBy;
@@ -41,15 +41,23 @@ public class EmployeePosition implements Serializable {
 
 	private String name;
 
+	public String getStatus() {
+		return status;
+	}
+	
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
 	public EmployeePosition() {
 	}
-
-	public int getEmployeePositionId() {
-		return this.employeePositionId;
+	
+	public int getPositionId() {
+		return positionId;
 	}
-
-	public void setEmployeePositionId(int employeePositionId) {
-		this.employeePositionId = employeePositionId;
+	
+	public void setPositionId(int positionId) {
+		this.positionId = positionId;
 	}
 
 	public String getCreatedBy() {
@@ -76,13 +84,13 @@ public class EmployeePosition implements Serializable {
 		this.description = description;
 	}
 
-	public byte getDisable() {
-		return this.disable;
-	}
-
-	public void setDisable(byte disable) {
-		this.disable = disable;
-	}
+//	public byte getDisable() {
+//		return this.disable;
+//	}
+//
+//	public void setDisable(byte disable) {
+//		this.disable = disable;
+//	}
 
 	public String getModifiedBy() {
 		return this.modifiedBy;

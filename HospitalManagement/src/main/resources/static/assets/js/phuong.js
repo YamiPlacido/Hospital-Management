@@ -1,7 +1,7 @@
 $(document).ready(function () {
     $("#load-more").click();
-    currentDoctor = 1;
-    currentExaminator = 9;
+    currentDoctor = 2;
+    currentExaminator = 1;
     loadAppointments(currentDoctor);
     loadExaminations(currentExaminator);
     callCKEditor();

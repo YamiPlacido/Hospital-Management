@@ -1,138 +1,181 @@
 package com.hospital.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.sql.Timestamp;
-import java.math.BigInteger;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 /**
- * The persistent class for the medicine database table.
+ * The persistent class for the appointment database table.
  * 
  */
 @Entity
-@NamedQuery(name="Medicine.findAll", query="SELECT m FROM Medicine m")
+@Table(name = "medicine")
+@NamedQuery(name="medicine", query="SELECT a FROM Medicine a")
 public class Medicine implements Serializable {
-	private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = 5207854116375888017L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="medicine_id")
-	private Integer medicineId;
+	private Long medicineId;
 
-	private String createdBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdDate;
-
+	@Temporal(TemporalType.TIMESTAMP) 
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Column(name="stock_date")
+	private Date  stockDate;
+	
+	@JoinColumn(name="name") 
+	private String name;
+	
+	@JoinColumn(name="price") 
+	private BigDecimal price;
+	
+	@JoinColumn(name="quantity") 
+	private int quantity;
+	
+	@Lob
+	@JoinColumn(name="function") 
 	private String function;
 
+	@JoinColumn(name="status") 
+	private boolean status;
+	 
+	@Column(name = "created_date")
+	private String createdDate;
+	
+	@Column(name = "created_by")
+	private String createdBy;
+	
+	@Column(name = "modified_date")
+	private String modifiedDate;
+	
+	@Column(name = "modified_by")
 	private String modifiedBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date modifiedDate;
-
-	private String name;
-
-	private BigDecimal price;
-
-	private BigInteger quantity;
-
-	private int status;
-
-	@Column(name="stock_date")
-	private Timestamp stockDate;
-
-	public Medicine() {
+	
+	public String getCreatedDate() {
+		return createdDate;
 	}
 
-	public Integer getMedicineId() {
-		return this.medicineId;
+
+	public void setCreatedDate(String createdDate) {
+		this.createdDate = createdDate;
 	}
 
-	public void setMedicineId(Integer medicineId) {
-		this.medicineId = medicineId;
-	}
 
 	public String getCreatedBy() {
-		return this.createdBy;
+		return createdBy;
 	}
+
 
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
 
-	public Date getCreatedDate() {
-		return this.createdDate;
+
+	public String getModifiedDate() {
+		return modifiedDate;
 	}
 
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
+
+	public void setModifiedDate(String modifiedDate) {
+		this.modifiedDate = modifiedDate;
 	}
 
-	public String getFunction() {
-		return this.function;
-	}
-
-	public void setFunction(String function) {
-		this.function = function;
-	}
 
 	public String getModifiedBy() {
-		return this.modifiedBy;
+		return modifiedBy;
 	}
+
 
 	public void setModifiedBy(String modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
 
-	public Date getModifiedDate() {
-		return this.modifiedDate;
+
+	public Medicine() {
+	}
+ 
+	public boolean isStatus() {
+		return status;
 	}
 
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
+	public Long getMedicineId() {
+		return medicineId;
 	}
+
+
+	public void setMedicineId(Long medicineId) {
+		this.medicineId = medicineId;
+	}
+
+
+	public Date getStockDate() {
+		return stockDate;
+	}
+
+
+	public void setStockDate(Date stockDate) {
+		this.stockDate = stockDate;
+	}
+
 
 	public String getName() {
-		return this.name;
+		return name;
 	}
+
 
 	public void setName(String name) {
 		this.name = name;
 	}
 
+
 	public BigDecimal getPrice() {
-		return this.price;
+		return price;
 	}
+
 
 	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 
-	public BigInteger getQuantity() {
-		return this.quantity;
+
+	public int getQuantity() {
+		return quantity;
 	}
 
-	public void setQuantity(BigInteger quantity) {
+
+	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
 
-	public int getStatus() {
-		return this.status;
+	public String getFunction() {
+		return function;
 	}
 
-	public void setStatus(int status) {
+
+	public void setFunction(String function) {
+		this.function = function;
+	}
+
+
+	public void setStatus(boolean status) {
 		this.status = status;
 	}
-
-	public Timestamp getStockDate() {
-		return this.stockDate;
-	}
-
-	public void setStockDate(Timestamp stockDate) {
-		this.stockDate = stockDate;
-	}
-
+ 
 }

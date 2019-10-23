@@ -1,9 +1,21 @@
 package com.hospital.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.sql.Time;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 /**
@@ -11,73 +23,125 @@ import java.util.Date;
  * 
  */
 @Entity
+@Table(name = "appointment")
 @NamedQuery(name="Appointment.findAll", query="SELECT a FROM Appointment a")
 public class Appointment implements Serializable {
-	private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = 5482207279862354571L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="app_id")
-	private int appId;
+	private Long appId;
 
-	private String createdBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdDate;
-
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP) 
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Column(name="date")
 	private Date date;
-
-	private String location;
-
-	private String modifiedBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date modifiedDate;
-
+	
 	@Lob
+	@JoinColumn(name="note") 
 	private String note;
 
-	private byte status;
+	@JoinColumn(name="status") 
+	private boolean status;
+	 
+	@JoinColumn(name="employee_id") 
+	private Long employeeId;
 
-	private Time time;
+	//bi-directional many-to-one association to Patient
 
-	//uni-directional many-to-one association to Employee
-	@ManyToOne
-	@JoinColumn(name="employee_id")
-	private Employee employee;
+	@JoinColumn(name="patient_id") 
+	private Long patientId;
+	
+	@Temporal(TemporalType.TIMESTAMP) 
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Column(name = "created_date")
+	private Date createdDate;
+	
+	@Column(name = "created_by")
+	private String createdBy;
+	
+	@Temporal(TemporalType.TIMESTAMP) 
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Column(name = "modified_date")
+	private Date modifiedDate;
+	
+	@Column(name = "modified_by")
+	private String modifiedBy;
 
-	//uni-directional many-to-one association to Patient
-	@ManyToOne
-	@JoinColumn(name="patient_id")
-	private Patient patient;
-
-	public Appointment() {
+	@Column(name = "shift_id")
+	private Long shiftId;
+	
+	@Column(name = "stage")
+	private String stage;
+	
+	
+	public String getStage() {
+		return stage;
 	}
 
-	public int getAppId() {
-		return this.appId;
+
+	public void setStage(String stage) {
+		this.stage = stage;
 	}
 
-	public void setAppId(int appId) {
-		this.appId = appId;
+
+	public Long getShiftId() {
+		return shiftId;
 	}
 
-	public String getCreatedBy() {
-		return this.createdBy;
-	}
 
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
+	public void setShiftId(Long shiftId) {
+		this.shiftId = shiftId;
 	}
 
 	public Date getCreatedDate() {
-		return this.createdDate;
+		return createdDate;
 	}
+
 
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
 
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Date getModifiedDate() {
+		return modifiedDate;
+	}
+
+
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+
+
+	public String getModifiedBy() {
+		return modifiedBy;
+	}
+
+
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+
+	public Long getAppId() {
+		return appId;
+	}
+ 
+	public void setAppId(Long appId) {
+		this.appId = appId;
+	}
+ 
 	public Date getDate() {
 		return this.date;
 	}
@@ -85,30 +149,7 @@ public class Appointment implements Serializable {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-
-	public String getLocation() {
-		return this.location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
-	}
-
-	public String getModifiedBy() {
-		return this.modifiedBy;
-	}
-
-	public void setModifiedBy(String modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
-
-	public Date getModifiedDate() {
-		return this.modifiedDate;
-	}
-
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
+	
 
 	public String getNote() {
 		return this.note;
@@ -118,36 +159,29 @@ public class Appointment implements Serializable {
 		this.note = note;
 	}
 
-	public byte getStatus() {
-		return this.status;
+	public boolean isStatus() {
+		return status;
 	}
 
-	public void setStatus(byte status) {
+	public void setStatus(boolean status) {
 		this.status = status;
 	}
 
-	public Time getTime() {
-		return this.time;
+	public Long getEmployeeId() {
+		return employeeId;
 	}
 
-	public void setTime(Time time) {
-		this.time = time;
+	public void setEmployeeId(Long employeeId) {
+		this.employeeId = employeeId;
 	}
 
-	public Employee getEmployee() {
-		return this.employee;
+
+	public Long getPatientId() {
+		return patientId;
 	}
 
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
-	}
-
-	public Patient getPatient() {
-		return this.patient;
-	}
-
-	public void setPatient(Patient patient) {
-		this.patient = patient;
+	public void setPatientId(Long patientId) {
+		this.patientId = patientId;
 	}
 
 }

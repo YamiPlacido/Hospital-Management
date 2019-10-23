@@ -1,95 +1,114 @@
 package com.hospital.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
+import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-/**
- * The persistent class for the role database table.
- * 
- */
 @Entity
-@NamedQuery(name="Role.findAll", query="SELECT r FROM Role r")
-public class Role implements Serializable {
-	private static final long serialVersionUID = 1L;
-
+@Table(name = "roles")
+public class Role implements Serializable{
+	
+	private static final long serialVersionUID = -1L;
+	
 	@Id
-	@Column(name="role_id")
-	private Integer roleId;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "role_id", updatable = false, nullable = false)
+	private long role_id;
 
-	private String createdBy;
+	@Column (name = "role_name", nullable = false)
+	private String name;
+	
+	@Column (name = "description", nullable = false)
+	private String description;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdDate;
+	@Column(name = "created_date", nullable = true)
+	private Date create_Date;
+	
+	@Column(name = "created_by", nullable = true)
+	private Date create_By;
+	
+	@Column(name = "modified_date", nullable = true)
+	private Date modified_Date;
+	
+	@Column(name = "modified_by", nullable = true)
+	private Date modified_By;
+	
+	@OneToMany
+    @JoinColumn(name = "role_id")
+	private List<User_Role> user_roles;
 
-	private String detail;
-
-	private String modifiedBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date modifiedDate;
-
-	@Column(name="role_code")
-	private String roleCode;
-
-	public Role() {
+	public List<User_Role> getUser_roles() {
+		return user_roles;
 	}
 
-	public Integer getRoleId() {
-		return this.roleId;
+	public void setUser_roles(List<User_Role> user_roles) {
+		this.user_roles = user_roles;
 	}
 
-	public void setRoleId(Integer roleId) {
-		this.roleId = roleId;
+	public long getRole_id() {
+		return role_id;
 	}
 
-	public String getCreatedBy() {
-		return this.createdBy;
+	public void setRole_id(long role_id) {
+		this.role_id = role_id;
 	}
 
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
+	public String getName() {
+		return name;
 	}
 
-	public Date getCreatedDate() {
-		return this.createdDate;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
+	public String getDescription() {
+		return description;
 	}
 
-	public String getDetail() {
-		return this.detail;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public void setDetail(String detail) {
-		this.detail = detail;
+	public Date getCreate_Date() {
+		return create_Date;
 	}
 
-	public String getModifiedBy() {
-		return this.modifiedBy;
+	public void setCreate_Date(Date create_Date) {
+		this.create_Date = create_Date;
 	}
 
-	public void setModifiedBy(String modifiedBy) {
-		this.modifiedBy = modifiedBy;
+	public Date getCreate_By() {
+		return create_By;
 	}
 
-	public Date getModifiedDate() {
-		return this.modifiedDate;
+	public void setCreate_By(Date create_By) {
+		this.create_By = create_By;
 	}
 
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
+	public Date getModified_Date() {
+		return modified_Date;
 	}
 
-	public String getRoleCode() {
-		return this.roleCode;
+	public void setModified_Date(Date modified_Date) {
+		this.modified_Date = modified_Date;
 	}
 
-	public void setRoleCode(String roleCode) {
-		this.roleCode = roleCode;
+	public Date getModified_By() {
+		return modified_By;
 	}
 
+	public void setModified_By(Date modified_By) {
+		this.modified_By = modified_By;
+	}
+	
+	
 }

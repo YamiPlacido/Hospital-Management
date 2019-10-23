@@ -1,109 +1,103 @@
 package com.hospital.model;
 
-import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
 
+import java.util.List;
 
-/**
- * The persistent class for the users database table.
- * 
- */
+import java.io.Serializable;
+import java.sql.Date;
+
 @Entity
 @Table(name="users")
-@NamedQuery(name="User.findAll", query="SELECT u FROM User u")
-public class User implements Serializable {
-	private static final long serialVersionUID = 1L;
-
+public class User implements Serializable{
+	
+	private static final long serialVersionUID = -1L;
+	
 	@Id
-	@Column(name="user_id")
-	private Integer userId;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "user_id", updatable = false, nullable = false)
+	private long user_id;
 
-	private String address;
+	@Column(name = "username", nullable = false)
+	private String userName;
 
-	private String createdBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdDate;
-
-	@Temporal(TemporalType.DATE)
-	private Date dob;
-
-	private String email;
-
-	@Column(name="first_name")
-	private String firstName;
-
-	@Column(name="last_name")
-	private String lastName;
-
-	private String modifiedBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date modifiedDate;
-
-	private String name;
-
+	@Column(name = "password", nullable = false)
 	private String password;
 
-	//uni-directional many-to-one association to UserGroup
-	@ManyToOne
-	@JoinColumn(name="user_group_id")
-	private UserGroup userGroup;
+	@Column(name = "first_name", nullable = false)
+	private String firstName;
+	
+	@Column(name = "last_name", nullable = false)
+	private String lastName;
+	
+	@Column(name = "address", nullable = false)
+	private String addRess;
+	
+	@Column(name = "dob", nullable = false)
+	private Date dateofBirth;
 
+	@Column(name = "created_date", nullable = true)
+	private Date create_Date;
+	
+	@Column(name = "created_by", nullable = true)
+	private Date create_By;
+	
+	@Column(name = "modified_date", nullable = true)
+	private Date modified_Date;
+	
+	@Column(name = "modified_by", nullable = true)
+	private Date modified_By;
+	
+	@Column
+	private int status;
+	@OneToMany
+    @JoinColumn(name = "user_id")
+	private List<User_Role> user_roles;
+	
 	public User() {
+		 
+    }
+ 
+    public User(Long user_id, String userName, String password) {
+        this.user_id = user_id;
+        this.userName = userName;
+        this.password = password;
+    }
+
+	public long getUser_id() {
+		return user_id;
 	}
 
-	public Integer getUserId() {
-		return this.userId;
+	public void setUser_id(long user_id) {
+		this.user_id = user_id;
 	}
 
-	public void setUserId(Integer userId) {
-		this.userId = userId;
+	public List<User_Role> getUser_roles() {
+		return user_roles;
 	}
 
-	public String getAddress() {
-		return this.address;
+	public void setUser_roles(List<User_Role> user_roles) {
+		this.user_roles = user_roles;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public String getUserName() {
+		return userName;
 	}
 
-	public String getCreatedBy() {
-		return this.createdBy;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
+	public String getPassword() {
+		return password;
 	}
 
-	public Date getCreatedDate() {
-		return this.createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public Date getDob() {
-		return this.dob;
-	}
-
-	public void setDob(Date dob) {
-		this.dob = dob;
-	}
-
-	public String getEmail() {
-		return this.email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getFirstName() {
-		return this.firstName;
+		return firstName;
 	}
 
 	public void setFirstName(String firstName) {
@@ -111,51 +105,68 @@ public class User implements Serializable {
 	}
 
 	public String getLastName() {
-		return this.lastName;
+		return lastName;
 	}
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
 
-	public String getModifiedBy() {
-		return this.modifiedBy;
+	public String getAddRess() {
+		return addRess;
 	}
 
-	public void setModifiedBy(String modifiedBy) {
-		this.modifiedBy = modifiedBy;
+	public void setAddRess(String addRess) {
+		this.addRess = addRess;
 	}
 
-	public Date getModifiedDate() {
-		return this.modifiedDate;
+	public Date getDateofBirth() {
+		return dateofBirth;
 	}
 
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
+	public void setDateofBirth(Date dateofBirth) {
+		this.dateofBirth = dateofBirth;
 	}
 
-	public String getName() {
-		return this.name;
+	public Date getCreate_Date() {
+		return create_Date;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setCreate_Date(Date create_Date) {
+		this.create_Date = create_Date;
 	}
 
-	public String getPassword() {
-		return this.password;
+	public Date getCreate_By() {
+		return create_By;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setCreate_By(Date create_By) {
+		this.create_By = create_By;
 	}
 
-	public UserGroup getUserGroup() {
-		return this.userGroup;
+	public Date getModified_Date() {
+		return modified_Date;
 	}
 
-	public void setUserGroup(UserGroup userGroup) {
-		this.userGroup = userGroup;
+	public void setModified_Date(Date modified_Date) {
+		this.modified_Date = modified_Date;
 	}
 
+	public Date getModified_By() {
+		return modified_By;
+	}
+
+	public void setModified_By(Date modified_By) {
+		this.modified_By = modified_By;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	
 }

@@ -1,104 +1,56 @@
 package com.hospital.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
-import java.util.Date;
 
-
-/**
- * The persistent class for the speciality database table.
- * 
- */
 @Entity
-@NamedQuery(name="Speciality.findAll", query="SELECT s FROM Speciality s")
 public class Speciality implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="speciality_id")
 	private int specialityId;
 
-	private String createdBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdDate;
-
-	private String description;
-
-	private String modifiedBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date modifiedDate;
-
 	private String name;
 
-	private String note;
+	private String description;
+	@ManyToOne
+	@JoinColumn(name="position_id")
+	private Position position;
 
-	public Speciality() {
-	}
+//	@OneToMany
+//	private ExaminationType examinationType;
 
 	public int getSpecialityId() {
-		return this.specialityId;
+		return specialityId;
 	}
 
 	public void setSpecialityId(int specialityId) {
 		this.specialityId = specialityId;
 	}
 
-	public String getCreatedBy() {
-		return this.createdBy;
-	}
-
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public Date getCreatedDate() {
-		return this.createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
 	public String getDescription() {
-		return this.description;
+		return description;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
-	public String getModifiedBy() {
-		return this.modifiedBy;
-	}
-
-	public void setModifiedBy(String modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
-
-	public Date getModifiedDate() {
-		return this.modifiedDate;
-	}
-
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
-
 	public String getName() {
-		return this.name;
+		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public String getNote() {
-		return this.note;
+	public Position getPosition() {
+		return position;
 	}
-
-	public void setNote(String note) {
-		this.note = note;
+	public void setPosition(Position position) {
+		this.position = position;
 	}
-
 }

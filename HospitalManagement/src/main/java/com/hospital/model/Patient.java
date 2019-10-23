@@ -1,149 +1,185 @@
 package com.hospital.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-/**
- * The persistent class for the patient database table.
- * 
- */
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
-@NamedQuery(name="Patient.findAll", query="SELECT p FROM Patient p")
+@Table(name = "patient")
 public class Patient implements Serializable {
-	private static final long serialVersionUID = 1L;
+	
+	private static final long serialVersionUID = 3295457969402399219L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY) 
 	@Column(name="patient_id")
-	private int patientId;
-
-	private String address;
-
-	private String createdBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdDate;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date dob;
-
-	private String email;
-
-	@Lob
-	@Column(name="image_url")
-	private byte[] imageUrl;
-
-	private String modifiedBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date modifiedDate;
-
+	private Long patientID;
+	
+	@Column(name = "name")
 	private String name;
 
-	@Lob
-	@Column(name="patient_note")
-	private String patientNote;
+	@Column(name = "address")
+	private String address;
 
+	@Column(name = "phone")
 	private String phone;
 
-	public Patient() {
+	@Column(name = "email")
+	private String email;
+	
+	@Column(name = "status")
+	private boolean status;
+
+	@Temporal(TemporalType.TIMESTAMP) 
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date dob;
+	 
+	@Column(name = "image_url")
+	private String imageUrl;
+	
+	@Column(name = "patient_note")
+	private String patientNote;
+	 
+	@Column(name = "identity_card")
+	private String identityCard;
+	
+	@Column(name = "created_date")
+	private String createdDate;
+	
+	@Column(name = "created_by")
+	private String createdBy;
+	
+	@Column(name = "modified_date")
+	private String modifiedDate;
+	
+	@Column(name = "modified_by")
+	private String modifiedBy;
+	
+	public boolean isStatus() {
+		return status;
 	}
 
-	public int getPatientId() {
-		return this.patientId;
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 
-	public void setPatientId(int patientId) {
-		this.patientId = patientId;
+	public String getCreatedDate() {
+		return createdDate;
 	}
 
-	public String getAddress() {
-		return this.address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
+	public void setCreatedDate(String createdDate) {
+		this.createdDate = createdDate;
 	}
 
 	public String getCreatedBy() {
-		return this.createdBy;
+		return createdBy;
 	}
 
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
 
-	public Date getCreatedDate() {
-		return this.createdDate;
+	public String getModifiedDate() {
+		return modifiedDate;
 	}
 
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public Date getDob() {
-		return this.dob;
-	}
-
-	public void setDob(Date dob) {
-		this.dob = dob;
-	}
-
-	public String getEmail() {
-		return this.email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public byte[] getImageUrl() {
-		return this.imageUrl;
-	}
-
-	public void setImageUrl(byte[] imageUrl) {
-		this.imageUrl = imageUrl;
+	public void setModifiedDate(String modifiedDate) {
+		this.modifiedDate = modifiedDate;
 	}
 
 	public String getModifiedBy() {
-		return this.modifiedBy;
+		return modifiedBy;
 	}
 
 	public void setModifiedBy(String modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
 
-	public Date getModifiedDate() {
-		return this.modifiedDate;
+	public String getIdentityCard() {
+		return identityCard;
 	}
 
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
+	public void setIdentityCard(String identityCard) {
+		this.identityCard = identityCard;
+	}
+
+	public Long getPatientID() {
+		return patientID;
+	}
+
+	public void setPatientID(Long patientID) {
+		this.patientID = patientID;
 	}
 
 	public String getName() {
-		return this.name;
+		return name;
 	}
+
+
 
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	
+	public Date getDob() {
+		return this.dob;
+	}
+
+	public void setDob(Date dob) {
+		
+		this.dob = dob;
+	}
+
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public String getPatientNote() {
-		return this.patientNote;
+		return patientNote;
 	}
 
 	public void setPatientNote(String patientNote) {
 		this.patientNote = patientNote;
 	}
-
-	public String getPhone() {
-		return this.phone;
+ 
+	
+	public String getImageUrl() {
+		return imageUrl;
 	}
 
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 
 }

@@ -32,5 +32,17 @@ public interface AppointmentService {
 	public void disableAppointment(long appointmentId);
 
 	public DoctorScheduleInforDto getDoctorSchedule(DoctorScheduleSearchDto doctorScheduleSearchDto);
+	
+	public List<Appointment> ListAllAppointment();
+	
+	public List<Appointment> ListAllAppointmentByDoctorID(Long id);
+	
+	public Appointment GetAppointmentByID(Long id );
+	
+	public void SaveData(Appointment appointment);
+	
+	public void Delete(Long id );
+	
+	public Integer GetPatientIDByAppID(Long id );
 	 
 }

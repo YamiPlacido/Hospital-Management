@@ -1,22 +1,28 @@
 package com.hospital.model;
 
-import javax.persistence.*;
-
-import java.util.List;
-
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
 @Table(name="users")
-public class User implements Serializable{
+public class Users implements Serializable{
 	
 	private static final long serialVersionUID = -1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id", updatable = false, nullable = false)
-	private long user_id;
+	private Long userId;
 
 	@Column(name = "username", nullable = false)
 	private String userName;
@@ -37,47 +43,37 @@ public class User implements Serializable{
 	private Date dateofBirth;
 
 	@Column(name = "created_date", nullable = true)
-	private Date create_Date;
+	private Date createDate;
 	
 	@Column(name = "created_by", nullable = true)
-	private Date create_By;
+	private Date createBy;
 	
 	@Column(name = "modified_date", nullable = true)
-	private Date modified_Date;
+	private Date modifiedDate;
 	
 	@Column(name = "modified_by", nullable = true)
-	private Date modified_By;
+	private Date modifiedBy;
 	
-	@Column
-	private int status;
 	@OneToMany
     @JoinColumn(name = "user_id")
-	private List<User_Role> user_roles;
+	private List<UserRole> userRoles;
 	
-	public User() {
+	public Users() {
 		 
     }
  
-    public User(Long user_id, String userName, String password) {
-        this.user_id = user_id;
+    public Users(Long userId, String userName, String password) {
+        this.userId = userId;
         this.userName = userName;
         this.password = password;
     }
 
-	public long getUser_id() {
-		return user_id;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setUser_id(long user_id) {
-		this.user_id = user_id;
-	}
-
-	public List<User_Role> getUser_roles() {
-		return user_roles;
-	}
-
-	public void setUser_roles(List<User_Role> user_roles) {
-		this.user_roles = user_roles;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	public String getUserName() {
@@ -128,45 +124,44 @@ public class User implements Serializable{
 		this.dateofBirth = dateofBirth;
 	}
 
-	public Date getCreate_Date() {
-		return create_Date;
+	public Date getCreateDate() {
+		return createDate;
 	}
 
-	public void setCreate_Date(Date create_Date) {
-		this.create_Date = create_Date;
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 
-	public Date getCreate_By() {
-		return create_By;
+	public Date getCreateBy() {
+		return createBy;
 	}
 
-	public void setCreate_By(Date create_By) {
-		this.create_By = create_By;
+	public void setCreateBy(Date createBy) {
+		this.createBy = createBy;
 	}
 
-	public Date getModified_Date() {
-		return modified_Date;
+	public Date getModifiedDate() {
+		return modifiedDate;
 	}
 
-	public void setModified_Date(Date modified_Date) {
-		this.modified_Date = modified_Date;
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
 	}
 
-	public Date getModified_By() {
-		return modified_By;
+	public Date getModifiedBy() {
+		return modifiedBy;
 	}
 
-	public void setModified_By(Date modified_By) {
-		this.modified_By = modified_By;
+	public void setModifiedBy(Date modifiedBy) {
+		this.modifiedBy = modifiedBy;
 	}
 
-	public int getStatus() {
-		return status;
+	public List<UserRole> getUserRoles() {
+		return userRoles;
 	}
 
-	public void setStatus(int status) {
-		this.status = status;
+	public void setUserRoles(List<UserRole> userRoles) {
+		this.userRoles = userRoles;
 	}
 
-	
 }

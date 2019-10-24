@@ -46,13 +46,13 @@ public class AdminController {
 	
 	@GetMapping("doctor")
 	public ModelAndView createFirstView() {
-		ModelAndView mav = new ModelAndView("doctor-view");
+		ModelAndView mav = new ModelAndView("admin/doctor-view");
 		return mav;
 	}
 	
 	@GetMapping("doctor/{id}")
-	public ModelAndView messages(@PathVariable("id") long id) {
-        ModelAndView mav = new ModelAndView("doctor-detail-view");
+	public ModelAndView messages(@PathVariable("id") Long id) {
+        ModelAndView mav = new ModelAndView("admin/doctor-detail-view");
         mav.addObject("employee", employeeRepository.findById(id).get());
         return mav;
     }
@@ -70,7 +70,7 @@ public class AdminController {
 		List<Speciality> specialities =  specialityRepository.findByPositionId(1);
 		List<Position> positions =  positionRepository.findAll();
 
-		ModelAndView mav = new ModelAndView("employee-create");
+		ModelAndView mav = new ModelAndView("admin/employee-create");
 		mav.addObject("employee", employee);
 		mav.addObject("positions", positions);
         mav.addObject("specialities", specialities);
@@ -79,11 +79,11 @@ public class AdminController {
 	}
 	
 	@GetMapping("employee/edit/{id}")
-	public ModelAndView editDoctor(@PathVariable("id") long id) {
+	public ModelAndView editDoctor(@PathVariable("id") Long id) {
 		edited = true;
 		List<Speciality> specialities =  specialityRepository.findAll();
 		List<Position> positions =  positionRepository.findAll();
-		ModelAndView mav = new ModelAndView("employee-create");
+		ModelAndView mav = new ModelAndView("admin/employee-create");
 		mav.addObject("positions", positions);
         mav.addObject("specialities", specialities);
         mav.addObject("employee", employeeRepository.findById(id).get());
@@ -99,7 +99,7 @@ public class AdminController {
     		BindingResult bindingResult) {
 		
         if (bindingResult.hasErrors()) {
-            return "employee-create";
+            return "admin/employee-create";
         } else {
         	employee.setImagePath(file.getOriginalFilename());
 //        	doctor.setPosition(positionRepository.getOne(1));
@@ -144,7 +144,7 @@ public class AdminController {
     		BindingResult bindingResult) {
 		
         if (bindingResult.hasErrors()) {
-            return "employee-create";
+            return "admin/employee-create";
         } else {
         	Employee oldEmployee = employeeRepository.findById(employee.getEmployeeId()).get();
     		employee.setCode(oldEmployee.getCode());
@@ -175,7 +175,7 @@ public class AdminController {
         		}
         	}
         	employeeRepository.save(employee);
-        	return "redirect:/admin/doctor";
+        	return "redirect:admin/admin/doctor";
         }
 
 	}
@@ -192,7 +192,7 @@ public class AdminController {
 	@ResponseBody
 	@GetMapping("api/doctor/maxpage")
 	public int getMaxPage() {
-		long maxRecord = employeeRepository.count();
+		Long maxRecord = employeeRepository.count();
 		int pages = (int) Math.ceil(maxRecord / 8.0);
 		return pages;
 	}
@@ -201,7 +201,7 @@ public class AdminController {
 	@DeleteMapping("api/doctor")
 	public boolean deleteDoctor(@RequestParam String id) {
 		if (id !=null) {
-			long intId = Integer.parseInt(id);
+			Long intId = Long.valueOf(id);
 			Employee employee = employeeRepository.findById(intId).get();
 			if (employee !=null) {
 				employeeRepository.delete(employee);

@@ -6,7 +6,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
 
-
 /**
  * The persistent class for the examination database table.
  * 
@@ -17,8 +16,8 @@ public class Examination implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="ex_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ex_id")
 	private long id;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -29,35 +28,40 @@ public class Examination implements Serializable {
 	private String content;
 	private String result;
 
-	@Column(name="image_path_1")
+	@Column(name = "image_path_1")
 	private String image_path_1;
-	@Column(name="image_path_2")
+	@Column(name = "image_path_2")
 	private String image_path_2;
-	@Column(name="image_path_3")
+	@Column(name = "image_path_3")
 	private String image_path_3;
 
 	private String stage;
 	private int status;
 
-	//bi-directional many-to-one association to Appointment
+	// bi-directional many-to-one association to Appointment
 //	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name="app_id")
+	@JoinColumn(name = "app_id")
 	private Appointment appointment;
 
+	// bi-directional many-to-one association to Appointment
+	//@JsonIgnore
+	@Column(name = "symptom_id")
+	private Long symptomId;
+
 	@ManyToOne
-	@JoinColumn(name="examination_type_id")
+	@JoinColumn(name = "examination_type_id")
 	private ExaminationType examinationType;
 
-	//bi-directional many-to-one association to Examinator
+	// bi-directional many-to-one association to Examinator
 //	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name="examinator_id")
+	@JoinColumn(name = "examinator_id")
 	private Employee examinator;
 
-	//bi-directional many-to-one association to Patient
+	// bi-directional many-to-one association to Patient
 	@ManyToOne
-	@JoinColumn(name="patient_id")
+	@JoinColumn(name = "patient_id")
 	private Patient patient;
 
 	public Examination() {
@@ -105,6 +109,14 @@ public class Examination implements Serializable {
 
 	public String getStage() {
 		return stage;
+	}
+
+	public Long getSymptomId() {
+		return symptomId;
+	}
+
+	public void setSymptomId(Long symptomId) {
+		this.symptomId = symptomId;
 	}
 
 	public void setStage(String stage) {

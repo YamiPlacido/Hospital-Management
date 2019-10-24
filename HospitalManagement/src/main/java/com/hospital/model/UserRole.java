@@ -11,44 +11,47 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="user_role")
-public class User_Role implements Serializable{
+public class UserRole implements Serializable{
 	
 	private static final long serialVersionUID = -1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ur_id", updatable = false, nullable = false)
-	private long ur_id;
+	private long urId;
 	
 	@Column(name = "user_id", nullable = true)
-	private long user_id;
+	private long userId;
 	
 	@Column(name = "role_id", nullable = true)
-	private long role_id;
+	private long roleId;
 
 	public long getUr_id() {
-		return ur_id;
+		return urId;
 	}
 
-	public void setUr_id(long ur_id) {
-		this.ur_id = ur_id;
+	public long getUrId() {
+		return urId;
 	}
 
-	public long getUser_id() {
-		return user_id;
+	public void setUrId(long urId) {
+		this.urId = urId;
 	}
 
-	public void setUser_id(long user_id) {
-		this.user_id = user_id;
+	public long getUserId() {
+		return userId;
 	}
 
-	public long getRole_id() {
-		return role_id;
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 
-	public void setRole_id(long role_id) {
-		this.role_id = role_id;
+	public long getRoleId() {
+		return roleId;
 	}
-	
-	
+
+	public void setRoleId(long roleId) {
+		this.roleId = roleId;
+	}
+
 }

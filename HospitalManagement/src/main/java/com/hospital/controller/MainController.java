@@ -2,6 +2,7 @@ package com.hospital.controller;
 
 import java.security.Principal;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.hospital.repository.UserRepository;
 import com.hospital.utils.WebUtils;
 
 @Controller
@@ -16,55 +18,13 @@ import com.hospital.utils.WebUtils;
 @RequestMapping(value = "/admin")
 public class MainController {
 
+	@Autowired
+	UserRepository userRepository;
 	
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
-    public String index(Model model, Principal principal) {
-		
-		  User loginedUser = (User) ((Authentication) principal).getPrincipal();
-		  
-		  String userInfo = WebUtils.toString(loginedUser);
-		  model.addAttribute("userInfo", userInfo);
-		 
-        model.addAttribute("title", "Index");
-        return "admin_index";
-    }
- 
-    @RequestMapping(value = "/IllnessType", method = RequestMethod.GET)
-    public String illnessType(Model model, Principal principal) {
-         
-		/*
-		 * User loginedUser = (User) ((Authentication) principal).getPrincipal();
-		 * 
-		 * String userInfo = WebUtils.toString(loginedUser);
-		 * model.addAttribute("userInfo", userInfo);
-		 */
-    	//Set title
-        model.addAttribute("title", "Illness Type");
-        return "IllnessType";
-    }
-    
-    @RequestMapping(value = "/illness", method = RequestMethod.GET)
-    public String illness(Model model, Principal principal) {
-        model.addAttribute("title", "Illness");
-        return "illness/illness";
-    }
-    
-    @RequestMapping(value = "/Users", method = RequestMethod.GET)
-    public String users(Model model, Principal principal) {
-        model.addAttribute("title", "Users");
-        return "Users";
-    }
-    
-    @RequestMapping(value = "/UserRole", method = RequestMethod.GET)
-    public String userRole(Model model, Principal principal) {
-        model.addAttribute("title", "User & Role");
-        return "UserRole";
-    }
-    
-    @RequestMapping(value = "/Roles", method = RequestMethod.GET)
-    public String roles(Model model, Principal principal) {
-        model.addAttribute("title", "Roles");
-        return "Roles";
+    public String adminIndex(Model model) {
+    	
+        return "dashboard";
     }
  
     @RequestMapping(value = "/login", method = RequestMethod.GET)

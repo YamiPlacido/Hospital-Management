@@ -127,4 +127,38 @@ public class AppointmentServiceImpl implements AppointmentService {
 		infor.setDateTo(doctorScheduleSearchDto.getDateTo());
 		return infor;
 	}
+	
+	@Override
+	public List<Appointment> ListAllAppointment() {
+		List<Appointment> listApp = (List<Appointment>) appointmentRepository.findAll();
+		return listApp;
+	}
+
+	@Override
+	public Appointment GetAppointmentByID(Long id) {
+		Appointment app = appointmentRepository.findById(id).get();
+		return app;
+	}
+
+	@Override
+	public void SaveData(Appointment app) {
+		appointmentRepository.save(app);
+	}
+
+	@Override
+	public void Delete(Long id ) {
+		appointmentRepository.deleteById(id);
+	}
+
+	@Override
+	public List<Appointment> ListAllAppointmentByDoctorID(Long id) {
+		List<Appointment> listApp = (List<Appointment>) appointmentRepository.GetAllAppByDoctorID(id);
+		return listApp;
+	}
+
+	@Override
+	public Integer GetPatientIDByAppID(Long id) {
+		Integer PatientID = appointmentRepository.GetPatientIDByAppID(id);
+		return PatientID;
+	}
 }

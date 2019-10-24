@@ -22,7 +22,7 @@ public class Role implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "role_id", updatable = false, nullable = false)
-	private long role_id;
+	private long roleId;
 
 	@Column (name = "role_name", nullable = false)
 	private String name;
@@ -31,35 +31,27 @@ public class Role implements Serializable{
 	private String description;
 
 	@Column(name = "created_date", nullable = true)
-	private Date create_Date;
+	private Date createDate;
 	
 	@Column(name = "created_by", nullable = true)
-	private Date create_By;
+	private Date createBy;
 	
 	@Column(name = "modified_date", nullable = true)
-	private Date modified_Date;
+	private Date modifiedDate;
 	
 	@Column(name = "modified_by", nullable = true)
-	private Date modified_By;
+	private Date modifiedBy;
 	
 	@OneToMany
     @JoinColumn(name = "role_id")
-	private List<User_Role> user_roles;
+	private List<UserRole> user_roles;
 
-	public List<User_Role> getUser_roles() {
-		return user_roles;
+	public long getRoleId() {
+		return roleId;
 	}
 
-	public void setUser_roles(List<User_Role> user_roles) {
-		this.user_roles = user_roles;
-	}
-
-	public long getRole_id() {
-		return role_id;
-	}
-
-	public void setRole_id(long role_id) {
-		this.role_id = role_id;
+	public void setRoleId(long roleId) {
+		this.roleId = roleId;
 	}
 
 	public String getName() {
@@ -78,37 +70,44 @@ public class Role implements Serializable{
 		this.description = description;
 	}
 
-	public Date getCreate_Date() {
-		return create_Date;
+	public Date getCreateDate() {
+		return createDate;
 	}
 
-	public void setCreate_Date(Date create_Date) {
-		this.create_Date = create_Date;
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 
-	public Date getCreate_By() {
-		return create_By;
+	public Date getCreateBy() {
+		return createBy;
 	}
 
-	public void setCreate_By(Date create_By) {
-		this.create_By = create_By;
+	public void setCreateBy(Date createBy) {
+		this.createBy = createBy;
 	}
 
-	public Date getModified_Date() {
-		return modified_Date;
+	public Date getModifiedDate() {
+		return modifiedDate;
 	}
 
-	public void setModified_Date(Date modified_Date) {
-		this.modified_Date = modified_Date;
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
 	}
 
-	public Date getModified_By() {
-		return modified_By;
+	public Date getModifiedBy() {
+		return modifiedBy;
 	}
 
-	public void setModified_By(Date modified_By) {
-		this.modified_By = modified_By;
+	public void setModifiedBy(Date modifiedBy) {
+		this.modifiedBy = modifiedBy;
 	}
-	
-	
+
+	public List<UserRole> getUser_roles() {
+		return user_roles;
+	}
+
+	public void setUser_roles(List<UserRole> user_roles) {
+		this.user_roles = user_roles;
+	}
+
 }

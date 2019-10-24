@@ -42,16 +42,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         // The pages does not require login
         .authorizeRequests()
         .antMatchers("/admin/login", "/admin/logout").permitAll()
-        .antMatchers("/admin/**").hasAnyAuthority("USER","RECEPTIONIST")
+ 
         // /userInfo page requires login as ROLE_USER or ROLE_ADMIN.
      // If no login, it will redirect to /login page.
 //        http.authorizeRequests().antMatchers("/admin/userInfo").access("hasAnyRole('USER', 'NONE')");
-        .antMatchers("/admin/userInfo*").hasAnyAuthority("USER")
+        .antMatchers("/admin/**").hasAnyAuthority("ADMIN", "RECEPTIONIST","DOCTOR","EXAMINATOR")
         // For ADMIN only.
 //        http.authorizeRequests().antMatchers("/admin/adminPage").access("hasRole('ADMIN')");
-        .antMatchers("/admin/IllnessType*").hasAuthority("ADMIN")
-        .antMatchers("/admin/patient/*").hasAnyAuthority("RECEPTIONIST")
-        .antMatchers("/admin/appointment/*").hasAuthority("RECEPTIONIST")
+        .antMatchers("/admin/illnesstype/*").hasAuthority("ADMIN")
+        .antMatchers("/admin/illness/*").hasAuthority("RECEPTIONIST")
         // When the user has logged in as XX.
         // But access a page that requires role YY,
         // AccessDeniedException will be thrown.
@@ -72,5 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .deleteCookies("JSESSIONID")
                 .logoutUrl("/admin/logout").logoutSuccessUrl("/admin/login?logout")
                 .clearAuthentication(true).invalidateHttpSession(true);
+                
+ 
     }	
 }

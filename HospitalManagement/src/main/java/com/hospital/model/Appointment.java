@@ -3,17 +3,7 @@ package com.hospital.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -45,14 +35,14 @@ public class Appointment implements Serializable {
 
 	@JoinColumn(name="status") 
 	private boolean status;
-	 
-	@JoinColumn(name="employee_id") 
-	private Long employeeId;
-
-	//bi-directional many-to-one association to Patient
-
-	@JoinColumn(name="patient_id") 
-	private Long patientId;
+//
+//	@JoinColumn(name="employee_id")
+//	private Long employeeId;
+//
+//	//bi-directional many-to-one association to Patient
+//
+//	@JoinColumn(name="patient_id")
+//	private Long patientId;
 	
 	@Temporal(TemporalType.TIMESTAMP) 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -75,7 +65,18 @@ public class Appointment implements Serializable {
 	
 	@Column(name = "stage")
 	private String stage;
-	
+
+	//bi-directional many-to-one association to Doctor
+//	@JsonIgnore
+	@ManyToOne()
+	@JoinColumn(name="employee_id")
+	private Employee employee;
+
+	//bi-directional many-to-one association to Patient
+//	@JsonIgnore
+	@ManyToOne()
+	@JoinColumn(name="patient_id")
+	private Patient patient;
 	
 	public String getStage() {
 		return stage;
@@ -167,21 +168,19 @@ public class Appointment implements Serializable {
 		this.status = status;
 	}
 
-	public Long getEmployeeId() {
-		return employeeId;
+	public Employee getEmployee() {
+		return employee;
 	}
 
-	public void setEmployeeId(Long employeeId) {
-		this.employeeId = employeeId;
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 
-
-	public Long getPatientId() {
-		return patientId;
+	public Patient getPatient() {
+		return patient;
 	}
 
-	public void setPatientId(Long patientId) {
-		this.patientId = patientId;
+	public void setPatient(Patient patient) {
+		this.patient = patient;
 	}
-
 }

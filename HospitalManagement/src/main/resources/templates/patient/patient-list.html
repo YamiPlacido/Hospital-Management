@@ -100,9 +100,9 @@
 												json[i][5] = json[i].email;
 												json[i][6] = json[i].identityCard;
 												json[i][7] = json[i].status == 1 ? 'Active' : 'Inactive';
-												json[i][8] = "<a href='/admin/patient/update/"+json[i].patientID+"' class='btn btn-primary btn-outline'><i class='fa fa-pencil'></i></a>"
+												json[i][8] = "<a href='/admin/patient/update/"+json[i].patientId+"' class='btn btn-primary btn-outline'><i class='fa fa-pencil'></i></a>"
 														+ " "
-														+ "<a href='#' onclick='DisableRecord("+ json[i].patientID+")' class='btn btn-danger btn-outline'><i class='fa fa-trash'></i></a>";
+														+ "<a href='#' onclick='DisableRecord("+ json[i].patientId+")' class='btn btn-danger btn-outline'><i class='fa fa-trash'></i></a>";
 											}
 											return json;
 										}
@@ -115,8 +115,8 @@
 			//Disable
 			var id;
 
-			function DisableRecord(patientID) {
-				id = patientID;
+			function DisableRecord(patientId) {
+				id = patientId;
 				$("#disableConfirm").modal("show");
 			}
 

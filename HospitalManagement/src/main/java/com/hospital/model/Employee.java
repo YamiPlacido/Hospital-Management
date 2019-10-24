@@ -21,7 +21,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Employee implements Serializable {
-	private static final long serialVersionUID = 1L;
+	private static final Long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -30,15 +30,11 @@ public class Employee implements Serializable {
 	
 	@NotNull(message = "First name cannot be null")
 	@Size(min = 2, max = 50, message 
-    = "FirstName must be between 2 and 50 characters")
+    = "Address must be between 2 and 50 characters")
 	private String firstName;
 	
 	@NotEmpty(message = "Last name cannot be null")
 	private String lastName;
-	
-//	@Size(min = 6, max = 50, message
-//		    = "Password must be between 6 and 50 characters")
-//	private String password;
 	
 	@Size(min = 5, max = 100, message 
 		      = "Address must be between 5 and 100 characters")
@@ -65,14 +61,12 @@ public class Employee implements Serializable {
 	private String status;
 	
 	//bi-directional many-to-one association to DoctorPosition
-	@ManyToOne
 	@JoinColumn(name="position_id")
-	private Position position;
+	private Long positionId;
 
 	//bi-directional many-to-one association to Speciality
-	@ManyToOne
 	@JoinColumn(name="speciality_id")
-	private Speciality speciality;
+	private Long specialityId;
 
 	public Long getEmployeeId() {
 		return employeeId;
@@ -138,22 +132,20 @@ public class Employee implements Serializable {
 		this.status = status;
 	}
 
-	
-
-	public Position getPosition() {
-		return position;
+	public Long getPositionId() {
+		return positionId;
 	}
 
-	public void setPosition(Position position) {
-		this.position = position;
+	public void setPositionId(Long positionId) {
+		this.positionId = positionId;
 	}
 
-	public Speciality getSpeciality() {
-		return speciality;
+	public Long getSpecialityId() {
+		return specialityId;
 	}
 
-	public void setSpeciality(Speciality speciality) {
-		this.speciality = speciality;
+	public void setSpecialityId(Long specialityId) {
+		this.specialityId = specialityId;
 	}
 
 	public String getEmail() {

@@ -80,10 +80,10 @@ public class AppointmentController {
 	}
 	
 	
-	@RequestMapping(value = "/appointment/addAppointment/", method = RequestMethod.GET)
+	@RequestMapping(value = "/appointment/addAppointment", method = RequestMethod.GET)
 	public ModelAndView addArticle() {
 		ModelAndView model = new ModelAndView();
-		Appointment appointment = new Appointment(); 
+		AppointmentDto appointment = new AppointmentDto(); 
 		List<Patient> patientList = patientService.getAllPatient();
 		model.addObject("patientList", patientList);
 		List<Employee> employeeList = employeeService.getAllEmployee();

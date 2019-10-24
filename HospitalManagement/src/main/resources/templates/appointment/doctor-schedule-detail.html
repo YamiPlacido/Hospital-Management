@@ -41,24 +41,60 @@
 						<table style="border: 1px solid;">
 							<thead>
 								<tr>
-									<th>Monday</th>
-									<th>Tuesday</th>
-									<th>Wednesday</th>
-									<th>Thursday</th>
-									<th>Friday</th>
-									<th>Saturday</th>
-									<th>Sunday</th>
+									<th style="width: 100px;">Monday</th>
+									<th style="width: 100px;">Tuesday</th>
+									<th style="width: 100px;">Wednesday</th>
+									<th style="width: 100px;">Thursday</th>
+									<th style="width: 100px;">Friday</th>
+									<th style="width: 100px;">Saturday</th>
+									<th style="width: 100px;">Sunday</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:each="app : ${infor.listShift1}" th:remove="tag">
-									<td th:if="${app.dayOfWeek} == 2" >a</td>
-									<td th:if="${app.dayOfWeek} == 3" >b</td>
-									<td th:if="${app.dayOfWeek} == 4" >c</td>
-									<td th:if="${app.dayOfWeek} == 5" >d</td>
-									<td th:if="${app.dayOfWeek} == 6" >e</td>
-									<td th:if="${app.dayOfWeek} == 7" >e</td>
-									<td th:if="${app.dayOfWeek} == 1" >f</td>
+								<tr id="shift1">
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr id="shift2">
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr id="shift3">
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr id="shift4">
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr id="shift5">
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
 								</tr>
 							</tbody>
 						</table>

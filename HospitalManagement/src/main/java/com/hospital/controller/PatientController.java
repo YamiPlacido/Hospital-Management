@@ -69,10 +69,10 @@ public class PatientController {
 		return model;
 	}
 
-	@RequestMapping(value = "/patient/update/{patientID}", method = RequestMethod.GET)
-	public ModelAndView editArticle(@PathVariable long patientID) {
+	@RequestMapping(value = "/patient/update/{patientId}", method = RequestMethod.GET)
+	public ModelAndView editArticle(@PathVariable long patientId) {
 		ModelAndView model = new ModelAndView(); 
-		Patient patient = patientService.getPatientById(patientID);
+		Patient patient = patientService.getPatientById(patientId);
 		model.addObject("patientForm2", patient);
 		model.setViewName("patient/patient-form2");
 

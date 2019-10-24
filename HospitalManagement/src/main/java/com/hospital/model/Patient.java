@@ -18,12 +18,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "patient")
 public class Patient implements Serializable {
 	
-	private static final long serialVersionUID = 3295457969402399219L;
+	private static final long serialVersionUId = 3295457969402399219L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) 
 	@Column(name="patient_id")
-	private Long patientID;
+	private Long patientId;
 	
 	@Column(name = "name")
 	private String name;
@@ -113,12 +113,12 @@ public class Patient implements Serializable {
 		this.identityCard = identityCard;
 	}
 
-	public Long getPatientID() {
-		return patientID;
+	public Long getPatientId() {
+		return patientId;
 	}
 
-	public void setPatientID(Long patientID) {
-		this.patientID = patientID;
+	public void setPatientId(Long patientId) {
+		this.patientId = patientId;
 	}
 
 	public String getName() {

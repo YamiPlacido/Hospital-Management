@@ -16,6 +16,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 
@@ -36,9 +37,10 @@ import fr.opensagres.xdocreport.template.TemplateEngineKind;
 @Repository
 public class AppointmentRepositoryImpl implements AppointmentBookRepository{
 
-//	@Autowired
-//	 AppointmentRepository appointmentRepository;
-	
+	@Autowired
+	EmployeeRepository employeeRepository;
+	@Autowired
+	PatientRepository patientRepository;
 	@PersistenceContext
 	EntityManager entityManager;
 
@@ -81,8 +83,8 @@ public class AppointmentRepositoryImpl implements AppointmentBookRepository{
 					app.setModifiedDate(new Date());
 					app.setModifiedBy("admin");
 				}
-				app.setEmployeeId(appointmentDto.getEmployeeId());
-				app.setPatientId(appointmentDto.getPatientId());
+				app.setEmployee(employeeRepository.findById(appointmentDto.getEmployeeId()).get());
+				app.setPatient(patientRepository.findById(appointmentDto.getPatientId()).get());
 				app.setStatus(appointmentDto.isStatus());
 				app.setShiftId(appointmentDto.getShiftId());
 				app.setDate(appointmentDto.getDate());

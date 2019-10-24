@@ -25,8 +25,8 @@ public class PatientServiceImpl implements PatientService {
 	 }
 
 	 @Override
-	 public Patient getPatientById(long patientID) {
-	  return patientRepository.findById(patientID).get();
+	 public Patient getPatientById(long patientId) {
+	  return patientRepository.findById(patientId).get();
 	 }
 
 	 @Override
@@ -40,8 +40,8 @@ public class PatientServiceImpl implements PatientService {
 	 }
 
 	 @Override
-	 public void disablePatient(long patientID) {
-		 Patient patient = patientRepository.findById(patientID).get();
+	 public void disablePatient(long patientId) {
+		 Patient patient = patientRepository.findById(patientId).get();
 		 patient.setStatus(false);
 		 patientRepository.save(patient);
 	 }

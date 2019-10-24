@@ -19,6 +19,6 @@ public interface DiagnosisService {
 	
 	public List<Diagnosi> ListAllDiagnosisByAppID(Long appID);
 	
-	public List<IllnessSuggestionDTO> ListAllSuggestIllnessByExaminationResult(Integer IllnessID);
+	public List<IllnessSuggestionDTO> ListAllSuggestIllnessByExaminationResult(Long IllnessID);
 
 }

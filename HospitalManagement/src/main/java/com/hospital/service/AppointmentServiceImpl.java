@@ -157,8 +157,8 @@ public class AppointmentServiceImpl implements AppointmentService {
 	}
 
 	@Override
-	public Integer GetPatientIDByAppID(Long id) {
-		Integer PatientID = appointmentRepository.GetPatientIDByAppID(id);
+	public Long GetPatientIDByAppID(Long id) {
+		Long PatientID = appointmentRepository.GetPatientIDByAppID(id);
 		return PatientID;
 	}
 }

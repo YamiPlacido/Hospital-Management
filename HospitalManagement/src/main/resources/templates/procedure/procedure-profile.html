@@ -35,23 +35,25 @@
 										<div class="row">
 											<div class="col-md-5">
 												<div class="profile-info-left">
-													<h3 class="user-name m-t-0 mb-0">Authur Flex</h3>
+													<h3 class="user-name m-t-0 mb-0" id="PatientName">Authur
+														Flex</h3>
 													<div class="staff-id">Age: 47</div>
-													<div class="staff-id">Patient ID : PA-0001</div>
+													<div class="staff-id" id="PatientID">Patient ID :
+														PA-0001</div>
 												</div>
 											</div>
 											<div class="col-md-7">
 												<ul class="personal-info">
 													<li><span class="title">Phone:</span> <span
-														class="text"><a href="#">770-889-6484</a></span></li>
+														class="text"><a href="#" id="Phone">770-889-6484</a></span></li>
 													<li><span class="title">Email:</span> <span
-														class="text"><a href="#">cristinagroves@example.com</a></span>
+														class="text"><a href="#" id="Email">cristinagroves@example.com</a></span>
 													</li>
 													<li><span class="title">Address:</span> <span
-														class="text">714 Burwell Heights Road, Bridge City,
-															TX, 77611</span></li>
+														class="text" id="Address">714 Burwell Heights Road,
+															Bridge City, TX, 77611</span></li>
 													<li><span class="title">Gender:</span> <span
-														class="text">Female</span></li>
+														class="text" id="Gender">Female</span></li>
 												</ul>
 											</div>
 										</div>
@@ -185,19 +187,8 @@
 												href="#" onclick="NewPrescription()"> Create</a></small></span>
 									</h4>
 									<table class="table table-bordered">
-										<tbody>
-											<tr>
-												<td><strong>Phenorbabital, 30mg</strong> <span
-													class="float-right">24 tablet</span></td>
-											</tr>
-											<tr>
-												<td><strong>Aspirin 3.6g</strong> <span
-													class="float-right">12 capsules</span></td>
-											</tr>
-											<tr>
-												<td><strong>Avoid alcohol</strong> <span
-													class="float-right"></span></td>
-											</tr>
+										<tbody id="PresList">
+
 										</tbody>
 									</table>
 								</div>
@@ -357,9 +348,10 @@
 								<div class="col-sm-6">
 									<div class="form-group">
 										<label>Illnesses For Diagnosis</label> <input type="checkbox"
-											value="Bike" id="checkSuggest" onclick="suggestCheckDiag(this)">Illness
-										Suggestion <select th:field="*{illness.illnessId}"
-											class="form-control" id="illsug" disabled>
+											value="Bike" id="checkSuggest"
+											onclick="suggestCheckDiag(this)">Illness Suggestion <select
+											th:field="*{illness.illnessId}" class="form-control"
+											id="illsug" disabled>
 											<option th:each="i:${illsug}" th:value="${i.illnessId}"
 												th:utext=${i.name} />
 										</select>
@@ -424,13 +416,15 @@
 							th:action="@{/admin/treatment/save}" method="post">
 							<input type="hidden" th:field="*{treatmentId}" id="TreatmentId" />
 
-							<input type="hidden" th:field="*{appointment.appId}" id="TreatAppID" />
+							<input type="hidden" th:field="*{appointment.appId}"
+								id="TreatAppID" />
 
 							<div class="row">
 								<div class="col-sm-6">
 									<div class="form-group">
 										<label>Treatments for patient</label> <input type="checkbox"
-											value="Bike" id="checkSuggest" onclick="suggestCheckTreat(this)">Treatment
+											value="Bike" id="checkSuggest"
+											onclick="suggestCheckTreat(this)">Treatment
 										Suggestion <select
 											th:field="*{treatmentMethod.treatmentMethodId}"
 											class="form-control" id="treatsug" disabled>
@@ -452,7 +446,7 @@
 										<select th:field="*{treatmentMethod.treatmentMethodId}"
 											class="form-control" id="treatall">
 											<option th:each="t:${treatall}"
-												th:value="${t.treatmentMethod.treatmentMethodId}" th:utext=${t.treatmentMethod.name} />
+												th:value="${t.treatmentMethodId}" th:utext=${t.name} />
 										</select>
 									</div>
 								</div>
@@ -460,14 +454,14 @@
 							<div class="row">
 								<div class="col-sm-6">
 									<div class="form-group">
-										<label>Treatment Time</label> <input class="form-control" type="date"
-											th:field="*{treatmentTime}" id="TreatmentTime">
+										<label>Treatment Time</label> <input class="form-control"
+											type="date" th:field="*{treatmentTime}" id="TreatmentTime">
 									</div>
 								</div>
 								<div class="col-sm-6">
 									<div class="form-group">
-										<label>Follow up date</label> <input class="form-control" type="date"
-											th:field="*{followupDate}" id="FollowupDate">
+										<label>Follow up date</label> <input class="form-control"
+											type="date" th:field="*{followupDate}" id="FollowupDate">
 									</div>
 								</div>
 							</div>
@@ -484,14 +478,173 @@
 			</div>
 		</div>
 
+		<!-- 		Prescription modal -->
+		<div id="PresModal" class="modal fade">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header" align="center">
+						<h4 class="col-sm-12 modal-title text-center" align="center">
+							<h id="PresModalTitle"></h>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</h4>
+					</div>
 
+					<div class="modal-body">
+						<h3>Prescription</h3>
+						<form th:object="${pres}" th:action="@{/admin/prescription/save}"
+							method="post">
+							<input type="hidden" th:field="*{pmId}" id="PMId" /> <input
+								type="hidden" th:field="*{appointment.appId}" id="PresAppID" />
+
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label>Prescription for patient</label> <input type="checkbox"
+											value="Bike" id="checkSuggest"
+											onclick="suggestCheckPres(this)">Prescription
+										Suggestion <select th:field="*{medicine.medicineId}"
+											class="form-control" id="pressug" disabled>
+											<option th:each="t:${pressug}" th:value="${t.medicineId}"
+												th:utext=${t.name} />
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label>Dosage</label> <input class="form-control" type="text"
+											th:field="*{dosage}" id="Dosage">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group">
+										<select th:field="*{medicine.medicineId}" class="form-control"
+											id="presall">
+											<option th:each="t:${presall}" th:value="${t.medicineId}"
+												th:utext=${t.name} />
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label>Quantity</label> <input class="form-control"
+											type="number" th:field="*{quantity}" id="Quantity">
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label>Price</label> <input class="form-control" type="number"
+											th:field="*{price}" id="Price">
+									</div>
+								</div>
+							</div>
+
+							<div class="m-t-20 text-center">
+								<button class="btn btn-primary submit-btn"
+									id="submit-new-period" onclick="SavePres()">SAVE</button>
+							</div>
+						</form>
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 		@* Delete Confirmation Modal *@ -->
+
+		<div class="modal fade" id="deleteConfirmDiag">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="col-sm-12 modal-title text-center" align="center">
+							Delete Diagnosis Record <a href="#" class="close"
+								data-dismiss="modal">&times;</a>
+						</h4>
+					</div>
+					<div class="modal-body">
+						<h4>Are you sure you want to delete this?</h4>
+					</div>
+					<div class="modal-footer">
+						<a href="#" class="btn btn-primary" data-dismiss="modal">Cancel</a>
+						<a href="#" class="btn btn-danger" onclick="ConfirmDeleteDiag()">Confirm</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="deleteConfirmTreat">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="col-sm-12 modal-title text-center" align="center">
+							Delete Treatment Record <a href="#" class="close"
+								data-dismiss="modal">&times;</a>
+						</h4>
+					</div>
+					<div class="modal-body">
+						<h4>Are you sure you want to delete this?</h4>
+					</div>
+					<div class="modal-footer">
+						<a href="#" class="btn btn-primary" data-dismiss="modal">Cancel</a>
+						<a href="#" class="btn btn-danger" onclick="ConfirmDeleteTreat()">Confirm</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="deleteConfirm">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="col-sm-12 modal-title text-center" align="center">
+							Delete Student Record <a href="#" class="close"
+								data-dismiss="modal">&times;</a>
+						</h4>
+					</div>
+					<div class="modal-body">
+						<h4>Are you sure you want to delete this?</h4>
+					</div>
+					<div class="modal-footer">
+						<a href="#" class="btn btn-primary" data-dismiss="modal">Cancel</a>
+						<a href="#" class="btn btn-danger" onclick="ConfirmDelete()">Confirm</a>
+					</div>
+				</div>
+			</div>
+		</div>
 
 		<script th:inline="javascript">
 		$(document).ready(function() {
+			loadPatientDetail();
 			loadDiagnosis();
 			loadTreatment();
+			loadPres();
 		});
 		
+		function loadPatientDetail(){
+			var appID = [[${appID}]] ;
+			var patientID = [[${patientID}]] ;
+			var url = "/admin/patient/getPatientDetailByID/"+ patientID;
+			alert("hii");
+            $.ajax({
+                type: "GET",
+                url: url,
+                success: function (data) {		                    
+	                $("#PatientName").html(data.name);
+	                $("#PatientID").html(data.patientId);
+	                $("#Phone").html(data.phone);
+	                $("#Email").html(data.email);
+	                $("#DOB").html(data.dob);
+	                $("#Address").html(data.address);
+                }
+            });
+		}
 
 		function loadDiagnosis(){
 			var appID = [[${appID}]] ;
@@ -509,7 +662,7 @@
 					"<span class='float-right'>"+data[i].degree+"</span></td>"+
 					"<td>" + "<a href='#' onclick='ViewIllnessDetail(" + data[i].illness.illnessId + ")' >Detail</a>"+
 					"<a href='#' onclick='EditDiagnosis("+data[i].diagnosisId+")'><i class='fa fa-pencil m-r-5'></i>Edit        </a>"+
-					"<a href='#' onclick='DeleteDiagnosis("+data[i].diagnosisId+")'><i class='fa fa-trash-o m-r-5'></i>Delete</a>"+
+					"<a href='#' onclick='DeleteRecordDiag("+data[i].diagnosisId+")'><i class='fa fa-trash-o m-r-5'></i>Delete</a>"+
 					"</tr>";		                	
 		         	SetData.append(list);
 		            }
@@ -533,8 +686,32 @@
 					"<span class='float-right'>"+data[i].illness.name+"</span></td>"+
 					"<td>" + "<a href='#' onclick='ViewTreatmentDetail(" + data[i].treatmentId + ")' >Detail</a>"+
 					"<a href='#' onclick='EditTreatment("+data[i].treatmentId+")'><i class='fa fa-pencil m-r-5'></i>Edit        </a>"+
-					"<a href='#' onclick='DeleteTreatment("+data[i].treatmentId+")'><i class='fa fa-trash-o m-r-5'></i>Delete</a>"+
+					"<a href='#' onclick='DeleteRecordTreat("+data[i].treatmentId+")'><i class='fa fa-trash-o m-r-5'></i>Delete</a>"+
 					"</tr>";		                	
+		         	SetData.append(list);
+		            }
+		        }
+            });			
+		}
+		
+		function loadPres(){
+			var appID = [[${appID}]] ;
+			var url = "/admin/prescription/getPrescriptionMedicineByAppID/"+ appID;
+		    $.ajax({
+		    	type: "GET",
+		    	url: url,
+		    	success: function (data) {
+		        	var SetData = $("#PresList");
+		        	for (var i = 0; i < data.length; i++) {
+		                		
+		        	var list =                             
+					"<tr>"+
+					"<td><strong>"+ data[i].medicine.name +"</strong>"+ 
+					"<span class='float-right'>"+data[i].quantity+"</span></td>"+
+					"<td>" + "<a href='#' onclick='ViewPresDetail(" + data[i].medicine.medicineId + ")' >Detail</a>"+
+					"<a href='#' onclick='EditPres("+data[i].pmId+")'><i class='fa fa-pencil m-r-5'></i>Edit        </a>"+
+					"<a href='#' onclick='DeleteRecordPres("+data[i].pmId+")'><i class='fa fa-trash-o m-r-5'></i>Delete</a>"+
+					"</tr>";
 		         	SetData.append(list);
 		            }
 		        }
@@ -605,6 +782,14 @@
 	        $("#TreatAppID").val(appID);
 		}
 		
+		function NewPrescription(){
+			var appID = [[${appID}]] ;
+			
+	        $("#PresModalTitle").html("Prescription For Patient");
+	        $("#PresModal").modal();
+	        $("#PresAppID").val(appID);
+		}
+		
 		
 	    function EditDiagnosis(diagnosisID) {
 	        var url = "/admin/diagnosis/getDiagnosisByID/" + diagnosisID;
@@ -641,6 +826,25 @@
 	            }
 	        })
 	    }
+	    
+	    function EditPres(pmID) {
+	        var url = "/admin/prescription/getPrescriptionMedicineByID/" + pmID;
+	        $("#PresModalTitle").html("Edit Prescription");
+	        $("#PresModal").modal();
+	        $.ajax({
+	            type: "GET",
+	            url: url,
+	            success: function (data) {
+	                $("#PMId").val(data.pmId);
+	                $("#PresAppID").val(data.appointment.appId);
+	                $("#pressug").val(data.medicine.medicineId);
+	                $("#presall").val(data.medicine.medicineId);
+	                $("#Dosage").val(data.dosage);
+	                $("#Quantity").val(data.quantity);
+	                $("#Price").val(data.price);
+	            }
+	        })
+	    }
 		
 	    function suggestCheckDiag(checkbox){
 	    		document.getElementById('illall').disabled = checkbox.checked;
@@ -652,7 +856,39 @@
     		document.getElementById('treatsug').disabled = !checkbox.checked;
 	    }
 		
-
+	    function DeleteRecordDiag(ID) {
+	        $("#DiagnosisID").val(ID);
+	        $("#deleteConfirmDiag").modal("show");
+	    }
+	    function ConfirmDeleteDiag() {
+			var appID = [[${appID}]] ;
+	        var DiagID = $("#DiagnosisID").val();
+	        $.ajax({
+	            type: "POST",
+	            url: "/admin/diagnosis/delete?id=" + DiagID,
+	            success: function (result) {
+	                window.location.href = "/admin/procedure/profile/"+appID;
+	                $("#deleteConfirmDiag").modal("hide");
+	            }
+	        })
+	    }
+		
+	    function DeleteRecordTreat(ID) {
+	        $("#TreatmentId").val(ID);
+	        $("#deleteConfirmTreat").modal("show");
+	    }
+	    function ConfirmDeleteTreat() {
+			var appID = [[${appID}]] ;
+	        var TreatID = $("#TreatmentId").val();
+	        $.ajax({
+	            type: "POST",
+	            url: "/admin/treatment/delete?id=" + TreatID,
+	            success: function (result) {
+	                window.location.href = "/admin/procedure/profile/"+appID;
+	                $("#deleteConfirmTreat").modal("hide");
+	            }
+	        })
+	    }
 		</script>
 	</div>
 </body>

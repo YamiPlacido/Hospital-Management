@@ -38,8 +38,8 @@ public class TreatmentServiceImpl implements TreatmentService{
 	}
 
 	@Override
-	public List<Integer> ListAllIllnessID() {
-		List<Integer> listAllIllnessID = repo.ListAllIllnessID();
+	public List<Long> ListAllIllnessID() {
+		List<Long> listAllIllnessID = repo.ListAllIllnessID();
 		return listAllIllnessID;
 	}
 

@@ -23,5 +23,5 @@ public interface DiagnosisRepository extends CrudRepository<Diagnosi, Long> {
 			"WHERE e.symptomId IN (SELECT ex.symptomId FROM Examination ex WHERE ex.patient.patientId = ?1)\r\n" + 
 			"GROUP BY i.name\r\n" + 
 			"ORDER BY Count(i.name) DESC")
-	public List<IllnessSuggestionDTO> ListAllSuggestIllnessByExaminationResult(Integer PatientID);
+	public List<IllnessSuggestionDTO> ListAllSuggestIllnessByExaminationResult(Long PatientID);
 }

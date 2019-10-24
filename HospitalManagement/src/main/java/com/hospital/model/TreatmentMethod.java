@@ -17,6 +17,7 @@ public class TreatmentMethod implements Serializable {
 
 	@Id
 	@Column(name="treatment_method_id")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long treatmentMethodId;
 
 	@Column(name="created_by")

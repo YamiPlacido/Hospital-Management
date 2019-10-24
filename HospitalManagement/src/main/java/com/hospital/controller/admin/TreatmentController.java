@@ -50,7 +50,7 @@ public class TreatmentController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView Create() {
 		ModelAndView mv = new ModelAndView("treatment/treatment-form");
-		List<Integer> illnessID = service.ListAllIllnessID();
+		List<Long> illnessID = service.ListAllIllnessID();
 		Treatment tm = new Treatment();
 		mv.addObject("tmm",tm);
 		mv.addObject("illnessID",illnessID);
@@ -58,9 +58,9 @@ public class TreatmentController {
 	}
 	
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
-	public ModelAndView Update(@PathVariable int id) {
+	public ModelAndView Update(@PathVariable Long id) {
 		ModelAndView mv = new ModelAndView("treatment/treatment-form");
-		List<Integer> illnessID = service.ListAllIllnessID();
+		List<Long> illnessID = service.ListAllIllnessID();
 		Treatment tm = new Treatment();
 		mv.addObject("tm",tm);
 		mv.addObject("illnessID",illnessID);

@@ -50,7 +50,7 @@ public class DiagnosisServiceImpl implements DiagnosisService {
 	}
 
 	@Override
-	public List<IllnessSuggestionDTO> ListAllSuggestIllnessByExaminationResult(Integer PatientID) {
+	public List<IllnessSuggestionDTO> ListAllSuggestIllnessByExaminationResult(Long PatientID) {
 		List<IllnessSuggestionDTO> illsug = DiagRepo.ListAllSuggestIllnessByExaminationResult(PatientID);
 		return illsug;
 	}

@@ -17,15 +17,18 @@ public class TreatmentMethodIllness implements Serializable {
 
 	@Id
 	@Column(name="treatment_method_illness_id")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long treatmentMethodIllnessId;
 
 	@Column(name="created_by")
 	private String createdBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
-
 	@Column(name="created_date")
 	private Date createdDate;
+
+	@Column(name="illness_id")
+	private java.math.BigInteger illnessId;
 
 	@Column(name="modified_by")
 	private String modifiedBy;
@@ -33,11 +36,6 @@ public class TreatmentMethodIllness implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="modified_date")
 	private Date modifiedDate;
-
-	//uni-directional many-to-one association to Illness
-	@ManyToOne
-	@JoinColumn(name="illness_id")
-	private Illness illness;
 
 	//uni-directional many-to-one association to TreatmentMethod
 	@ManyToOne
@@ -71,6 +69,14 @@ public class TreatmentMethodIllness implements Serializable {
 		this.createdDate = createdDate;
 	}
 
+	public java.math.BigInteger getIllnessId() {
+		return this.illnessId;
+	}
+
+	public void setIllnessId(java.math.BigInteger illnessId) {
+		this.illnessId = illnessId;
+	}
+
 	public String getModifiedBy() {
 		return this.modifiedBy;
 	}
@@ -85,14 +91,6 @@ public class TreatmentMethodIllness implements Serializable {
 
 	public void setModifiedDate(Date modifiedDate) {
 		this.modifiedDate = modifiedDate;
-	}
-
-	public Illness getIllness() {
-		return this.illness;
-	}
-
-	public void setIllness(Illness illness) {
-		this.illness = illness;
 	}
 
 	public TreatmentMethod getTreatmentMethod() {

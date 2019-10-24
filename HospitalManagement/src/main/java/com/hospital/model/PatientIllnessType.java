@@ -17,6 +17,7 @@ public class PatientIllnessType implements Serializable {
 
 	@Id
 	@Column(name="patient_illness_type_id")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long patientIllnessTypeId;
 
 	@Column(name="created_by")

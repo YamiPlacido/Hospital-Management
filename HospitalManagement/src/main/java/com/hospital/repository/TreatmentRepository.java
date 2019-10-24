@@ -13,7 +13,7 @@ import com.hospital.model.dto.TreatmentSuggestionDTO;
 public interface TreatmentRepository extends CrudRepository<Treatment, Long> {
 	
 	@Query(value = "SELECT illness_id FROM illness", nativeQuery = true)
-	public List<Integer> ListAllIllnessID();
+	public List<Long> ListAllIllnessID();
 
 	@Query(value = "SELECT * FROM treatment t where t.app_id = ?1", nativeQuery = true)
 	public List<Treatment> ListAllTreatmentByAppID(Long appID);

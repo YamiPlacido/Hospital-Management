@@ -15,7 +15,7 @@ public interface PrescriptionMedicineRepository extends CrudRepository<Prescript
 	public List<Long> ListAllAppID();
 	
 	@Query(value = "SELECT * from prescription_medicine d WHERE d.app_id = ?1", nativeQuery = true)
-	public List<PrescriptionMedicine> ListAllPrescriptionMedicineByAppID(Integer appID);
+	public List<PrescriptionMedicine> ListAllPrescriptionMedicineByAppID(Long appID);
 //	
 //	@Query(value = "SELECT new com.hospital.model.dto.IllnessSuggestionDTO(i.illnessId, i.description, i.name, i.season, i.illnessType.name, Count(i.name))\r\n" + 
 //			"from Examination e\r\n" + 

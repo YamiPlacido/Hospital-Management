@@ -45,13 +45,9 @@ public class PrescriptionMedicineImpl implements PrescriptionMedicineService {
 	}
 
 	@Override
-	public List<PrescriptionMedicine> ListAllPrescriptionMedicineByAppID(Integer appID) {
+	public List<PrescriptionMedicine> ListAllPrescriptionMedicineByAppID(Long appID) {
 		List<PrescriptionMedicine> pm = PresRepo.ListAllPrescriptionMedicineByAppID(appID);
 		return pm;
 	}
-	
-
-
-	
 
 }

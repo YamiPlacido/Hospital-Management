@@ -16,7 +16,7 @@ public interface PrescriptionMedicineService {
 	
 	public List<Long> ListAllAppID();
 	
-	public List<PrescriptionMedicine> ListAllPrescriptionMedicineByAppID(Integer appID);
+	public List<PrescriptionMedicine> ListAllPrescriptionMedicineByAppID(Long appID);
 	
 
 }

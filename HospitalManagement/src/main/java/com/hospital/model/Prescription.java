@@ -17,6 +17,7 @@ public class Prescription implements Serializable {
 
 	@Id
 	@Column(name="app_id")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long appId;
 
 	@Column(name="created_by")

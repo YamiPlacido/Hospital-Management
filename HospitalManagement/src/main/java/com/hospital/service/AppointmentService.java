@@ -43,6 +43,6 @@ public interface AppointmentService {
 	
 	public void Delete(Long id );
 	
-	public Integer GetPatientIDByAppID(Long id );
+	public Long GetPatientIDByAppID(Long id );
 	 
 }

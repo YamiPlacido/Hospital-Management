@@ -16,19 +16,27 @@ public class Treatment implements Serializable {
 
 	@Id
 	@Column(name="treatment_id")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long treatmentId;
+
+	@ManyToOne
+	@JoinColumn(name="app_id")
+	private Appointment appointment;
 
 	@Column(name="created_by")
 	private String createdBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
-
 	@Column(name="created_date")
 	private Date createdDate;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="followup_date")
 	private Date followupDate;
+	
+	@ManyToOne
+	@JoinColumn(name="illness_id")
+	private Illness illness;
 
 	@Column(name="modified_by")
 	private String modifiedBy;
@@ -40,16 +48,6 @@ public class Treatment implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="treatment_time")
 	private Date treatmentTime;
-
-	//uni-directional many-to-one association to Appointment
-	@ManyToOne
-	@JoinColumn(name="app_id")
-	private Appointment appointment;
-
-	//uni-directional many-to-one association to Illness
-	@ManyToOne
-	@JoinColumn(name="illness_id")
-	private Illness illness;
 
 	//uni-directional many-to-one association to TreatmentMethod
 	@ManyToOne
@@ -91,6 +89,22 @@ public class Treatment implements Serializable {
 		this.followupDate = followupDate;
 	}
 
+	public Appointment getAppointment() {
+		return appointment;
+	}
+
+	public void setAppointment(Appointment appointment) {
+		this.appointment = appointment;
+	}
+
+	public Illness getIllness() {
+		return illness;
+	}
+
+	public void setIllness(Illness illness) {
+		this.illness = illness;
+	}
+
 	public String getModifiedBy() {
 		return this.modifiedBy;
 	}
@@ -113,22 +127,6 @@ public class Treatment implements Serializable {
 
 	public void setTreatmentTime(Date treatmentTime) {
 		this.treatmentTime = treatmentTime;
-	}
-
-	public Appointment getAppointment() {
-		return this.appointment;
-	}
-
-	public void setAppointment(Appointment appointment) {
-		this.appointment = appointment;
-	}
-
-	public Illness getIllness() {
-		return this.illness;
-	}
-
-	public void setIllness(Illness illness) {
-		this.illness = illness;
 	}
 
 	public TreatmentMethod getTreatmentMethod() {

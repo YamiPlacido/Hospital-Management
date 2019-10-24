@@ -17,6 +17,7 @@ public class Diagnosi implements Serializable {
 
 	@Id
 	@Column(name="diagnosis_id")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long diagnosisId;
 
 	@Column(name="created_by")

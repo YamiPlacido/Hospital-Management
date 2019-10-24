@@ -57,7 +57,7 @@ public class DiagnosisController {
 	
 	@RequestMapping(value = "/getAllIllnessSuggestionByExaminationResult/{id}", produces = org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Object getAllIllnessSuggestionByExaminationResult(@PathVariable Integer id) {
+	public Object getAllIllnessSuggestionByExaminationResult(@PathVariable Long id) {
 		List<IllnessSuggestionDTO> illsug = service.ListAllSuggestIllnessByExaminationResult(id);
 		return illsug;
 	}

@@ -12,6 +12,6 @@ public interface AppointmentRepository extends CrudRepository<Appointment, Long>
 	public List<Appointment> GetAllAppByDoctorID(Long id);
 	
 	@Query(value = "SELECT a.patient_id FROM appointment a WHERE a.app_id = ?1", nativeQuery = true)
-	public Integer GetPatientIDByAppID (Long id);
+	public Long GetPatientIDByAppID (Long id);
 	
 }

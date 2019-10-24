@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/main}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<div layout:fragment="content"
+		style="margin-top: 10px; margin-bottom: 40px;">
+		<div class="row">
+			<div class="col-lg-8 offset-lg-2">
+				<h4 class="page-title">Doctor schedule</h4>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-8 offset-lg-2">
+				<form class="form-horizontal" th:object="${infor}" method="post"
+					enctype="multipart/form-data">
+					<div class="panel-body">
+						<table id="table-compare" style="align-content: center;">
+							<tr style="height: 28px">
+								<th>Doctor Name:</th>
+								<td th:text="${infor.employee.firstName}"></td>
+							</tr>
+							<tr style="height: 28px">
+								<th>Phone:</th>
+								<td th:text="${infor.employee.phone}"></td>
+							</tr>
+							<tr style="height: 28px">
+								<th>Email:</th>
+								<td th:text="${infor.employee.email}"></td>
+							</tr>
+							<tr style="height: 28px">
+								<th>From:</th>
+								<td th:text="${infor.dateFrom}"></td>
+								<th>To:</th>
+								<td th:text="${infor.dateTo}"></td>
+							</tr>
+						</table>
+						<table style="border: 1px solid;">
+							<thead>
+								<tr>
+									<th style="width: 100px;">Monday</th>
+									<th style="width: 100px;">Tuesday</th>
+									<th style="width: 100px;">Wednesday</th>
+									<th style="width: 100px;">Thursday</th>
+									<th style="width: 100px;">Friday</th>
+									<th style="width: 100px;">Saturday</th>
+									<th style="width: 100px;">Sunday</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr id="shift1">
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr id="shift2">
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr id="shift3">
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr id="shift4">
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr id="shift5">
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+							</tbody>
+						</table>
+						<input type="hidden" th:field="${infor.employee.employeeId}" />
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			
+		</script>
+	</div>
+
+</body>
+</html>
+
+

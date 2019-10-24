@@ -15,7 +15,7 @@ public interface TreatmentService {
 	
 	public void Delete(Long id);
 	
-	public List<Integer> ListAllIllnessID();
+	public List<Long> ListAllIllnessID();
 	
 	public List<Treatment> ListAllTreatmentByAppID(Long appID);
 	

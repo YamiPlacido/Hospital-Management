@@ -13,24 +13,27 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/style.css">
  
 <link rel="stylesheet" type="text/css" href="/assets/css/fullcalendar.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
-<link rel="stylesheet" href="/assets/css/bootstrap.css"> 
+<!-- <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.css">  -->
 <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico">
+<link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap4.min.css">
+<!--	<link rel="stylesheet" href="/assets/css/dist/ui/trumbowyg.css">-->
+<link rel="stylesheet" type="text/css" href="/assets/css/phuong.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/multi-select.css">
 <!--[if lt IE 9]>
 		<script src="/assets/js/html5shiv.min.js"></script>
 		<script src="/assets/js/respond.min.js"></script>
 	<![endif]-->
-		<script src="/assets/js/jquery-3.2.1.min.js"></script>
+	<script src="/assets/js/jquery-3.2.1.min.js"></script>
 	<script src="/assets/js/popper.min.js"></script>
 	<script src="/assets/js/bootstrap.min.js"></script>
 	<script src="/assets/js/jquery.slimscroll.js"></script>
 	<script src="/assets/js/Chart.bundle.js"></script>
 	<script src="/assets/js/select2.min.js"></script>
 	<script src="/assets/js/moment.min.js"></script>
-	<script src="/assets/js/jquery-ui.min.html"></script>
+<!-- 	<script src="/assets/js/jquery-ui.min.html"></script> -->
 	<script src="/assets/js/fullcalendar.min.js"></script>
 	<script src="/assets/js/jquery.fullcalendar.js"></script>
 	<script src="/assets/js/bootstrap-datetimepicker.min.js"></script>
@@ -38,7 +41,11 @@
 	<script src="/assets/js/jquery.dataTables.min.js"></script>
 	<script src="/assets/js/dataTables.bootstrap4.min.js"></script>
 	<script src="/assets/js/patient.js"></script>
-	<script src="/assets/js/appointment.js"></script>
+<!-- 	<script src="/assets/js/jquery.quicksearch.js"></script> -->
+<!-- 	<script src="/assets/js/jquery.multi-select.js"></script> -->
+<!-- 	<script src="/assets/js/atmosphere.js"></script> -->
+<!-- 	<script src="/assets/js/phuong.js"></script> -->
+	
 	<!--[if lt IE 9]--> 
 
 	<!-- calendar -->
@@ -183,69 +190,31 @@
 			<div class="sidebar-inner slimscroll">
 				<div id="sidebar-menu" class="sidebar-menu">
 					<ul>
-						<li class="menu-title">Main</li>
-						<li class="active"><a href="index-2.html"><i
-								class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-						<li><a href="doctors.html"><i class="fa fa-user-md"></i>
-								<span>Doctors</span></a></li>
-						<li><a href="patients.html"><i class="fa fa-wheelchair"></i>
-								<span>Patients</span></a></li>
-						<li><a href="appointments.html"><i class="fa fa-calendar"></i>
-								<span>Appointments</span></a></li>
-						<li><a href="schedule.html"><i
-								class="fa fa-calendar-check-o"></i> <span>Doctor Schedule</span></a>
+						<!-- #_MENU -->
+						<li th:if="${#authorization.expression('hasAnyAuthority(''RECEPTIONIST'')')}" class="active">
+							<a th:href="${'/admin/index'}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
 						</li>
-						<li><a href="departments.html"><i
-								class="fa fa-hospital-o"></i> <span>Departments</span></a></li>
 						<li class="submenu"><a href="#"><i class="fa fa-user"></i>
-								<span> Employees </span> <span class="menu-arrow"></span></a>
+								<span> Patient </span> <span class="menu-arrow"></span></a>
 							<ul style="display: none;">
-								<li><a href="employees.html">Employees List</a></li>
-								<li><a href="leaves.html">Leaves</a></li>
-								<li><a href="holidays.html">Holidays</a></li>
-								<li><a href="attendance.html">Attendance</a></li>
-							</ul></li>
-						<li class="submenu"><a href="#"><i class="fa fa-money"></i>
-								<span> Accounts </span> <span class="menu-arrow"></span></a>
-							<ul style="display: none;">
-								<li><a href="invoices.html">Invoices</a></li>
-								<li><a href="payments.html">Payments</a></li>
-								<li><a href="expenses.html">Expenses</a></li>
-								<li><a href="taxes.html">Taxes</a></li>
-								<li><a href="provident-fund.html">Provident Fund</a></li>
-							</ul></li>
-						<li class="submenu"><a href="#"><i class="fa fa-book"></i>
-								<span> Payroll </span> <span class="menu-arrow"></span></a>
-							<ul style="display: none;">
-								<li><a href="salary.html"> Employee Salary </a></li>
-								<li><a href="salary-view.html"> Payslip </a></li>
-							</ul></li>
-						<li><a href="chat.html"><i class="fa fa-comments"></i> <span>Chat</span>
-								<span class="badge badge-pill bg-primary float-right">5</span></a></li>
-						<li class="submenu"><a href="#"><i
-								class="fa fa-video-camera camera"></i> <span> Calls</span> <span
-								class="menu-arrow"></span></a>
-							<ul style="display: none;">
-								<li><a href="voice-call.html">Voice Call</a></li>
-								<li><a href="video-call.html">Video Call</a></li>
-								<li><a href="incoming-call.html">Incoming Call</a></li>
+								<li><a th:href="${'/admin/patient/patient/'}">Patient List</a></li>
+								<li><a th:href="${'/admin/patient/addPatient/'}">Add New Patient</a></li>
 							</ul></li>
 						<li class="submenu"><a href="#"><i class="fa fa-envelope"></i>
-								<span> Email</span> <span class="menu-arrow"></span></a>
+								<span> Appointment </span> <span class="menu-arrow"></span></a>
 							<ul style="display: none;">
-								<li><a href="compose.html">Compose Mail</a></li>
-								<li><a href="inbox.html">Inbox</a></li>
-								<li><a href="mail-view.html">Mail View</a></li>
+								<li><a th:href="${'/admin/appointment/appointment/'}">Appointment List</a></li>
+								<li><a th:href="${'/admin/appointment/addAppointment/'}">Add New Appointment</a></li>
+								<li><a th:href="${'/admin/appointment/doctorSchedule/'}">Doctor Schedule</a></li>
 							</ul></li>
-						<li class="submenu"><a href="#"><i
-								class="fa fa-commenting-o"></i> <span> Blog</span> <span
-								class="menu-arrow"></span></a>
+						<li class="submenu"><a href="#"><i class="fa fa-user"></i>
+								<span> Employee </span> <span class="menu-arrow"></span></a>
 							<ul style="display: none;">
-								<li><a href="blog.html">Blog</a></li>
-								<li><a href="blog-details.html">Blog View</a></li>
-								<li><a href="add-blog.html">Add Blog</a></li>
-								<li><a href="edit-blog.html">Edit Blog</a></li>
-							</ul></li>
+								<li><a th:href="${'/admin/doctor/'}">Admin</a></li>
+								<li><a th:href="${'/admin/doctor/appointments/'}">Doctor</a></li>
+								<li><a th:href="${'/admin/examinator/examinations/'}">Examinator</a></li>
+							</ul>
+						</li>
 						<li><a href="assets.html"><i class="fa fa-cube"></i> <span>Assets</span></a>
 						</li>
 						<li><a href="activities.html"><i class="fa fa-bell-o"></i>

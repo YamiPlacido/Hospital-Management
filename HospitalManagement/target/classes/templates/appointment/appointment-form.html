@@ -25,7 +25,7 @@
 									<label>Patient Name</label> <select class="form-control"
 										th:field="*{patientId}" id="SelectedPatient">
 										<option th:value="0" th:text="Select"></option>
-										<option th:each="p : ${patientList}" th:value="${p.patientID}"
+										<option th:each="p : ${patientList}" th:value="${p.patientId}"
 											th:text="${p.name}"></option>
 									</select>
 								</div>
@@ -110,7 +110,7 @@
 				</form>
 			</div>
 		</div>
-		
+		<script src="/assets/js/appointment.js"></script>
 		<script type="text/javascript">
 		
 	</script>

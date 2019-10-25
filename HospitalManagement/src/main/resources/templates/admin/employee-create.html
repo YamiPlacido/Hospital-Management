@@ -61,10 +61,29 @@
 											</div>
 										</div>
 									</div>
+<!--									<div class="col-sm-6">-->
+<!--										<div class="form-group">-->
+<!--											<label>Position</label>-->
+<!--											<select class="form-control" th:field="*{position}">-->
+<!--												<option th:each="type : ${positions}"-->
+<!--														th:value="${type.positionId}" th:text="${type.name}">Wireframe</option>-->
+<!--											</select>-->
+<!--										</div>-->
+<!--									</div>-->
+<!--									<div class="col-sm-6">-->
+<!--										<div class="form-group">-->
+<!--											<label>Speciality</label> <select class="form-control"-->
+<!--																			  th:field="*{speciality}">-->
+<!--											<option th:each="type : ${specialities}"-->
+<!--													th:value="${type.specialityId}" th:text="${type.name}">Wireframe</option>-->
+<!--										</select>-->
+
+<!--										</div>-->
+<!--									</div>-->
 									<div class="col-sm-6">
 										<div class="form-group">
 											<label>Position</label>
-											<select class="form-control" th:field="*{position}">
+											<select class="form-control" th:field="*{positionId}">
 												<option th:each="type : ${positions}"
 														th:value="${type.positionId}" th:text="${type.name}">Wireframe</option>
 											</select>
@@ -73,7 +92,7 @@
 									<div class="col-sm-6">
 										<div class="form-group">
 											<label>Speciality</label> <select class="form-control"
-																			  th:field="*{speciality}">
+																			  th:field="*{specialityId}">
 											<option th:each="type : ${specialities}"
 													th:value="${type.specialityId}" th:text="${type.name}">Wireframe</option>
 										</select>
@@ -198,7 +217,10 @@
 				</div>
 			</div>
 		</div>
-
+		<script src="/assets/js/jquery.quicksearch.js"></script>
+		<script src="/assets/js/jquery.multi-select.js"></script>
+		<script src="/assets/js/atmosphere.js"></script>
+		<script src="/assets/js/phuong.js"></script>
 	</div>
 
 

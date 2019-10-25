@@ -3,15 +3,7 @@ package com.hospital.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -67,6 +59,12 @@ public class Employee implements Serializable {
 	//bi-directional many-to-one association to Speciality
 	@JoinColumn(name="speciality_id")
 	private Long specialityId;
+
+	@Transient
+	private Speciality speciality;
+
+	@Transient
+	private Position position;
 
 	public Long getEmployeeId() {
 		return employeeId;
@@ -179,5 +177,20 @@ public class Employee implements Serializable {
 	public void setGender(Character gender) {
 		this.gender = gender;
 	}
-	
+
+	public Speciality getSpeciality() {
+		return speciality;
+	}
+
+	public void setSpeciality(Speciality speciality) {
+		this.speciality = speciality;
+	}
+
+	public Position getPosition() {
+		return position;
+	}
+
+	public void setPosition(Position position) {
+		this.position = position;
+	}
 }

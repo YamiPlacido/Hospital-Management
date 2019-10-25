@@ -11,7 +11,7 @@ public class Speciality implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="speciality_id")
-	private int specialityId;
+	private Long specialityId;
 
 	private String name;
 
@@ -23,11 +23,11 @@ public class Speciality implements Serializable {
 //	@OneToMany
 //	private ExaminationType examinationType;
 
-	public int getSpecialityId() {
+	public Long getSpecialityId() {
 		return specialityId;
 	}
 
-	public void setSpecialityId(int specialityId) {
+	public void setSpecialityId(Long specialityId) {
 		this.specialityId = specialityId;
 	}
 

@@ -5,31 +5,6 @@ $(document).ready(function () {
     loadAppointments(currentDoctor);
     loadExaminations(currentExaminator);
     callCKEditor();
-    //ko chuyen tab neu chua co appointment
-    $("#examination-perform").click(
-        function (event) {
-            event.preventDefault();
-            if (currentExamination==null){
-                alert("Please select one exam to perform.");
-                return false;
-            } else {
-                this.click();
-                return true;
-            }
-        }
-    );
-    $("#appointment-perform").click(
-        function (event) {
-            event.preventDefault();
-            if (currentAppointment==null){
-                alert("Please select an appointment to perform.");
-                return false;
-            } else {
-                this.click();
-                return true;
-            }
-        }
-    );
 });
 
 var currentPage = 1;
@@ -48,6 +23,30 @@ var examinationValueSelected = [];
 var finishedExamList  = [];
 var currentSender;
 
+$("#examination-perform").click(
+    function (event) {
+        event.preventDefault();
+        if (currentExamination==null){
+            alert("Please select one exam to perform.");
+            return false;
+        } else {
+            this.click();
+            return true;
+        }
+    }
+);
+$("#appointment-perform").click(
+    function (event) {
+        event.preventDefault();
+        if (currentAppointment==null){
+            alert("Please select an appointment to perform.");
+            return false;
+        } else {
+            this.click();
+            return true;
+        }
+    }
+);
 
 $("#load-more").click(function () {
     $.ajax({
@@ -61,19 +60,19 @@ $("#load-more").click(function () {
                 insert_content = '<div class="col-md-4 col-sm-4 col-lg-3">';
                 insert_content += '<div class="profile-widget">';
                 insert_content += '<div class="doctor-img">';
-                insert_content += '<a class="avatar" href="doctor/' + val.employeeId
+                insert_content += '<a class="avatar" href="/admin/doctor/' + val.employeeId
                     + '"><img alt="" src="/upload/employee/'
                     + val.imagePath
                     + '"></a>';
                 insert_content += '</div>';
                 insert_content += '<div class="dropdown profile-action">';
-                insert_content += '<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>';
-                insert_content += '<div class="dropdown-menu dropdown-menu-right">';
-                insert_content += '<a class="dropdown-item" href="/doctor/edit/' + val.employeeId + '"><i class="fa fa-pencil m-r-5"></i> Edit</a>';
-                insert_content += '<a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_doctor"><i class="fa fa-trash-o m-r-5"></i> Delete</a>';
+                // insert_content += '<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>';
+                // insert_content += '<div class="dropdown-menu dropdown-menu-right">';
+                // insert_content += '<a class="dropdown-item" href="/doctor/edit/' + val.employeeId + '"><i class="fa fa-pencil m-r-5"></i> Edit</a>';
+                // insert_content += '<a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_doctor"><i class="fa fa-trash-o m-r-5"></i> Delete</a>';
+                // insert_content += '</div>';
                 insert_content += '</div>';
-                insert_content += '</div>';
-                insert_content += '<h4 class="doctor-name text-ellipsis"><a href="profile.html">'
+                insert_content += '<h4 class="doctor-name text-ellipsis"><a href="#">'
                     + val.firstName + ' ' + val.lastName
                     + '</a></h4>';
                 insert_content += '<div class="doc-prof">'

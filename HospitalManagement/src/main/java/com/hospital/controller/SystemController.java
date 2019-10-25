@@ -42,7 +42,7 @@ public class SystemController {
 
     }
     @RequestMapping(value = "/speciality", method = RequestMethod.GET)
-    public List<Speciality> getSpecialityByPositionId(@RequestParam int position_id) {
+    public List<Speciality> getSpecialityByPositionId(@RequestParam Long position_id) {
         List<Speciality> result = specialityRepository.findByPositionId(position_id);
         return result;
     }

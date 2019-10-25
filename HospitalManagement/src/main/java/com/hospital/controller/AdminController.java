@@ -51,9 +51,16 @@ public class AdminController {
 	}
 	
 	@GetMapping("doctor/{id}")
-	public ModelAndView messages(@PathVariable("id") Long id) {
+	public ModelAndView viewDetail(@PathVariable("id") Long id) {
         ModelAndView mav = new ModelAndView("admin/doctor-detail-view");
-        mav.addObject("employee", employeeRepository.findById(id).get());
+        Employee employee = employeeRepository.findById(id).get();
+        Long specialityId = employee.getSpecialityId();
+        Long positionId = employee.getPositionId();
+        Speciality speciality = specialityRepository.findById(specialityId).get();
+        Position position = positionRepository.findById(positionId).get();
+		employee.setSpeciality(speciality);
+		employee.setPosition(position);
+        mav.addObject("employee",employee);
         return mav;
     }
 	
@@ -66,8 +73,15 @@ public class AdminController {
 		Date dateBefore18Years = cal.getTime();
 		employee.setDob(dateBefore18Years);
 		employee.setStatus("1");
+		//bo sung do thieu mapping
+//		Long specialityId = employee.getSpecialityId();
+//		Long positionId = employee.getPositionId();
+//		Speciality speciality = specialityRepository.findById(specialityId).get();
+//		Position position = positionRepository.findById(positionId).get();
+//		employee.setSpeciality(speciality);
+//		employee.setPosition(position);
 		
-		List<Speciality> specialities =  specialityRepository.findByPositionId(1);
+		List<Speciality> specialities =  specialityRepository.findByPositionId((long) 1);
 		List<Position> positions =  positionRepository.findAll();
 
 		ModelAndView mav = new ModelAndView("admin/employee-create");
@@ -186,6 +200,11 @@ public class AdminController {
 		int current = Integer.parseInt(current_page);
 		Page<Employee> pages = employeeRepository.findAll(PageRequest.of(current-1, 8));
 		List<Employee> list = pages.getContent();
+		for (int i = 0; i < list.size(); i++) {
+			Long specialityId = list.get(i).getSpecialityId();
+			Speciality speciality  = specialityRepository.findById(specialityId).get();
+			list.get(i).setSpeciality(speciality);
+		}
 		return list;
 	}
 

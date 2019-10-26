@@ -46,7 +46,7 @@ public class DoctorController {
 
 	@ResponseBody
 	@GetMapping(value = "/api/appointments/{doctor_id}")
-	public List<Appointment> viewAllTodayAppointmentAPI(@PathVariable("doctor_id") int id){
+	public List<Appointment> viewAllTodayAppointmentAPI(@PathVariable("doctor_id") Long id){
 		todayAppointment = employeeRepository.findAppointmentByDoctorId(id);
 		return todayAppointment;
 //		Patient patient = new Patient();
@@ -73,7 +73,7 @@ public class DoctorController {
 	@ResponseBody
 	@PostMapping("/api/symptom")
 	public String editAppointmentSymptoms(
-			@RequestParam("appId") int appId,
+			@RequestParam("appId") Long appId,
 			@RequestParam(value="selectedValue[]",required = false) String[] selectedValue) {
 		List<AppointmentSymptom> list = new ArrayList<>();
 		AppointmentSymptom entity;
@@ -91,7 +91,7 @@ public class DoctorController {
 			for (int i = 0; i < selectedValue.length; i++) {
 				entity = new AppointmentSymptom();
 				entity.setAppointmentId(appId);
-				entity.setSymptomId(Integer.parseInt(selectedValue[i]));
+				entity.setSymptomId(Long.valueOf(selectedValue[i]));
 				appointmentSymptomRepository.save(entity);
 			}
 			return "redirect:/doctor/appointment/"+appId;
@@ -216,7 +216,7 @@ public class DoctorController {
 		return examinationDTOS;
 	}
 
-	public void editAppointmentSymptom(int id){
+	public void editAppointmentSymptom(Long id){
 		todayAppointment = employeeRepository.findAppointmentByDoctorId(id);
 	}
 

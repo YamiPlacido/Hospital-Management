@@ -18,7 +18,7 @@
 		<div class="row">
 			<div class="col-lg-8 offset-lg-2">
 				<form class="form-horizontal" th:object="${medicineForm}"
-					th:action="@{/admin/medicine/saveMedicine}" method="post"
+					th:action="@{/admin/medicine/saveMedicine}" method="post" id="form"
 					enctype="multipart/form-data">
 					<div class="panel-body">
 						<div class="row">
@@ -27,45 +27,46 @@
 								<div class="form-group">
 									<label>Medicine name:</label> <input type="text"
 										class="form-control required"
-										data-msg-required="This field is required."
+										data-msg-required="Medicine name is required."
 										aria-required="true" th:field="*{name}" />
 								</div>
 							</div>
 							<div class="col-sm-6">
-								<div class="form-group" >
+								<div class="form-group">
 									<label>Stock date:</label> <input type="date"
 										class="form-control required"
-										data-msg-required="This field is required."
+										data-msg-required="Stock date is required."
 										aria-required="true" th:field="*{stockDate}" />
 								</div>
 							</div>
 						</div>
 						<div class="row">
-						<div class="col-sm-6">
+							<div class="col-sm-6">
 								<div class="form-group">
-									<label>Price:</label> <input type="text"
+									<label>Price:</label> <input type="number"
 										class="form-control required"
-										data-msg-required="This field is required."
-										aria-required="true" th:field="*{price}" />
+										data-msg-required="Price is required." aria-required="true"
+										th:field="*{price}" />
 
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label>Quantity:</label> <input type="text"
+									<label>Quantity:</label> <input type="number"
 										class="form-control required"
-										data-msg-required="This field is required."
-										aria-required="true" th:field="*{quantity}" />
+										data-msg-required="Quantity is required." aria-required="true"
+										th:field="*{quantity}" />
 
 								</div>
 							</div>
-							</div>
+						</div>
 						<div class="row">
 							<div class="col-sm-6">
 								<div class="form-group">
 									<label>Function:</label>
 									<textarea rows="5" th:field="*{function}"
-										class="form-control"></textarea>
+										class="form-control required"
+										data-msg-required="Function is required." aria-required="true"></textarea>
 								</div>
 							</div>
 						</div>
@@ -89,6 +90,27 @@
 				</form>
 			</div>
 		</div>
+		<script src="/assets/js/jquery.validate.min.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$("#form").validate({
+					rules : {
+						price : {
+						      required: true,
+						      min: 1
+						    },
+						quantity : {
+						      required: true,
+						      min: 1
+						    }
+					},
+					messages : {
+						price : "Price must be greater than 0",
+						quantity : "Quantity must be greater than 0"
+					}
+				});
+			});
+		</script>
 	</div>
 
 </body>

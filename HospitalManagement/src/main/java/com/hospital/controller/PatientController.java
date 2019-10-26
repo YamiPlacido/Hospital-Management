@@ -84,21 +84,17 @@ public class PatientController {
 	@RequestMapping(value = "/patient/savePatient", method = RequestMethod.POST)
 	public ModelAndView save(@ModelAttribute("patientForm") Patient patient,
 			@RequestParam("imageUrl") MultipartFile file, RedirectAttributes redirectAttributes) {
-		try {
-			// Get the file and save it somewhere
-			byte[] bytes = file.getBytes();
-			Path path = Paths.get(
-					"E:\\Hospital-Trang\\Hospital-Trang\\img\\"
-							+ file.getOriginalFilename());
-			Files.write(path, bytes);
-
-			redirectAttributes.addFlashAttribute("message",
-					"You successfully uploaded '" + file.getOriginalFilename() + "'");
-			patient.setImageUrl(path.toString());
-			patientService.save(patient);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		// Get the file and save it somewhere
+//			byte[] bytes = file.getBytes();
+//			Path path = Paths.get(
+//					"E:\\Hospital-Trang\\Hospital-Trang\\img\\"
+//							+ file.getOriginalFilename());
+//			Files.write(path, bytes);
+//
+//			redirectAttributes.addFlashAttribute("message",
+//					"You successfully uploaded '" + file.getOriginalFilename() + "'");
+//			patient.setImageUrl(path.toString());
+		patientService.save(patient);
 		
 		ModelAndView model1 = new ModelAndView();
 		model1.setViewName("patient/patient-list");

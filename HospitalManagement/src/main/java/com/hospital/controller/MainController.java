@@ -2,6 +2,8 @@ package com.hospital.controller;
 
 import java.security.Principal;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
@@ -10,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.hospital.model.Users;
 import com.hospital.repository.UserRepository;
 import com.hospital.utils.WebUtils;
 
@@ -22,10 +25,15 @@ public class MainController {
 	UserRepository userRepository;
 	
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
-    public String adminIndex(Model model) {
-    	
-        return "dashboard";
-    }
+	public String adminIndex(Model model, HttpSession session, Principal principal) {
+		Users userid = userRepository.findUserid(principal.getName()).get(0);
+		// Set userid to session
+		session.setAttribute("usersessionid", userid.getUserId());
+		session.setAttribute("usersessionname", userid.getFirstName());
+		// Test print user ID
+		System.out.println("userid :" + userid.getUserId());
+		return "dashboard";
+	}
  
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String adminLogin(Model model) {

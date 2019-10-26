@@ -1,4 +1,5 @@
 package com.hospital.repository;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
@@ -16,7 +17,7 @@ public interface AppointmentBookRepository{
 
 	public List<Shift> getListShiftAvailabelByDoctorId(AppointmentDto appointmentDto);
 	
-	public int checkAppBeforeAdd(Long employee_id, Long shift_id, Date from, Date to);
+	public int checkAppBeforeAdd(AppointmentDto appointment);
 	
 	public Appointment saveApp(AppointmentDto appointmentDto);
 	
@@ -25,4 +26,6 @@ public interface AppointmentBookRepository{
 	public void exportAppSlip(Long appId)throws IOException,XDocReportException;
 
 	public List<DoctorScheduleDetailDto> getDoctorSchedule(DoctorScheduleSearchDto doctorScheduleSearchDto); 
+	
+	public void exportSchedule(DoctorScheduleInforDto infor) throws IOException, XDocReportException;
 }

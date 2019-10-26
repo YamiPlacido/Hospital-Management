@@ -17,7 +17,7 @@ public class EmployeeRepositoryCustomImpl implements EmployeeRepositoryCustom {
     EntityManager entityManager;
 
     @Override
-    public List<Examination> findExaminationsByExaminatorId(int employee_id) {
+    public List<Examination> findExaminationsByExaminatorId(Long employee_id) {
         Calendar cal = getTodayDate();
         Date realDay = cal.getTime();
         cal.add(Calendar.DATE, +1);
@@ -38,7 +38,7 @@ public class EmployeeRepositoryCustomImpl implements EmployeeRepositoryCustom {
     }
 
     @Override
-    public List<Examination> findUnfinishedExaminationsByExaminatorId(int employee_id) {
+    public List<Examination> findUnfinishedExaminationsByExaminatorId(Long employee_id) {
         Calendar cal = getTodayDate();
         Date realDay = cal.getTime();
         cal.add(Calendar.DATE, +1);
@@ -60,7 +60,7 @@ public class EmployeeRepositoryCustomImpl implements EmployeeRepositoryCustom {
     }
 
     @Override
-    public List<Appointment> findAppointmentByDoctorId(int employee_id) {
+    public List<Appointment> findAppointmentByDoctorId(Long employee_id) {
         Calendar cal = getTodayDate();
 
         Date realDay = cal.getTime();

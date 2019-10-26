@@ -11,35 +11,35 @@ public class AppointmentSymptom implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name="id")
-    private long id;
+    private Long id;
 
     @Column(name="app_id")
-    private long appointmentId;
+    private Long appointmentId;
 
     @Column(name="symptom_id")
-    private long symptomId;
+    private Long symptomId;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public long getAppointmentId() {
+    public Long getAppointmentId() {
         return appointmentId;
     }
 
-    public void setAppointmentId(int appointmentId) {
+    public void setAppointmentId(Long appointmentId) {
         this.appointmentId = appointmentId;
     }
 
-    public long getSymptomId() {
+    public Long getSymptomId() {
         return symptomId;
     }
 
-    public void setSymptomId(int symptomId) {
+    public void setSymptomId(Long symptomId) {
         this.symptomId = symptomId;
     }
 }

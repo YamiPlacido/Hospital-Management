@@ -37,13 +37,13 @@ public class ExaminatorController {
 
     @ResponseBody
     @GetMapping(value = "/api/examinations/{examinator_id}")
-    public List<Examination> viewAllTodayAppointmentAPI(@PathVariable("examinator_id") int id) {
+    public List<Examination> viewAllTodayAppointmentAPI(@PathVariable("examinator_id") Long id) {
         return employeeRepository.findUnfinishedExaminationsByExaminatorId(id);
     }
 
     @ResponseBody
     @GetMapping(value = "/api/examination/{examination_id}")
-    public Examination viewExaminationById(@PathVariable("examination_id") long id) {
+    public Examination viewExaminationById(@PathVariable("examination_id") Long id) {
         return examinationRepository.findById(id).get();
     }
 

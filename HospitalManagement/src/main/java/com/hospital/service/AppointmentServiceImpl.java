@@ -1,9 +1,13 @@
 package com.hospital.service;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+
+import javax.print.Doc;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,7 +64,8 @@ public class AppointmentServiceImpl implements AppointmentService {
 
 	@Override
 	public void saveApp(AppointmentDto appointment) {
-		appointmentRepository.save(appointmentRepository.saveApp(appointment));
+		Appointment app = appointmentRepository.saveApp(appointment);
+		appointmentRepository.save(app);
 	}
 
 	public List<AppointmentDto> getListAppointment() {
@@ -73,7 +78,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 	}
 
 	@Override
-	public void exportSlip(long appId) {
+	public void exportSlip(Long appId) {
 		try {
 			appointmentRepository.exportAppSlip(appId);
 		} catch (IOException | XDocReportException e) {
@@ -82,10 +87,56 @@ public class AppointmentServiceImpl implements AppointmentService {
 	}
 
 	@Override
-	public void disableAppointment(long appointmentId) {
+	public void disableAppointment(Long appointmentId) {
 		Appointment app = appointmentRepository.findById(appointmentId).get();
 		app.setStatus(false);
 		appointmentRepository.save(app);
+	}
+
+	@Override
+	public void exportSchedule(Long employeeId, Date dateFrom) throws IOException, XDocReportException {
+		DoctorScheduleInforDto infor = new DoctorScheduleInforDto();
+		Employee emp = employeeRepository.findById(employeeId).get();
+		infor.setEmployee(emp);
+		DoctorScheduleSearchDto doctorScheduleSearchDto = new DoctorScheduleSearchDto();
+		doctorScheduleSearchDto.setEmployeeId(employeeId);
+		doctorScheduleSearchDto.setDateFrom(dateFrom);
+		doctorScheduleSearchDto.setDateTo(addDays(dateFrom, 6));
+		List<DoctorScheduleDetailDto> listDetail = new ArrayList();
+		List<DoctorScheduleDetailDto> listShift1 = new ArrayList();
+		List<DoctorScheduleDetailDto> listShift2 = new ArrayList();
+		List<DoctorScheduleDetailDto> listShift3 = new ArrayList();
+		List<DoctorScheduleDetailDto> listShift4 = new ArrayList();
+		List<DoctorScheduleDetailDto> listShift5 = new ArrayList();
+		listDetail = appointmentRepository.getDoctorSchedule(doctorScheduleSearchDto);
+		for (DoctorScheduleDetailDto d : listDetail) {
+			Calendar c = Calendar.getInstance();
+			c.setTime(d.getDate());
+			Integer dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+			d.setDateOfWeek(dayOfWeek);
+			if (d.getShiftId() == 1) {
+				listShift1.add(d);
+			} else if (d.getShiftId() == 2) {
+				listShift2.add(d);
+			} else if (d.getShiftId() == 3) {
+				listShift3.add(d);
+			} else if (d.getShiftId() == 4) {
+				listShift4.add(d);
+			} else {
+				listShift5.add(d);
+			}
+		}
+		infor.setListShift1(listShift1);
+		infor.setListShift2(listShift2);
+		infor.setListShift3(listShift3);
+		infor.setListShift4(listShift4);
+		infor.setListShift5(listShift5);
+		infor.setListDetail(listDetail);
+		infor.setDateFrom(doctorScheduleSearchDto.getDateFrom());
+		infor.setDateTo(doctorScheduleSearchDto.getDateTo());
+
+		appointmentRepository.exportSchedule(infor);
+
 	}
 
 	@Override
@@ -127,7 +178,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 		infor.setDateTo(doctorScheduleSearchDto.getDateTo());
 		return infor;
 	}
-	
+
 	@Override
 	public List<Appointment> ListAllAppointment() {
 		List<Appointment> listApp = (List<Appointment>) appointmentRepository.findAll();
@@ -146,7 +197,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 	}
 
 	@Override
-	public void Delete(Long id ) {
+	public void Delete(Long id) {
 		appointmentRepository.deleteById(id);
 	}
 
@@ -160,5 +211,12 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public Long GetPatientIDByAppID(Long id) {
 		Long PatientID = appointmentRepository.GetPatientIDByAppID(id);
 		return PatientID;
+	}
+
+	public static Date addDays(Date date, int days) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.add(Calendar.DATE, days); // minus number would decrement the days
+		return cal.getTime();
 	}
 }

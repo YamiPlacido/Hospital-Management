@@ -16,7 +16,7 @@
 		<div class="row">
 			<div class="col-lg-8 offset-lg-2">
 				<form class="form-horizontal" th:object="${searchDto}"
-					th:action="@{/admin/appointment/doctorGetSchedule}" method="post"
+					th:action="@{/admin/appointment/doctorGetSchedule}" method="post" id="form"
 					enctype="multipart/form-data">
 					<div class="panel-body">
 						<div class="row">
@@ -24,7 +24,6 @@
 								<div class="form-group">
 									<label>Doctor</label> <select class="form-control"
 										th:field="*{employeeId}" id="SelectedDoctor">
-										<option th:value="0" th:text="Select"></option>
 										<option th:each="p : ${employeeList}"
 											th:value="${p.employeeId}" selected="selected"
 											th:text="${p.firstName}"></option>
@@ -35,14 +34,16 @@
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-									<label>From</label> <input type="date" class="form-control"
-										th:field="*{dateFrom}" id="selectdate">
+									<label>From</label> <input type="date" class="form-control required"
+										data-msg-required="Date is required." aria-required="true"
+										th:field="*{dateFrom}" id="selectdateFrom">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<label>To</label> <input type="date" class="form-control"
-										th:field="*{dateTo}" id="selectdate">
+									<label>To</label> <input type="date" class="form-control required"
+										data-msg-required="Date is required." aria-required="true"
+										th:field="*{dateTo}" id="selectdateTo">
 								</div>
 							</div>
 						</div>
@@ -54,9 +55,12 @@
 				</form>
 			</div>
 		</div>
-		
+		<script src="/assets/js/jquery.validate.min.js"></script>
 		<script type="text/javascript">
-		
+		$(document).ready(function() {
+	        $("#form").validate({
+	        });
+	    });
 	</script>
 	</div>
 	

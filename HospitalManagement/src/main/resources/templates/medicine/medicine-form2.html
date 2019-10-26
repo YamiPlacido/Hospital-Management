@@ -14,7 +14,7 @@
 			</div>
 		</div>
 		<form th:object="${medicineForm2}" th:action="@{/admin/medicine/saveUpdate}"
-			method="post" enctype="multipart/form-data">
+			method="post" id="form" enctype="multipart/form-data"> 
 
 			<div class="profile-tabs">
 
@@ -28,7 +28,9 @@
 										<div class="col-md-6">
 											<div class="form-group form-focus">
 												<label class="focus-label">Medicine name:</label> <input
-													type="text" class="form-control floating"
+													type="text" class="form-control floating required"
+										data-msg-required="Medicine name is required."
+										aria-required="true"
 													th:field="*{name}">
 											</div>
 										</div>
@@ -36,7 +38,9 @@
 										<div class="col-md-6">
 											<div class="form-group form-focus">
 												<label class="focus-label">Stock date</label> <input
-													class="form-control floating" type="date" th:field="*{stockDate}">
+													class="form-control floating required"
+										data-msg-required="Stock date is required."
+										aria-required="true" type="date" th:field="*{stockDate}">
 											</div>
 										</div>
 									</div>
@@ -47,14 +51,18 @@
 										<div class="col-md-6 ">
 											<div class="form-group form-focus">
 												<label class="focus-label">Price</label> <input
-													type="text" class="form-control floating"
+													type="text" class="form-control floating required"
+										data-msg-required="Price is required."
+										aria-required="true"
 													th:field="*{price}">
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group form-focus">
 												<label class="focus-label">Quantity</label> <input type="text"
-													class="form-control floating" th:field="*{quantity}">
+													class="form-control floating required"
+										data-msg-required="Quantity is required."
+										aria-required="true" th:field="*{quantity}">
 											</div>
 										</div>
 									</div>
@@ -71,7 +79,9 @@
 										<div class="col-md-12">
 											<label class="focus-label">Medicine Function</label>
 											<div class="form-group form-focus">
-												<textarea rows="5" class="form-control"
+												<textarea rows="5" class="form-control required"
+										data-msg-required="Medicine Function is required."
+										aria-required="true"
 													th:field="*{function}"></textarea>
 											</div>
 										</div>
@@ -105,6 +115,27 @@
 				<input type="hidden" th:field="*{medicineId}" />
 			</div>
 		</form>
+		<script src="/assets/js/jquery.validate.min.js"></script>
+		<script type="text/javascript">
+		$(document).ready(function() {
+	        $("#form").validate({
+				rules : {
+					price : {
+					      required: true,
+					      min: 1
+					    },
+					quantity : {
+					      required: true,
+					      min: 1
+					    }
+				},
+				messages : {
+					price : "Price must be greater than 0",
+					quantity : "Quantity must be greater than 0"
+				}
+	        });
+	    });
+	</script>
 	</div>
 
 </body>

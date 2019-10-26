@@ -14,6 +14,26 @@ public class ShiftDto implements Serializable {
 
 	private static final long serialVersionUID = -3034669421776725538L;
 
+	private String type;
+	
+	private String mess;
+	
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getMess() {
+		return mess;
+	}
+
+	public void setMess(String mess) {
+		this.mess = mess;
+	}
+
 	private List<Shift> lstShift;
 
 	public List<Shift> getLstShift() {

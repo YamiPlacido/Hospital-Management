@@ -13,7 +13,7 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
- 
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
 <link rel="stylesheet" type="text/css" href="/assets/css/fullcalendar.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
 <!-- <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.css">  -->
@@ -166,7 +166,7 @@
 						<span class="user-img"> <img class="rounded-circle"
 							src="/assets/img/user.jpg" width="24" alt="Admin"> <span
 							class="status online"></span>
-					</span> <span>Admin</span>
+					</span> <span th:text="${session.usersessionname}"></span>
 				</a>
 					<div class="dropdown-menu">
 						<a class="dropdown-item" href="profile.html">My Profile</a> <a
@@ -193,8 +193,11 @@
 						<!-- #_MENU -->
 						<li th:if="${#authorization.expression('hasAnyAuthority(''RECEPTIONIST'')')}" class="active">
 							<a th:href="${'/admin/index'}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+							
 						</li>
-						<li class="submenu"><a href="#"><i class="fa fa-user"></i>
+						<li class="submenu"><a href="#">
+						<input type="hidden" th:value="${session.usersessionid}" id="userSessionId"> 
+						<i class="fa fa-user"></i>
 								<span> Patient </span> <span class="menu-arrow"></span></a>
 							<ul style="display: none;">
 								<li><a th:href="${'/admin/patient/patient/'}">Patient List</a></li>
@@ -208,50 +211,69 @@
 								<li><a th:href="${'/admin/appointment/doctorSchedule/'}">Doctor Schedule</a></li>
 							</ul></li>
 						<li class="submenu"><a href="#"><i class="fa fa-user"></i>
-								<span> Employee </span> <span class="menu-arrow"></span></a>
+								<span> Admin </span> <span class="menu-arrow"></span></a>
 							<ul style="display: none;">
-								<li><a th:href="${'/admin/doctor/'}">Admin</a></li>
-								<li><a th:href="${'/admin/doctor/appointments/'}">Doctor</a></li>
-								<li><a th:href="${'/admin/examinator/examinations/'}">Examinator</a></li>
+								<li><a th:href="${'/admin/doctor/'}">List Doctor</a></li>
+								<li><a th:href="${'/admin/employee/create/'}">Create doctor</a></li>
 							</ul>
 						</li>
-						<li><a href="assets.html"><i class="fa fa-cube"></i> <span>Assets</span></a>
+						<li class="submenu"><a href="#"><i class="fa fa-user"></i>
+							<span> Doctor </span> <span class="menu-arrow"></span></a>
+							<ul style="display: none;">
+								<li><a th:href="${'/admin/doctor/appointments/'}">Today appointments</a></li>
+								<li><a th:href="${'/admin/doctor/1'}">Personal info</a></li>
+							</ul>
 						</li>
-						<li><a href="activities.html"><i class="fa fa-bell-o"></i>
-								<span>Activities</span></a></li>
-						<li class="submenu"><a href="#"><i class="fa fa-flag-o"></i>
-								<span> Reports </span> <span class="menu-arrow"></span></a>
+						<li class="submenu"><a href="#"><i class="fa fa-user"></i>
+							<span> Examinator </span> <span class="menu-arrow"></span></a>
 							<ul style="display: none;">
-								<li><a href="expense-reports.html"> Expense Report </a></li>
-								<li><a href="invoice-reports.html"> Invoice Report </a></li>
-							</ul></li>
-						<li><a href="settings.html"><i class="fa fa-cog"></i> <span>Settings</span></a>
+								<li><a th:href="${'/admin/examinator/examinations/'}">Today examinations</a></li>
+								<li><a th:href="${'/admin/doctor/1'}">Personal info</a></li>
+							</ul>
 						</li>
-						<li class="menu-title">UI Elements</li>
-						<li class="submenu"><a href="#"><i class="fa fa-laptop"></i>
-								<span> Components</span> <span class="menu-arrow"></span></a>
+						<li class="submenu"><a href="#"><i class="fa fa-envelope"></i>
+								<span> Medicine </span> <span class="menu-arrow"></span></a>
 							<ul style="display: none;">
-								<li><a href="uikit.html">UI Kit</a></li>
-								<li><a href="typography.html">Typography</a></li>
-								<li><a href="tabs.html">Tabs</a></li>
+								<li><a th:href="${'/admin/medicine/medicine/'}">Medicine List</a></li>
+								<li><a th:href="${'/admin/medicine/addMedicine/'}">Add New Medicine</a></li>
 							</ul></li>
-						<li class="submenu"><a href="#"><i class="fa fa-edit"></i>
-								<span> Forms</span> <span class="menu-arrow"></span></a>
-							<ul style="display: none;">
-								<li><a href="form-basic-inputs.html">Basic Inputs</a></li>
-								<li><a href="form-input-groups.html">Input Groups</a></li>
-								<li><a href="form-horizontal.html">Horizontal Form</a></li>
-								<li><a href="form-vertical.html">Vertical Form</a></li>
-							</ul></li>
-						<li class="submenu"><a href="#"><i class="fa fa-table"></i>
-								<span> Tables</span> <span class="menu-arrow"></span></a>
-							<ul style="display: none;">
-								<li><a href="tables-basic.html">Basic Tables</a></li>
-								<li><a href="tables-datatables.html">Data Table</a></li>
-							</ul></li>
-						<li><<a th:href="${'/appointment/calendar/'}"><i
-								class="fa fa-calendar"></i> <span>Calendar</span></a></li>
-						<li class="menu-title">Extras</li>
+<!--						<li><a href="assets.html"><i class="fa fa-cube"></i> <span>Assets</span></a>-->
+<!--						</li>-->
+<!--						<li><a href="activities.html"><i class="fa fa-bell-o"></i>-->
+<!--								<span>Activities</span></a></li>-->
+<!--						<li class="submenu"><a href="#"><i class="fa fa-flag-o"></i>-->
+<!--								<span> Reports </span> <span class="menu-arrow"></span></a>-->
+<!--							<ul style="display: none;">-->
+<!--								<li><a href="expense-reports.html"> Expense Report </a></li>-->
+<!--								<li><a href="invoice-reports.html"> Invoice Report </a></li>-->
+<!--							</ul></li>-->
+<!--						<li><a href="settings.html"><i class="fa fa-cog"></i> <span>Settings</span></a>-->
+<!--						</li>-->
+<!--						<li class="menu-title">UI Elements</li>-->
+<!--						<li class="submenu"><a href="#"><i class="fa fa-laptop"></i>-->
+<!--								<span> Components</span> <span class="menu-arrow"></span></a>-->
+<!--							<ul style="display: none;">-->
+<!--								<li><a href="uikit.html">UI Kit</a></li>-->
+<!--								<li><a href="typography.html">Typography</a></li>-->
+<!--								<li><a href="tabs.html">Tabs</a></li>-->
+<!--							</ul></li>-->
+<!--						<li class="submenu"><a href="#"><i class="fa fa-edit"></i>-->
+<!--								<span> Forms</span> <span class="menu-arrow"></span></a>-->
+<!--							<ul style="display: none;">-->
+<!--								<li><a href="form-basic-inputs.html">Basic Inputs</a></li>-->
+<!--								<li><a href="form-input-groups.html">Input Groups</a></li>-->
+<!--								<li><a href="form-horizontal.html">Horizontal Form</a></li>-->
+<!--								<li><a href="form-vertical.html">Vertical Form</a></li>-->
+<!--							</ul></li>-->
+<!--						<li class="submenu"><a href="#"><i class="fa fa-table"></i>-->
+<!--								<span> Tables</span> <span class="menu-arrow"></span></a>-->
+<!--							<ul style="display: none;">-->
+<!--								<li><a href="tables-basic.html">Basic Tables</a></li>-->
+<!--								<li><a href="tables-datatables.html">Data Table</a></li>-->
+<!--							</ul></li>-->
+<!--						<li><<a th:href="${'/appointment/calendar/'}"><i-->
+<!--								class="fa fa-calendar"></i> <span>Calendar</span></a></li>-->
+<!--						<li class="menu-title">Extras</li>-->
 						<li class="submenu"><a href="#"><i class="fa fa-columns"></i>
 								<span>Pages</span> <span class="menu-arrow"></span></a>
 							<ul style="display: none;">
@@ -266,229 +288,229 @@
 								<li><a href="error-500.html">500 Error </a></li>
 								<li><a href="blank-page.html"> Blank Page </a></li>
 							</ul></li>
-						<li class="submenu"><a href="javascript:void(0);"><i
-								class="fa fa-share-alt"></i> <span>Multi Level</span> <span
-								class="menu-arrow"></span></a>
-							<ul style="display: none;">
-								<li class="submenu"><a href="javascript:void(0);"><span>Level
-											1</span> <span class="menu-arrow"></span></a>
-									<ul style="display: none;">
-										<li><a href="javascript:void(0);"><span>Level
-													2</span></a></li>
-										<li class="submenu"><a href="javascript:void(0);"> <span>
-													Level 2</span> <span class="menu-arrow"></span></a>
-											<ul style="display: none;">
-												<li><a href="javascript:void(0);">Level 3</a></li>
-												<li><a href="javascript:void(0);">Level 3</a></li>
-											</ul></li>
-										<li><a href="javascript:void(0);"><span>Level
-													2</span></a></li>
-									</ul></li>
-								<li><a href="javascript:void(0);"><span>Level 1</span></a>
-								</li>
-							</ul></li>
+<!--						<li class="submenu"><a href="javascript:void(0);"><i-->
+<!--								class="fa fa-share-alt"></i> <span>Multi Level</span> <span-->
+<!--								class="menu-arrow"></span></a>-->
+<!--							<ul style="display: none;">-->
+<!--								<li class="submenu"><a href="javascript:void(0);"><span>Level-->
+<!--											1</span> <span class="menu-arrow"></span></a>-->
+<!--									<ul style="display: none;">-->
+<!--										<li><a href="javascript:void(0);"><span>Level-->
+<!--													2</span></a></li>-->
+<!--										<li class="submenu"><a href="javascript:void(0);"> <span>-->
+<!--													Level 2</span> <span class="menu-arrow"></span></a>-->
+<!--											<ul style="display: none;">-->
+<!--												<li><a href="javascript:void(0);">Level 3</a></li>-->
+<!--												<li><a href="javascript:void(0);">Level 3</a></li>-->
+<!--											</ul></li>-->
+<!--										<li><a href="javascript:void(0);"><span>Level-->
+<!--													2</span></a></li>-->
+<!--									</ul></li>-->
+<!--								<li><a href="javascript:void(0);"><span>Level 1</span></a>-->
+<!--								</li>-->
+<!--							</ul></li>-->
 					</ul>
 				</div>
 			</div>
 		</div>
 		<div class="page-wrapper">
 			<div layout:fragment="content"></div>
-			<div class="notification-box">
-				<div class="msg-sidebar notifications msg-noti">
-					<div class="topnav-dropdown-header">
-						<span>Messages</span>
-					</div>
-					<div class="drop-scroll msg-list-scroll" id="msg_list">
-						<ul class="list-box">
-							<li><a href="chat.html">
-									<div class="list-item">
-										<div class="list-left">
-											<span class="avatar">R</span>
-										</div>
-										<div class="list-body">
-											<span class="message-author">Richard Miles </span> <span
-												class="message-time">12:28 AM</span>
-											<div class="clearfix"></div>
-											<span class="message-content">Lorem ipsum dolor sit
-												amet, consectetur adipiscing</span>
-										</div>
-									</div>
-							</a></li>
-							<li><a href="chat.html">
-									<div class="list-item new-message">
-										<div class="list-left">
-											<span class="avatar">J</span>
-										</div>
-										<div class="list-body">
-											<span class="message-author">John Doe</span> <span
-												class="message-time">1 Aug</span>
-											<div class="clearfix"></div>
-											<span class="message-content">Lorem ipsum dolor sit
-												amet, consectetur adipiscing</span>
-										</div>
-									</div>
-							</a></li>
-							<li><a href="chat.html">
-									<div class="list-item">
-										<div class="list-left">
-											<span class="avatar">T</span>
-										</div>
-										<div class="list-body">
-											<span class="message-author"> Tarah Shropshire </span> <span
-												class="message-time">12:28 AM</span>
-											<div class="clearfix"></div>
-											<span class="message-content">Lorem ipsum dolor sit
-												amet, consectetur adipiscing</span>
-										</div>
-									</div>
-							</a></li>
-							<li><a href="chat.html">
-									<div class="list-item">
-										<div class="list-left">
-											<span class="avatar">M</span>
-										</div>
-										<div class="list-body">
-											<span class="message-author">Mike Litorus</span> <span
-												class="message-time">12:28 AM</span>
-											<div class="clearfix"></div>
-											<span class="message-content">Lorem ipsum dolor sit
-												amet, consectetur adipiscing</span>
-										</div>
-									</div>
-							</a></li>
-							<li><a href="chat.html">
-									<div class="list-item">
-										<div class="list-left">
-											<span class="avatar">C</span>
-										</div>
-										<div class="list-body">
-											<span class="message-author"> Catherine Manseau </span> <span
-												class="message-time">12:28 AM</span>
-											<div class="clearfix"></div>
-											<span class="message-content">Lorem ipsum dolor sit
-												amet, consectetur adipiscing</span>
-										</div>
-									</div>
-							</a></li>
-							<li><a href="chat.html">
-									<div class="list-item">
-										<div class="list-left">
-											<span class="avatar">D</span>
-										</div>
-										<div class="list-body">
-											<span class="message-author"> Domenic Houston </span> <span
-												class="message-time">12:28 AM</span>
-											<div class="clearfix"></div>
-											<span class="message-content">Lorem ipsum dolor sit
-												amet, consectetur adipiscing</span>
-										</div>
-									</div>
-							</a></li>
-							<li><a href="chat.html">
-									<div class="list-item">
-										<div class="list-left">
-											<span class="avatar">B</span>
-										</div>
-										<div class="list-body">
-											<span class="message-author"> Buster Wigton </span> <span
-												class="message-time">12:28 AM</span>
-											<div class="clearfix"></div>
-											<span class="message-content">Lorem ipsum dolor sit
-												amet, consectetur adipiscing</span>
-										</div>
-									</div>
-							</a></li>
-							<li><a href="chat.html">
-									<div class="list-item">
-										<div class="list-left">
-											<span class="avatar">R</span>
-										</div>
-										<div class="list-body">
-											<span class="message-author"> Rolland Webber </span> <span
-												class="message-time">12:28 AM</span>
-											<div class="clearfix"></div>
-											<span class="message-content">Lorem ipsum dolor sit
-												amet, consectetur adipiscing</span>
-										</div>
-									</div>
-							</a></li>
-							<li><a href="chat.html">
-									<div class="list-item">
-										<div class="list-left">
-											<span class="avatar">C</span>
-										</div>
-										<div class="list-body">
-											<span class="message-author"> Claire Mapes </span> <span
-												class="message-time">12:28 AM</span>
-											<div class="clearfix"></div>
-											<span class="message-content">Lorem ipsum dolor sit
-												amet, consectetur adipiscing</span>
-										</div>
-									</div>
-							</a></li>
-							<li><a href="chat.html">
-									<div class="list-item">
-										<div class="list-left">
-											<span class="avatar">M</span>
-										</div>
-										<div class="list-body">
-											<span class="message-author">Melita Faucher</span> <span
-												class="message-time">12:28 AM</span>
-											<div class="clearfix"></div>
-											<span class="message-content">Lorem ipsum dolor sit
-												amet, consectetur adipiscing</span>
-										</div>
-									</div>
-							</a></li>
-							<li><a href="chat.html">
-									<div class="list-item">
-										<div class="list-left">
-											<span class="avatar">J</span>
-										</div>
-										<div class="list-body">
-											<span class="message-author">Jeffery Lalor</span> <span
-												class="message-time">12:28 AM</span>
-											<div class="clearfix"></div>
-											<span class="message-content">Lorem ipsum dolor sit
-												amet, consectetur adipiscing</span>
-										</div>
-									</div>
-							</a></li>
-							<li><a href="chat.html">
-									<div class="list-item">
-										<div class="list-left">
-											<span class="avatar">L</span>
-										</div>
-										<div class="list-body">
-											<span class="message-author">Loren Gatlin</span> <span
-												class="message-time">12:28 AM</span>
-											<div class="clearfix"></div>
-											<span class="message-content">Lorem ipsum dolor sit
-												amet, consectetur adipiscing</span>
-										</div>
-									</div>
-							</a></li>
-							<li><a href="chat.html">
-									<div class="list-item">
-										<div class="list-left">
-											<span class="avatar">T</span>
-										</div>
-										<div class="list-body">
-											<span class="message-author">Tarah Shropshire</span> <span
-												class="message-time">12:28 AM</span>
-											<div class="clearfix"></div>
-											<span class="message-content">Lorem ipsum dolor sit
-												amet, consectetur adipiscing</span>
-										</div>
-									</div>
-							</a></li>
-						</ul>
-					</div>
-					<div class="topnav-dropdown-footer">
-						<a href="chat.html">See all messages</a>
-					</div>
-				</div>
-			</div>
+<!-- 			<div class="notification-box"> -->
+<!-- 				<div class="msg-sidebar notifications msg-noti"> -->
+<!-- 					<div class="topnav-dropdown-header"> -->
+<!-- 						<span>Messages</span> -->
+<!-- 					</div> -->
+<!-- 					<div class="drop-scroll msg-list-scroll" id="msg_list"> -->
+<!-- 						<ul class="list-box"> -->
+<!-- 							<li><a href="chat.html"> -->
+<!-- 									<div class="list-item"> -->
+<!-- 										<div class="list-left"> -->
+<!-- 											<span class="avatar">R</span> -->
+<!-- 										</div> -->
+<!-- 										<div class="list-body"> -->
+<!-- 											<span class="message-author">Richard Miles </span> <span -->
+<!-- 												class="message-time">12:28 AM</span> -->
+<!-- 											<div class="clearfix"></div> -->
+<!-- 											<span class="message-content">Lorem ipsum dolor sit -->
+<!-- 												amet, consectetur adipiscing</span> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 							</a></li> -->
+<!-- 							<li><a href="chat.html"> -->
+<!-- 									<div class="list-item new-message"> -->
+<!-- 										<div class="list-left"> -->
+<!-- 											<span class="avatar">J</span> -->
+<!-- 										</div> -->
+<!-- 										<div class="list-body"> -->
+<!-- 											<span class="message-author">John Doe</span> <span -->
+<!-- 												class="message-time">1 Aug</span> -->
+<!-- 											<div class="clearfix"></div> -->
+<!-- 											<span class="message-content">Lorem ipsum dolor sit -->
+<!-- 												amet, consectetur adipiscing</span> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 							</a></li> -->
+<!-- 							<li><a href="chat.html"> -->
+<!-- 									<div class="list-item"> -->
+<!-- 										<div class="list-left"> -->
+<!-- 											<span class="avatar">T</span> -->
+<!-- 										</div> -->
+<!-- 										<div class="list-body"> -->
+<!-- 											<span class="message-author"> Tarah Shropshire </span> <span -->
+<!-- 												class="message-time">12:28 AM</span> -->
+<!-- 											<div class="clearfix"></div> -->
+<!-- 											<span class="message-content">Lorem ipsum dolor sit -->
+<!-- 												amet, consectetur adipiscing</span> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 							</a></li> -->
+<!-- 							<li><a href="chat.html"> -->
+<!-- 									<div class="list-item"> -->
+<!-- 										<div class="list-left"> -->
+<!-- 											<span class="avatar">M</span> -->
+<!-- 										</div> -->
+<!-- 										<div class="list-body"> -->
+<!-- 											<span class="message-author">Mike Litorus</span> <span -->
+<!-- 												class="message-time">12:28 AM</span> -->
+<!-- 											<div class="clearfix"></div> -->
+<!-- 											<span class="message-content">Lorem ipsum dolor sit -->
+<!-- 												amet, consectetur adipiscing</span> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 							</a></li> -->
+<!-- 							<li><a href="chat.html"> -->
+<!-- 									<div class="list-item"> -->
+<!-- 										<div class="list-left"> -->
+<!-- 											<span class="avatar">C</span> -->
+<!-- 										</div> -->
+<!-- 										<div class="list-body"> -->
+<!-- 											<span class="message-author"> Catherine Manseau </span> <span -->
+<!-- 												class="message-time">12:28 AM</span> -->
+<!-- 											<div class="clearfix"></div> -->
+<!-- 											<span class="message-content">Lorem ipsum dolor sit -->
+<!-- 												amet, consectetur adipiscing</span> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 							</a></li> -->
+<!-- 							<li><a href="chat.html"> -->
+<!-- 									<div class="list-item"> -->
+<!-- 										<div class="list-left"> -->
+<!-- 											<span class="avatar">D</span> -->
+<!-- 										</div> -->
+<!-- 										<div class="list-body"> -->
+<!-- 											<span class="message-author"> Domenic Houston </span> <span -->
+<!-- 												class="message-time">12:28 AM</span> -->
+<!-- 											<div class="clearfix"></div> -->
+<!-- 											<span class="message-content">Lorem ipsum dolor sit -->
+<!-- 												amet, consectetur adipiscing</span> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 							</a></li> -->
+<!-- 							<li><a href="chat.html"> -->
+<!-- 									<div class="list-item"> -->
+<!-- 										<div class="list-left"> -->
+<!-- 											<span class="avatar">B</span> -->
+<!-- 										</div> -->
+<!-- 										<div class="list-body"> -->
+<!-- 											<span class="message-author"> Buster Wigton </span> <span -->
+<!-- 												class="message-time">12:28 AM</span> -->
+<!-- 											<div class="clearfix"></div> -->
+<!-- 											<span class="message-content">Lorem ipsum dolor sit -->
+<!-- 												amet, consectetur adipiscing</span> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 							</a></li> -->
+<!-- 							<li><a href="chat.html"> -->
+<!-- 									<div class="list-item"> -->
+<!-- 										<div class="list-left"> -->
+<!-- 											<span class="avatar">R</span> -->
+<!-- 										</div> -->
+<!-- 										<div class="list-body"> -->
+<!-- 											<span class="message-author"> Rolland Webber </span> <span -->
+<!-- 												class="message-time">12:28 AM</span> -->
+<!-- 											<div class="clearfix"></div> -->
+<!-- 											<span class="message-content">Lorem ipsum dolor sit -->
+<!-- 												amet, consectetur adipiscing</span> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 							</a></li> -->
+<!-- 							<li><a href="chat.html"> -->
+<!-- 									<div class="list-item"> -->
+<!-- 										<div class="list-left"> -->
+<!-- 											<span class="avatar">C</span> -->
+<!-- 										</div> -->
+<!-- 										<div class="list-body"> -->
+<!-- 											<span class="message-author"> Claire Mapes </span> <span -->
+<!-- 												class="message-time">12:28 AM</span> -->
+<!-- 											<div class="clearfix"></div> -->
+<!-- 											<span class="message-content">Lorem ipsum dolor sit -->
+<!-- 												amet, consectetur adipiscing</span> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 							</a></li> -->
+<!-- 							<li><a href="chat.html"> -->
+<!-- 									<div class="list-item"> -->
+<!-- 										<div class="list-left"> -->
+<!-- 											<span class="avatar">M</span> -->
+<!-- 										</div> -->
+<!-- 										<div class="list-body"> -->
+<!-- 											<span class="message-author">Melita Faucher</span> <span -->
+<!-- 												class="message-time">12:28 AM</span> -->
+<!-- 											<div class="clearfix"></div> -->
+<!-- 											<span class="message-content">Lorem ipsum dolor sit -->
+<!-- 												amet, consectetur adipiscing</span> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 							</a></li> -->
+<!-- 							<li><a href="chat.html"> -->
+<!-- 									<div class="list-item"> -->
+<!-- 										<div class="list-left"> -->
+<!-- 											<span class="avatar">J</span> -->
+<!-- 										</div> -->
+<!-- 										<div class="list-body"> -->
+<!-- 											<span class="message-author">Jeffery Lalor</span> <span -->
+<!-- 												class="message-time">12:28 AM</span> -->
+<!-- 											<div class="clearfix"></div> -->
+<!-- 											<span class="message-content">Lorem ipsum dolor sit -->
+<!-- 												amet, consectetur adipiscing</span> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 							</a></li> -->
+<!-- 							<li><a href="chat.html"> -->
+<!-- 									<div class="list-item"> -->
+<!-- 										<div class="list-left"> -->
+<!-- 											<span class="avatar">L</span> -->
+<!-- 										</div> -->
+<!-- 										<div class="list-body"> -->
+<!-- 											<span class="message-author">Loren Gatlin</span> <span -->
+<!-- 												class="message-time">12:28 AM</span> -->
+<!-- 											<div class="clearfix"></div> -->
+<!-- 											<span class="message-content">Lorem ipsum dolor sit -->
+<!-- 												amet, consectetur adipiscing</span> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 							</a></li> -->
+<!-- 							<li><a href="chat.html"> -->
+<!-- 									<div class="list-item"> -->
+<!-- 										<div class="list-left"> -->
+<!-- 											<span class="avatar">T</span> -->
+<!-- 										</div> -->
+<!-- 										<div class="list-body"> -->
+<!-- 											<span class="message-author">Tarah Shropshire</span> <span -->
+<!-- 												class="message-time">12:28 AM</span> -->
+<!-- 											<div class="clearfix"></div> -->
+<!-- 											<span class="message-content">Lorem ipsum dolor sit -->
+<!-- 												amet, consectetur adipiscing</span> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 							</a></li> -->
+<!-- 						</ul> -->
+<!-- 					</div> -->
+<!-- 					<div class="topnav-dropdown-footer"> -->
+<!-- 						<a href="chat.html">See all messages</a> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
 		</div>
 	</div>
 	<div class="sidebar-overlay" data-reff=""></div>

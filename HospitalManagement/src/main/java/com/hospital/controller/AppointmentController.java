@@ -1,13 +1,19 @@
 package com.hospital.controller;
 
+import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,11 +28,13 @@ import org.springframework.web.servlet.ModelAndView;
 import com.hospital.dto.AppointmentDto;
 import com.hospital.dto.DoctorScheduleInforDto;
 import com.hospital.dto.DoctorScheduleSearchDto;
+import com.hospital.dto.EmptyJsonResponse;
 import com.hospital.dto.ShiftDto;
-import com.hospital.model.Appointment;
 import com.hospital.model.Employee;
 import com.hospital.model.Patient;
 import com.hospital.model.Shift;
+import com.hospital.model.Users;
+import com.hospital.repository.UserRepository;
 import com.hospital.service.AppointmentService;
 import com.hospital.service.EmployeeService;
 import com.hospital.service.PatientService;
@@ -44,12 +52,12 @@ public class AppointmentController {
 	EmployeeService employeeService;
 	@Autowired
 	ShiftService shiftService;
-	
+	@Autowired
+	UserRepository userRepository;
 	@RequestMapping(value = "/appointment/appointment", method = RequestMethod.GET)
 	public ModelAndView appointment() {
 		ModelAndView model = new ModelAndView();
 		model.setViewName("appointment/appointment-list");
-
 		return model;
 	}
 
@@ -79,6 +87,12 @@ public class AppointmentController {
 		return model;
 	}
 	
+	@ResponseBody
+	@GetMapping(value = "/appointment/getDoctorScheduleDetail")
+	public Object getDoctorScheduleDetail(@ModelAttribute("appointmentForm") DoctorScheduleSearchDto doctorScheduleSearchDto) {
+		DoctorScheduleInforDto infor = appointmentService.getDoctorSchedule(doctorScheduleSearchDto);
+		return infor;
+	}
 	
 	@RequestMapping(value = "/appointment/addAppointment", method = RequestMethod.GET)
 	public ModelAndView addArticle() {
@@ -110,7 +124,6 @@ public class AppointmentController {
 //		return model;
 //	}
 
-	@ResponseBody
 	@PostMapping(value = "/appointment/saveAppointment")
 	public ModelAndView save(@ModelAttribute("appointmentForm") AppointmentDto appointment) {
 		ModelAndView model = new ModelAndView();
@@ -145,7 +158,7 @@ public class AppointmentController {
 	
 	
 	@RequestMapping(value="/appointment/export/{appId}", method = RequestMethod.GET)
-	public ModelAndView export(@PathVariable long appId) {
+	public ModelAndView export(@PathVariable Long appId) {
 		ModelAndView model = new ModelAndView();
 		try {
 			appointmentService.exportSlip(appId);
@@ -154,6 +167,17 @@ public class AppointmentController {
 		}
 		model.setViewName("appointment/appointment-list");
         return model;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/appointment/exportSchedule", method = RequestMethod.GET)
+	public ResponseEntity exportSchedule(@ModelAttribute("appointmentForm") DoctorScheduleSearchDto doctorScheduleSearchDto) throws Exception {
+		try {
+			appointmentService.exportSchedule(doctorScheduleSearchDto.getEmployeeId(),doctorScheduleSearchDto.getDateFrom());
+		}catch(Exception ex) {
+			throw ex;
+		}
+		return new ResponseEntity(new EmptyJsonResponse(), HttpStatus.OK); 
 	}
 	
 	@RequestMapping(value="/appointment/disable", method = RequestMethod.POST)

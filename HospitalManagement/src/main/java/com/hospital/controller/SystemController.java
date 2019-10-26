@@ -31,12 +31,12 @@ public class SystemController {
     }
 
     @RequestMapping(value = "/symptom", method = RequestMethod.GET)
-    public HashMap<Integer, String> getSymptomOfAppointment(@RequestParam int appointment_id) {
+    public HashMap<Long, String> getSymptomOfAppointment(@RequestParam Long appointment_id) {
         return null;
     }
 
     @RequestMapping(value = "/symptom", method = RequestMethod.POST)
-    public void editSymptomOfAppointment(@RequestParam int appointment_id) {
+    public void editSymptomOfAppointment(@RequestParam Long appointment_id) {
         //check appointment status  != FINISHED
         //check role Doctor or Receptionist
 

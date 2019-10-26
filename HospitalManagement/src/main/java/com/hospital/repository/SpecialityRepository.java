@@ -9,5 +9,9 @@ import java.util.List;
 
 public interface SpecialityRepository extends JpaRepository<Speciality, Long> {
     @Query("SELECT s FROM Speciality s WHERE s.position.positionId = :id")
+<<<<<<< Updated upstream
     public List<Speciality> findByPositionId(@Param("id") Long position_id);
+=======
+    public List<Speciality> findByPositionId(@Param("id") Long positionId);
+>>>>>>> Stashed changes
 }

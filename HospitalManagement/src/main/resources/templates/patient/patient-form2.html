@@ -13,7 +13,7 @@
 				<h4 class="page-title">Patient</h4>
 			</div>
 		</div>
-		<form th:object="${patientForm2}" th:action="@{/admin/patient/saveUpdate}"
+		<form th:object="${patientForm2}" th:action="@{/admin/patient/saveUpdate}" id="form"
 			method="post" enctype="multipart/form-data">
 			<div class="card-box profile-header">
 				<div class="row">
@@ -58,7 +58,9 @@
 										<div class="col-md-6">
 											<div class="form-group form-focus">
 												<label class="focus-label">Fullname</label> <input
-													type="text" class="form-control floating"
+													type="text" class="form-control floating required"
+													data-msg-required="Fullname is required."
+										aria-required="true"
 													th:field="*{name}">
 											</div>
 										</div>
@@ -66,7 +68,9 @@
 										<div class="col-md-6">
 											<div class="form-group form-focus">
 												<label class="focus-label">Birth Date</label> <input
-													class="form-control floating" type="date" th:field="*{dob}">
+													class="form-control floating required"
+													data-msg-required="Birth Date is required."
+										aria-required="true" type="date" th:field="*{dob}">
 											</div>
 										</div>
 									</div>
@@ -78,28 +82,33 @@
 										<div class="col-md-12">
 											<div class="form-group form-focus">
 												<label class="focus-label">Address</label> <input
-													type="text" class="form-control floating"
+													type="text"
+													data-msg-required="Address is required."
+										aria-required="true" class="form-control floating required"
 													th:field="*{address}">
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group form-focus">
 												<label class="focus-label">Email</label> <input type="text"
-													class="form-control floating" th:field="*{email}">
+													data-msg-required="Email is required."
+										aria-required="true" class="form-control floating required" th:field="*{email}">
 											</div>
 										</div>
 
 										<div class="col-md-6">
 											<div class="form-group form-focus">
 												<label class="focus-label">Phone Number</label> <input
-													type="text" class="form-control floating"
+													data-msg-required="Phone Number is required."
+										aria-required="true" type="text" class="form-control floating required"
 													th:field="*{phone}">
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group form-focus">
 												<label class="focus-label">Identity Card</label> <input
-													type="text" class="form-control floating"
+													data-msg-required="Identity Card is required."
+										aria-required="true" type="text" class="form-control floating required"
 													th:field="*{identityCard}">
 											</div>
 										</div>
@@ -155,6 +164,27 @@
 				<input type="hidden" th:field="*{patientId}" />
 			</div>
 		</form>
+		<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
+		<script type="text/javascript">
+		$(document).ready(function() {
+			 
+	        //Khi bàn phím được nhấn và thả ra thì sẽ chạy phương thức này
+	        $("#form").validate({
+
+	            rules: {
+	                email: {
+	                    email: true
+	                  }
+	            },
+	            messages: {
+	            	email: {
+	                    email: "Invalid email format!!!"
+	                  }
+	            }
+	        
+	        });
+	    });
+		</script>
 	</div>
 
 </body>

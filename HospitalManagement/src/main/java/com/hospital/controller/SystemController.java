@@ -20,9 +20,14 @@ public class SystemController {
     @Autowired
     EmployeeRepository employeeRepository;
 
-    @GetMapping(value = "/symptoms")
-    public Set<Symptom> findAllSymptom(){
-        return employeeRepository.findAllSymptom();
+    @GetMapping(value = "/symptoms/type_one")
+    public List<Symptom> findAllSymptomTypeOne(){
+        return employeeRepository.fillSymptomTypeOne();
+    }
+
+    @GetMapping(value = "/symptoms/type_two")
+    public List<Symptom> findAllSymptomTypeTwo(){
+        return employeeRepository.fillSymptomTypeTwo();
     }
 
     @GetMapping(value = "/examinations")
@@ -31,12 +36,12 @@ public class SystemController {
     }
 
     @RequestMapping(value = "/symptom", method = RequestMethod.GET)
-    public HashMap<Long, String> getSymptomOfAppointment(@RequestParam Long appointment_id) {
+    public HashMap<Integer, String> getSymptomOfAppointment(@RequestParam int appointment_id) {
         return null;
     }
 
     @RequestMapping(value = "/symptom", method = RequestMethod.POST)
-    public void editSymptomOfAppointment(@RequestParam Long appointment_id) {
+    public void editSymptomOfAppointment(@RequestParam int appointment_id) {
         //check appointment status  != FINISHED
         //check role Doctor or Receptionist
 

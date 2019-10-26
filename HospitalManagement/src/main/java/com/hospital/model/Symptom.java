@@ -19,6 +19,9 @@ public class Symptom implements Serializable {
 	@Column(name="symptom_id")
 	private long symptomId;
 
+	@Column(name = "symptom_type_id")
+	private long symptomTypeId;
+
 	private String degree;
 
 	private String description;
@@ -64,7 +67,15 @@ public class Symptom implements Serializable {
 		this.name = name;
 	}
 
-//	public List<IllnessSymptom> getIllnessSymptoms() {
+	public long getSymptomTypeId() {
+		return symptomTypeId;
+	}
+
+	public void setSymptomTypeId(long symptomTypeId) {
+		this.symptomTypeId = symptomTypeId;
+	}
+
+	//	public List<IllnessSymptom> getIllnessSymptoms() {
 //		return this.illnessSymptoms;
 //	}
 //

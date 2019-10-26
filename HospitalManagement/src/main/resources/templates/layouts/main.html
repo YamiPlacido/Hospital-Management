@@ -16,6 +16,9 @@
 <link rel="stylesheet" type="text/css"
 	href="/assets/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+
+<link rel="stylesheet" type="text/css" href="/assets/css/fullcalendar.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
 <link rel="stylesheet"
 	href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
 <link rel="stylesheet" type="text/css"
@@ -43,17 +46,22 @@
 <script src="/assets/js/select2.min.js"></script>
 <script src="/assets/js/moment.min.js"></script>
 <!-- 	<script src="/assets/js/jquery-ui.min.html"></script> -->
-<script src="/assets/js/fullcalendar.min.js"></script>
-<script src="/assets/js/jquery.fullcalendar.js"></script>
-<script src="/assets/js/bootstrap-datetimepicker.min.js"></script>
-<script src="/assets/js/app.js"></script>
-<script src="/assets/js/jquery.dataTables.min.js"></script>
-<script src="/assets/js/dataTables.bootstrap4.min.js"></script>
-<script src="/assets/js/patient.js"></script>
+	<script src="/assets/js/fullcalendar.min.js"></script>
+	<script src="/assets/js/jquery.fullcalendar.js"></script>
+	<script src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="/assets/js/app.js"></script>
+	<script src="/assets/js/jquery.dataTables.min.js"></script>
+	<script src="/assets/js/dataTables.bootstrap4.min.js"></script>
+	<script src="/assets/js/atmosphere.js"></script>
+	<script src="/assets/js/patient.js"></script>
+	<script src="/assets/js/phuong_utils.js"></script>
 <!-- 	<script src="/assets/js/jquery.quicksearch.js"></script> -->
 <!-- 	<script src="/assets/js/jquery.multi-select.js"></script> -->
 <!-- 	<script src="/assets/js/atmosphere.js"></script> -->
-<!-- 	<script src="/assets/js/phuong.js"></script> -->
+<!-- 	<script src="/assets/js/phuong_exam.js"></script> -->
+	
+	<!--[if lt IE 9]--> 
+
 
 <!--[if lt IE 9]-->
 
@@ -175,7 +183,7 @@
 						<span class="user-img"> <img class="rounded-circle"
 							src="/assets/img/user.jpg" width="24" alt="Admin"> <span
 							class="status online"></span>
-					</span> <span th:text="${session.usersessionname}"></span>
+					</span> <span>Admin</span>
 				</a>
 					<div class="dropdown-menu">
 <!-- 						<a class="dropdown-item" href="profile.html">My Profile</a> <a -->
@@ -339,6 +347,7 @@
 		</div>
 		<div class="page-wrapper">
 			<div layout:fragment="content"></div>
+
 			<!-- 			<div class="notification-box"> -->
 			<!-- 				<div class="msg-sidebar notifications msg-noti"> -->
 			<!-- 					<div class="topnav-dropdown-header"> -->

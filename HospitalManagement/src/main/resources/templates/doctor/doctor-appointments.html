@@ -1,204 +1,484 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  xmlns:th="http://www.w3.org/1999/xhtml"
-	  layout:decorate="~{layouts/main}">
+      xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/main}">
 <head>
-<meta charset="ISO-8859-1">
-<title>List appointment</title>
+    <meta charset="ISO-8859-1">
+    <title>List appointment</title>
 </head>
 <body>
 <div layout:fragment="content">
-	<div class="container pt-3 pb-4">
-		<ul class="nav nav-tabs nav-tabs-solid">
-			<li class="nav-item"><a class="nav-link show active" href="#solid-tab1" data-toggle="tab">Today appointments</a></li>
-			<li class="nav-item"><a class="nav-link show" href="#solid-tab2" data-toggle="tab" id="appointment-perform">Performing</a></li>
-		</ul>
-		<div class="row">
-			<div class="col-md-12">
-				<div class="card-box">
-					<div class="tab-content">
-						<div class="tab-pane show active" id="solid-tab1">
-							<div class="table-responsive">
-								<table id="appointment-datatables" class="table table-striped table-bordered" style="width:100%">
-									<thead>
-									<tr>
-										<th>Appointment ID</th>
-										<th>Patient Name</th>
-										<th>Age</th>
-										<th>Speciality</th>
-										<th>Appointment Date</th>
-										<th>Appointment Time</th>
-										<th>Status</th>
-<!--										<th class="text-right">Action</th>-->
-									</tr>
-									</thead>
-									<tbody id="appointment-container">
+    <div class="container pt-3 pb-4">
+        <ul class="nav nav-tabs nav-tabs-solid">
+            <li class="nav-item"><a class="nav-link show active" href="#solid-tab1" data-toggle="tab">Today
+                appointments</a></li>
+            <li class="nav-item"><a class="nav-link show" href="#solid-tab2" data-toggle="tab" id="appointment-perform">Performing</a>
+            </li>
+        </ul>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card-box">
+                    <div class="tab-content">
+                        <div class="tab-pane show active" id="solid-tab1">
+                            <div class="table-responsive">
+                                <table id="appointment-datatables" class="table table-striped table-bordered"
+                                       style="width:100%">
+                                    <thead>
+                                    <tr>
+                                        <th>Appointment ID</th>
+                                        <th>Patient Name</th>
+                                        <th>Age</th>
+                                        <th>Speciality</th>
+                                        <th>Appointment Date</th>
+                                        <th>Appointment Time</th>
+                                        <th>Status</th>
+                                        <!--										<th class="text-right">Action</th>-->
+                                    </tr>
+                                    </thead>
+                                    <tbody id="appointment-container">
 
-									</tbody>
-								</table>
+                                    </tbody>
+                                </table>
 
-							</div>
-						</div>
+                            </div>
+                        </div>
 
-						<div class="tab-pane show" id="solid-tab2">
-							<div class="profile-view mb-4">
-								<div class="profile-img-wrap">
-									<div class="profile-img">
-										<a href="#"><img class="avatar" src="" alt=""></a>
-									</div>
-								</div>
-								<div class="profile-basic">
-									<div class="row">
-										<div class="col-md-5">
-											<div class="profile-info-left">
-												<h3 class="user-name m-t-0 mb-0" id="patient-name"></h3>
-												<div class="staff-id" id="patient-age"></div>
-												<div class="staff-id" id="patient-id"></div>
-												<div class="staff-msg"><a href="#" class="btn btn-outline-secondary">Patient's history</a></div>
-											</div>
-										</div>
-										<div class="col-md-7">
-											<ul class="personal-info">
-												<li>
-													<span class="title">Phone:</span>
-													<span class="text" id="patient-phone"></span>
-												</li>
-												<li>
-													<span class="title">Email:</span>
-													<span class="text"><a href="#" id="patient-email"></a></span>
-												</li>
-												<li>
-													<span class="title">Address:</span>
-													<span class="text" id="patient-address"></span>
-												</li>
-												<li>
-													<span class="title">Gender:</span>
-													<span class="text" id="patient-gender"></span>
-												</li>
-											</ul>
-										</div>
-									</div>
-								</div>
-							</div>
+                        <div class="tab-pane show" id="solid-tab2">
+                            <div class="profile-view mb-4">
+                                <div class="profile-img-wrap">
+                                    <div class="profile-img">
+                                        <a href="#"><img class="avatar" src="" alt=""></a>
+                                    </div>
+                                </div>
+                                <div class="profile-basic">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="profile-info-left">
+                                                <h3 class="user-name m-t-0 mb-0" id="patient-name"></h3>
+                                                <div class="staff-id" id="patient-age"></div>
+                                                <div class="staff-id" id="patient-id"></div>
+                                                <div class="staff-msg">
+                                                    <button href="#" class="btn btn-outline-secondary"
+                                                            data-toggle="modal"
+                                                            data-target="#exampleModalPatientHistory">Patient's history
+                                                    </button>
+                                                </div>
+                                                <!--	modal-->
+                                                <div class="modal fade" id="exampleModalPatientHistory" tabindex="-1"
+                                                     role="dialog" aria-labelledby="exampleModalLabel"
+                                                     aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="">Patient's history</h5>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                        aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body d-flex justify-content-center">
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <div class="card-box profile-header">
+                                                                            <div class="profile-view">
+                                                                                <div class="profile-img-wrap">
+                                                                                    <div class="profile-img">
+                                                                                        <a href="#"><img class="avatar"
+                                                                                                         src="assets/img/doctor-03.jpg"
+                                                                                                         alt=""></a>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="profile-basic">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-5">
+                                                                                            <div class="profile-info-left">
+                                                                                                <h3 class="user-name m-t-0 mb-0">
+                                                                                                    Cristina Groves</h3>
+                                                                                                <small class="text-muted">Gynecologist</small>
+                                                                                                <div class="staff-id">
+                                                                                                    Employee ID :
+                                                                                                    DR-0001
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-7">
+                                                                                            <ul class="personal-info">
+                                                                                                <li>
+                                                                                                    <span class="title">Phone:</span>
+                                                                                                    <span class="text"><a
+                                                                                                            href="#">770-889-6484</a></span>
+                                                                                                </li>
+                                                                                                <li>
+                                                                                                    <span class="title">Email:</span>
+                                                                                                    <span class="text"><a
+                                                                                                            href="#">cristinagroves@example.com</a></span>
+                                                                                                </li>
+                                                                                                <li>
+                                                                                                    <span class="title">Address:</span>
+                                                                                                    <span class="text">714 Burwell Heights Road, Bridge City, TX, 77611</span>
+                                                                                                </li>
+                                                                                                <li>
+                                                                                                    <span class="title">Gender:</span>
+                                                                                                    <span class="text">Female</span>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+																	<div class="col-md-12">
+																		<div class="card-box">
+																			<h3 class="card-title">History appointments</h3>
+																			<div class="experience-box">
+																				<ul class="experience-list">
+																					<li>
+																						<div class="experience-user">
+																							<div class="before-circle"></div>
+																						</div>
+																						<div class="experience-content">
+																							<div class="timeline-content">
+																								<a href="#/"
+																								   class="name">International
+																									College of Medical
+																									Science (UG)</a>
+																								<div>MBBS</div>
+																								<span class="time">2001 - 2003</span>
+																							</div>
+																						</div>
+																					</li>
+																					<li>
+																						<div class="experience-user">
+																							<div class="before-circle"></div>
+																						</div>
+																						<div class="experience-content">
+																							<div class="timeline-content">
+																								<a href="#/"
+																								   class="name">International
+																									College of Medical
+																									Science (PG)</a>
+																								<div>MD - Obstetrics
+																									&amp; Gynaecology
+																								</div>
+																								<span class="time">1997 - 2001</span>
+																							</div>
+																						</div>
+																					</li>
+																				</ul>
+																			</div>
+																		</div>
+																		<div class="card-box mb-0">
+																			<h3 class="card-title">History symptoms</h3>
+																			<div class="experience-box">
+																				<ul class="experience-list">
+																					<li>
+																						<div class="experience-user">
+																							<div class="before-circle"></div>
+																						</div>
+																						<div class="experience-content">
+																							<div class="timeline-content">
+																								<a href="#/"
+																								   class="name">Consultant
+																									Gynecologist</a>
+																								<span class="time">Jan 2014 - Present (4 years 8 months)</span>
+																							</div>
+																						</div>
+																					</li>
+																					<li>
+																						<div class="experience-user">
+																							<div class="before-circle"></div>
+																						</div>
+																						<div class="experience-content">
+																							<div class="timeline-content">
+																								<a href="#/"
+																								   class="name">Consultant
+																									Gynecologist</a>
+																								<span class="time">Jan 2009 - Present (6 years 1 month)</span>
+																							</div>
+																						</div>
+																					</li>
+																					<li>
+																						<div class="experience-user">
+																							<div class="before-circle"></div>
+																						</div>
+																						<div class="experience-content">
+																							<div class="timeline-content">
+																								<a href="#"
+																								   class="name">Consultant
+																									Gynecologist</a>
+																								<span class="time">Jan 2004 - Present (5 years 2 months)</span>
+																							</div>
+																						</div>
+																					</li>
+																				</ul>
+																			</div>
+																		</div>
+																	</div>
+                                                                </div>
 
-<!--							body-->
-							<h4 class="payslip-title">Appointment <span id="appointment-id"></span></h4>
-							<div class="col-lg-6 m-b-20">
-								<div>
-									<h4 class="mb-0"><strong>Symptom(s)</strong><span class="text"><small><a href="#" data-toggle="modal" data-target="#exampleModalSymptom" id="symptom-edit"> Edit</a></small></span></h4>
-									<!-- Modal -->
-									<div class="modal fade" id="exampleModalSymptom" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-										<div class="modal-dialog" role="document">
-											<div class="modal-content">
-												<div class="modal-header">
-													<h5 class="modal-title" id="exampleModalLabel">Symptom edit</h5>
-													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-														<span aria-hidden="true">&times;</span>
-													</button>
-												</div>
-												<div class="modal-body d-flex justify-content-center">
-													<select multiple="multiple" id="select-symptom" name="my-select[]">
 
-													</select>
-												</div>
-												<div class="modal-footer">
-													<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-													<button type="button" class="btn btn-primary" id="add-symptom"
-															onclick="saveSymptomToAppointment(0)"
-													>Update symptoms</button>
-													<!--												hidden button-->
-<!--													<button type="button" class="hidden-button"-->
-<!--															th:attr="onclick=|loadSymptomToAppointment(${appointment.appId})|"-->
-<!--															hidden="hidden"-->
-<!--													>Hidden button</button>-->
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<ul class="list-unstyled" id="symptoms">
-									<li>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                        data-dismiss="modal">Close
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
-									</li>
-								</ul>
-								<div>
-									<h4 class="mb-0"><strong>Examination(s)</strong><span class="text"><small><a href="#" data-toggle="modal" data-target="#exampleModalExamination" id="examination-edit"> Edit</a></small></span></h4>
-									<!-- Modal -->
-									<div class="modal fade" id="exampleModalExamination" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-										<div class="modal-dialog" role="document">
-											<div class="modal-content">
-												<div class="modal-header">
-													<h5 class="modal-title" id="exampleModalExaminationLabel">Examination edit</h5>
-													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-														<span aria-hidden="true">&times;</span>
-													</button>
-												</div>
-												<div class="modal-body d-flex justify-content-center">
-													<select multiple="multiple" id="select-examination" name="my-select[]">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <ul class="personal-info">
+                                                <li>
+                                                    <span class="title">Phone:</span>
+                                                    <span class="text" id="patient-phone"></span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Email:</span>
+                                                    <span class="text"><a href="#" id="patient-email"></a></span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Address:</span>
+                                                    <span class="text" id="patient-address"></span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Gender:</span>
+                                                    <span class="text" id="patient-gender"></span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-													</select>
-												</div>
-												<div class="modal-footer">
-													<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-													<button type="button" class="btn btn-primary" id="add-examination"
-															onclick="saveExaminationToAppointment(0)"
-													>Add examinations</button>
-<!--													<button type="button" class="hidden-button"-->
-<!--															th:attr="onclick=|loadExaminationToAppointment(${appointment.appId})|"-->
-<!--															hidden="hidden"-->
-<!--													>Hidden button</button>-->
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<ul class="list-unstyled" id="examinations">
-									<li>
-									</li>
-								</ul>
+                            <!--							body-->
+                            <h4 class="payslip-title">Appointment <span id="appointment-id"></span></h4>
+                            <div class="col-lg-6 m-b-20">
+                                <div>
+                                    <h4 class="mb-0"><strong>Symptom(s)</strong><span class="text"><small><a href="#"
+                                                                                                             data-toggle="modal"
+                                                                                                             data-target="#exampleModalSymptom"
+                                                                                                             id="symptom-edit"> Edit</a></small></span>
+                                    </h4>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModalSymptom" tabindex="-1" role="dialog"
+                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Symptom edit</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body d-flex justify-content-center">
+                                                    <select multiple="multiple" id="select-symptom" name="my-select[]">
 
-							</div>
+                                                    </select>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">Close
+                                                    </button>
+                                                    <button type="button" class="btn btn-primary" id="add-symptom"
+                                                            onclick="saveSymptomToAppointment(0)"
+                                                    >Update symptoms
+                                                    </button>
+                                                    <!--												hidden button-->
+                                                    <!--													<button type="button" class="hidden-button"-->
+                                                    <!--															th:attr="onclick=|loadSymptomToAppointment(${appointment.appId})|"-->
+                                                    <!--															hidden="hidden"-->
+                                                    <!--													>Hidden button</button>-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul class="list-unstyled" id="symptoms">
+                                    <li>
 
-<!--							<div class="col-sm-6">-->
-<!--								<ul class="list-unstyled">-->
-<!--									<li>-->
-<!--										<h4 class="mb-0"><strong>Conclusion</strong></h4>-->
-<!--									</li>-->
-<!--									<li>-->
-<!--										<textarea class="form-control" rows="5" id="comment"></textarea>-->
-<!--									</li>-->
-<!--								</ul>-->
-<!--								<div>-->
-<!--									<h4 class="mb-0"><strong>Prescription</strong><span class="text"><small><a href="#" data-toggle="modal" data-target="#exampleModalExamination"> Edit</a></small></span></h4>-->
-<!--									<table class="table table-bordered">-->
-<!--										<tbody>-->
-<!--										<tr>-->
-<!--											<td><strong>Phenorbabital, 30mg</strong> <span class="float-right">24 tablet</span></td>-->
-<!--										</tr>-->
-<!--										<tr>-->
-<!--											<td><strong>Aspirin 3.6g</strong> <span class="float-right">12 capsules</span></td>-->
-<!--										</tr>-->
-<!--										<tr>-->
-<!--											<td><strong>Avoid alcohol</strong> <span class="float-right"></span></td>-->
-<!--										</tr>-->
-<!--										</tbody>-->
-<!--									</table>-->
-<!--								</div>-->
-<!--							</div>-->
-<!--							end body-->
-						</div>
-					</div>
-				</div>
+                                    </li>
+                                </ul>
+                                <div>
+                                    <h4 class="mb-0"><strong>Examination(s)</strong><span class="text"><small><a
+                                            href="#" data-toggle="modal" data-target="#exampleModalExamination"
+                                            id="examination-edit"> Edit</a></small></span></h4>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModalExamination" tabindex="-1" role="dialog"
+                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalExaminationLabel">
+                                                        Examination edit</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body d-flex justify-content-center">
+                                                    <select multiple="multiple" id="select-examination"
+                                                            name="my-select[]">
 
-	
+                                                    </select>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">Close
+                                                    </button>
+                                                    <button type="button" class="btn btn-primary" id="add-examination"
+                                                            onclick="saveExaminationToAppointment(0)"
+                                                    >Add examinations
+                                                    </button>
+                                                    <!--													<button type="button" class="hidden-button"-->
+                                                    <!--															th:attr="onclick=|loadExaminationToAppointment(${appointment.appId})|"-->
+                                                    <!--															hidden="hidden"-->
+                                                    <!--													>Hidden button</button>-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul class="list-unstyled" id="examinations">
+                                    <li>
+                                    </li>
+                                </ul>
 
-			</div>
-		</div>
-	</div>
-	<script src="/assets/js/jquery.quicksearch.js"></script>
-	<script src="/assets/js/jquery.multi-select.js"></script>
-	<script src="/assets/js/atmosphere.js"></script>
-	<script src="/assets/js/phuong.js"></script>
+                            </div>
+                            <div class="modal fade bd-example-modal-lg" id="exampleModalExamFinish" tabindex="-1"
+                                 role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Examination details</h5>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="card-box profile-header">
+                                                <h4 class="payslip-title" id="examination-detail-exam-name"></h4>
+                                                <div class="row">
+                                                    <div class="col-md-5">
+                                                        <div class="profile-view">
+                                                            <div class="profile-img-wrap">
+                                                                <div class="profile-img">
+                                                                    <a href="#"><img class="avatar" src="" alt=""></a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="profile-basic">
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <div class="profile-info-left">
+                                                                            <h3 class="user-name m-t-0 mb-0"
+                                                                                id="examination-detail-patient-name"></h3>
+                                                                            <div class="staff-id"
+                                                                                 id="examination-detail-patient-age"></div>
+                                                                            <div class="staff-id"
+                                                                                 id="examination-detail-patient-gender"></div>
+                                                                            <div class="staff-id"
+                                                                                 id="examination-detail-examinator"></div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="mt-4">
+                                                            <ul class="list-unstyled">
+                                                                <li>
+                                                                    <h4 class="mb-0"><strong>Content</strong></h4></li>
+                                                                <li id="examination-detail-exam-content"></li>
+                                                            </ul>
+                                                            <ul class="list-unstyled">
+                                                                <li>
+                                                                    <h4 class="mb-0"><strong>Result</strong></h4></li>
+                                                                <li id="examination-detail-exam-result"></li>
+                                                            </ul>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-sm-7">
+                                                        <ul class="list-unstyled">
+                                                            <li>
+                                                                <div id="carouselExampleIndicators"
+                                                                     class="carousel slide" data-ride="carousel">
+
+                                                                    <ol class="carousel-indicators"
+                                                                        id="carousel-indicators">
+
+                                                                    </ol>
+                                                                    <div class="carousel-inner" id="carousel-container">
+                                                                    </div>
+                                                                    <a class="carousel-control-prev"
+                                                                       href="#carouselExampleIndicators" role="button"
+                                                                       data-slide="prev">
+                                                                        <span class="carousel-control-prev-icon"
+                                                                              aria-hidden="true"></span>
+                                                                        <span class="sr-only">Previous</span>
+                                                                    </a>
+                                                                    <a class="carousel-control-next"
+                                                                       href="#carouselExampleIndicators" role="button"
+                                                                       data-slide="next">
+                                                                        <span class="carousel-control-next-icon"
+                                                                              aria-hidden="true"></span>
+                                                                        <span class="sr-only">Next</span>
+                                                                    </a>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--							<div class="col-sm-6">-->
+                            <!--								<ul class="list-unstyled">-->
+                            <!--									<li>-->
+                            <!--										<h4 class="mb-0"><strong>Conclusion</strong></h4>-->
+                            <!--									</li>-->
+                            <!--									<li>-->
+                            <!--										<textarea class="form-control" rows="5" id="comment"></textarea>-->
+                            <!--									</li>-->
+                            <!--								</ul>-->
+                            <!--								<div>-->
+                            <!--									<h4 class="mb-0"><strong>Prescription</strong><span class="text"><small><a href="#" data-toggle="modal" data-target="#exampleModalExamination"> Edit</a></small></span></h4>-->
+                            <!--									<table class="table table-bordered">-->
+                            <!--										<tbody>-->
+                            <!--										<tr>-->
+                            <!--											<td><strong>Phenorbabital, 30mg</strong> <span class="float-right">24 tablet</span></td>-->
+                            <!--										</tr>-->
+                            <!--										<tr>-->
+                            <!--											<td><strong>Aspirin 3.6g</strong> <span class="float-right">12 capsules</span></td>-->
+                            <!--										</tr>-->
+                            <!--										<tr>-->
+                            <!--											<td><strong>Avoid alcohol</strong> <span class="float-right"></span></td>-->
+                            <!--										</tr>-->
+                            <!--										</tbody>-->
+                            <!--									</table>-->
+                            <!--								</div>-->
+                            <!--							</div>-->
+                            <!--							end body-->
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <script src="/assets/js/jquery.quicksearch.js"></script>
+    <script src="/assets/js/jquery.multi-select.js"></script>
+    <script src="/assets/js/phuong_doctor.js"></script>
 </div>
 </body>
 </html>

@@ -79,14 +79,8 @@ public class AdminController {
 		cal.add(Calendar.YEAR, -18);
 		Date dateBefore18Years = cal.getTime();
 		employee.setDob(dateBefore18Years);
-		employee.setStatus("1");
-		//bo sung do thieu mapping
-//		Long specialityId = employee.getSpecialityId();
-//		Long positionId = employee.getPositionId();
-//		Speciality speciality = specialityRepository.findById(specialityId).get();
-//		Position position = positionRepository.findById(positionId).get();
-//		employee.setSpeciality(speciality);
-//		employee.setPosition(position);
+		employee.setStatus(true);
+		employee.setGender('m');
 		
 		List<Speciality> specialities =  specialityRepository.findByPositionId((long) 1);
 		List<Position> positions =  positionRepository.findAll();
@@ -123,7 +117,6 @@ public class AdminController {
             return "admin/employee-create";
         } else {
         	employee.setImagePath(file.getOriginalFilename());
-//        	doctor.setPosition(positionRepository.getOne(1));
         	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         	Calendar cal = Calendar.getInstance();
         	try {
@@ -137,8 +130,9 @@ public class AdminController {
         		e.printStackTrace();
         	}
         	if (file.isEmpty()) {
-              return "redirect:error.html";
-        	}
+//              return "redirect:error.html";
+				return "admin/employee-create";
+			}
   
           try {
               // Get the file and save it somewhere
@@ -196,7 +190,7 @@ public class AdminController {
         		}
         	}
         	employeeRepository.save(employee);
-        	return "redirect:admin/admin/doctor";
+        	return "redirect:/admin/doctor";
         }
 
 	}
@@ -230,7 +224,9 @@ public class AdminController {
 			Long intId = Long.valueOf(id);
 			Employee employee = employeeRepository.findById(intId).get();
 			if (employee !=null) {
-				employeeRepository.delete(employee);
+				employee.setStatus(false);
+				employeeRepository.save(employee);
+//				employeeRepository.delete(employee);
 				return true;
 			} else {
 				return false;

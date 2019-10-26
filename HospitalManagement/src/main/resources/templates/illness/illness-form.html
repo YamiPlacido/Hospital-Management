@@ -3,7 +3,7 @@
 	layout:decorate="~{layouts/main}" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Illness form</title>
 </head>
 <body>
 	<div layout:fragment="content">
@@ -17,20 +17,25 @@
 			<div class="row">
 				<div class="col-lg-8 offset-lg-2">
 					<form th:object="${illness}"
-						th:action="@{/admin/illness/illness/save}" method="post">
+						th:action="@{/admin/illness/illness/save}" method="post"
+						id="illForm">
 						<input type="hidden" th:field="*{illnessId}" />
 
 						<div class="row">
 							<div class="col-sm-6">
 								<div class="form-group">
 									<label>Illness Name <span class="text-danger">*</span></label>
-									<input class="form-control" type="text" th:field="*{name}">
+									<input class="form-control required" type="text"
+										th:field="*{name}" data-msg-required="This field is required."
+										aria-required="true" id="name">
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label>Description</label> <input class="form-control"
-										type="text" th:field="*{description}">
+									<label>Description</label> <input class="form-control required"
+										type="text" th:field="*{description}"
+										data-msg-required="This field is required."
+										aria-required="true" id="description">
 								</div>
 							</div>
 						</div>
@@ -43,9 +48,13 @@
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label>Illness Type</label> 
-									<select th:field="*{illnessType.illnessTypeId}" class="form-control">
-										<option th:each="i:${illnessType}" th:value="${i.illnessTypeId}" th:utext=${i.name} />
+									<label>Illness Type</label> <select
+										th:field="*{illnessType.illnessTypeId}"
+										class="form-control required"
+										data-msg-required="This field is required."
+										aria-required="true" id="illcate">
+										<option th:each="i:${illnessType}"
+											th:value="${i.illnessTypeId}" th:utext=${i.name} />
 									</select>
 								</div>
 							</div>
@@ -59,6 +68,27 @@
 				</div>
 			</div>
 		</div>
+		<script type="text/javascript"
+			src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
+		<script th:inline="javascript">
+			$(document).ready(function() {
+				validation();
+			});
+			function validation() {
+				$("#illForm").validate({
+					rules : {
+						name : "required",
+						description : "required",
+						illcate : "required",
+					},
+					messages : {
+						name : "required",
+						description : "required",
+						illcate : "required",
+					}
+				});
+			}
+		</script>
 	</div>
 </body>
 </html>

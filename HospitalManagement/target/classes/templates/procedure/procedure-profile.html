@@ -40,6 +40,7 @@
 													<div class="staff-id">Age: 47</div>
 													<div class="staff-id" id="PatientID">Patient ID :
 														PA-0001</div>
+													<a th:href="@{/admin/procedure/index/}">Return to Appointment List</a>
 												</div>
 											</div>
 											<div class="col-md-7">
@@ -75,9 +76,7 @@
 								<ul class="list-unstyled">
 									<li>
 										<h4 class="mb-0">
-											<strong>Symptom(s)</strong><span class="text"><small><a
-													href="#" data-toggle="modal"
-													data-target="#exampleModalSymptom"> Edit</a></small></span>
+											<strong>Symptom(s)</strong>
 										</h4> <!-- Modal -->
 										<div class="modal fade" id="exampleModalSymptom" tabindex="-1"
 											role="dialog" aria-labelledby="exampleModalLabel"
@@ -118,9 +117,7 @@
 								<ul class="list-unstyled">
 									<li>
 										<h4 class="mb-0">
-											<strong>Examination(s)</strong><span class="text"><small><a
-													href="#" data-toggle="modal"
-													data-target="#exampleModalExamination"> Edit</a></small></span>
+											<strong>Examination(s)</strong>
 										</h4> <!-- Modal -->
 										<div class="modal fade" id="exampleModalExamination"
 											tabindex="-1" role="dialog"
@@ -339,7 +336,7 @@
 					<div class="modal-body">
 						<h3>Diagnosis</h3>
 						<form th:object="${diag}" th:action="@{/admin/diagnosis/save}"
-							method="post">
+							method="post" id="diagForm">
 							<input type="hidden" th:field="*{diagnosisId}" id="DiagnosisID" />
 
 							<input type="hidden" th:field="*{appointment.appId}" id="AppID" />
@@ -355,20 +352,13 @@
 											<option th:each="i:${illsug}" th:value="${i.illnessId}"
 												th:utext=${i.name} />
 										</select>
-										<!-- 										<select th:field="*{illness.illnessId}" class="form-control" multiple="multiple" id="multi-illness"> -->
-										<!-- 											<option th:each="i : ${illsug}" -->
-
-										<!-- 												th:value="${i.illnessId}" th:utext="${i.name}">Illness -->
-										<!-- 												name -->
-										<!-- 											</option> -->
-										<!-- 										</select> -->
-
 									</div>
 								</div>
 								<div class="col-sm-6">
 									<div class="form-group">
-										<label>Degree</label> <input class="form-control" type="text"
-											th:field="*{degree}" id="degree">
+										<label>Degree</label> <input class="form-control required" type="text"
+											data-msg-required="This field is required."
+											aria-required="true" th:field="*{degree}" id="degree">
 									</div>
 								</div>
 							</div>
@@ -435,9 +425,13 @@
 								</div>
 								<div class="col-sm-6">
 									<div class="form-group">
-										<label>Illness</label> <input class="form-control" type="text"
-											th:field="*{illness.illnessId}" id="TreatIllID">
-									</div>
+										<label>Illness to treat</label>											
+										<select th:field="*{illness.illnessId}"
+											class="form-control" id="TreatIllID">
+											<option th:each="t:${diagall}"
+												th:value="${t.illness.illnessId}" th:utext=${t.illness.name} />
+										</select>
+									</div>	
 								</div>
 							</div>
 							<div class="row">
@@ -619,13 +613,26 @@
 			</div>
 		</div>
 
+		<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
 		<script th:inline="javascript">
 		$(document).ready(function() {
 			loadPatientDetail();
 			loadDiagnosis();
 			loadTreatment();
 			loadPres();
+			validation();
 		});
+		
+		function validation(){
+			$("#diagForm").validate({
+				rules: {
+					degree: "required",
+				},
+				messages: {
+					degree: "required",
+				}
+			});
+		}
 		
 		function loadPatientDetail(){
 			var appID = [[${appID}]] ;

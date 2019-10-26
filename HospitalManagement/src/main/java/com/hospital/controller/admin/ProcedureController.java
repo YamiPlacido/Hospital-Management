@@ -64,6 +64,7 @@ public class ProcedureController {
 		PrescriptionMedicine pres = new PrescriptionMedicine();
 		List<IllnessSuggestionDTO> illsug = dservice.ListAllSuggestIllnessByExaminationResult(patientID);
 		List<Illness> illall = iservice.ListAllIllness();
+		List<Diagnosi> diagall = dservice.ListAllDiagnosisByAppID(appID);
 		List<TreatmentSuggestionDTO> treatsug = tservice.ListAllSuggestTreatmentByAppID(appID);
 		List<TreatmentMethod> treatall = tmservice.ListAllTreatmentMethod();
 		List<Medicine> presall = mservice.getAllMedicine();
@@ -72,6 +73,7 @@ public class ProcedureController {
 		mv.addObject("diag",diag);
 		mv.addObject("illsug",illsug);
 		mv.addObject("illall",illall);
+		mv.addObject("diagall",diagall);
 		mv.addObject("treatment",treatment);
 		mv.addObject("treatsug",treatsug);
 		mv.addObject("treatall",treatall);

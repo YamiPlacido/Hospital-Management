@@ -40,7 +40,7 @@
 													<div class="staff-id">Age: 47</div>
 													<div class="staff-id" id="PatientID">Patient ID :
 														PA-0001</div>
-													<a th:href="@{/admin/procedure/index/}">Return to Appointment List</a>
+													<a class="btn btn-primary" th:href="@{/admin/procedure/index/}">Return to Appointment List</a>
 												</div>
 											</div>
 											<div class="col-md-7">
@@ -403,7 +403,7 @@
 					<div class="modal-body">
 						<h3>Treatment</h3>
 						<form th:object="${treatment}"
-							th:action="@{/admin/treatment/save}" method="post">
+							th:action="@{/admin/treatment/save}" method="post" id="treatForm">
 							<input type="hidden" th:field="*{treatmentId}" id="TreatmentId" />
 
 							<input type="hidden" th:field="*{appointment.appId}"
@@ -417,7 +417,9 @@
 											onclick="suggestCheckTreat(this)">Treatment
 										Suggestion <select
 											th:field="*{treatmentMethod.treatmentMethodId}"
-											class="form-control" id="treatsug" disabled>
+											class="form-control required" id="treatsug" disabled
+											data-msg-required="This field is required."
+											aria-required="true">
 											<option th:each="t:${treatsug}"
 												th:value="${t.treatmentMethodId}" th:utext=${t.name} />
 										</select>
@@ -427,7 +429,9 @@
 									<div class="form-group">
 										<label>Illness to treat</label>											
 										<select th:field="*{illness.illnessId}"
-											class="form-control" id="TreatIllID">
+											class="form-control required" id="TreatIllID"
+											data-msg-required="This field is required."
+											aria-required="true">
 											<option th:each="t:${diagall}"
 												th:value="${t.illness.illnessId}" th:utext=${t.illness.name} />
 										</select>
@@ -438,7 +442,9 @@
 								<div class="col-sm-6">
 									<div class="form-group">
 										<select th:field="*{treatmentMethod.treatmentMethodId}"
-											class="form-control" id="treatall">
+											class="form-control required" id="treatall"
+											data-msg-required="This field is required."
+											aria-required="true">
 											<option th:each="t:${treatall}"
 												th:value="${t.treatmentMethodId}" th:utext=${t.name} />
 										</select>
@@ -446,12 +452,6 @@
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-sm-6">
-									<div class="form-group">
-										<label>Treatment Time</label> <input class="form-control"
-											type="date" th:field="*{treatmentTime}" id="TreatmentTime">
-									</div>
-								</div>
 								<div class="col-sm-6">
 									<div class="form-group">
 										<label>Follow up date</label> <input class="form-control"
@@ -489,7 +489,7 @@
 					<div class="modal-body">
 						<h3>Prescription</h3>
 						<form th:object="${pres}" th:action="@{/admin/prescription/save}"
-							method="post">
+							method="post" id="presForm">
 							<input type="hidden" th:field="*{pmId}" id="PMId" /> <input
 								type="hidden" th:field="*{appointment.appId}" id="PresAppID" />
 
@@ -499,8 +499,11 @@
 										<label>Prescription for patient</label> <input type="checkbox"
 											value="Bike" id="checkSuggest"
 											onclick="suggestCheckPres(this)">Prescription
-										Suggestion <select th:field="*{medicine.medicineId}"
-											class="form-control" id="pressug" disabled>
+										Suggestion 
+										<select th:field="*{medicine.medicineId}"
+											class="form-control required" id="pressug" disabled
+											data-msg-required="This field is required."
+											aria-required="true">
 											<option th:each="t:${pressug}" th:value="${t.medicineId}"
 												th:utext=${t.name} />
 										</select>
@@ -508,16 +511,20 @@
 								</div>
 								<div class="col-sm-6">
 									<div class="form-group">
-										<label>Dosage</label> <input class="form-control" type="text"
-											th:field="*{dosage}" id="Dosage">
+										<label>Dosage</label> <input class="form-control required" type="text"
+											th:field="*{dosage}" id="Dosage"
+											data-msg-required="This field is required."
+											aria-required="true">
 									</div>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-sm-6">
 									<div class="form-group">
-										<select th:field="*{medicine.medicineId}" class="form-control"
-											id="presall">
+										<select th:field="*{medicine.medicineId}" class="form-control required"
+											id="presall"
+											data-msg-required="This field is required."
+											aria-required="true">
 											<option th:each="t:${presall}" th:value="${t.medicineId}"
 												th:utext=${t.name} />
 										</select>
@@ -527,14 +534,18 @@
 							<div class="row">
 								<div class="col-sm-6">
 									<div class="form-group">
-										<label>Quantity</label> <input class="form-control"
-											type="number" th:field="*{quantity}" id="Quantity">
+										<label>Quantity</label> <input class="form-control required"
+											type="number" th:field="*{quantity}" id="Quantity"
+											data-msg-required="This field is required."
+											aria-required="true">
 									</div>
 								</div>
 								<div class="col-sm-6">
 									<div class="form-group">
-										<label>Price</label> <input class="form-control" type="number"
-											th:field="*{price}" id="Price">
+										<label>Price</label> <input class="form-control required" type="number"
+											th:field="*{price}" id="Price"
+											data-msg-required="This field is required."
+											aria-required="true">
 									</div>
 								</div>
 							</div>
@@ -632,6 +643,36 @@
 					degree: "required",
 				}
 			});
+			
+			$("#treatForm").validate({
+				rules: {
+					treatsug: "required",
+					treatall: "required",
+					TreatIllID: "required",
+				},
+				messages: {
+					treatsug: "required",
+					treatall: "required",
+					TreatIllID: "required",
+				}
+			});
+			
+			$("#presForm").validate({
+				rules: {
+					pressug: "required",
+					Dosage: "required",
+					presall: "required",
+					Quantity: "required",
+					Price: "required",
+				},
+				messages: {
+					pressug: "required",
+					Dosage: "required",
+					presall: "required",
+					Quantity: "required",
+					Price: "required",
+				}
+			});
 		}
 		
 		function loadPatientDetail(){
@@ -714,7 +755,8 @@
 					"<tr>"+
 					"<td><strong>"+ data[i].medicine.name +"</strong>"+ 
 					"<span class='float-right'>"+data[i].quantity+"</span></td>"+
-					"<td>" + "<a href='#' onclick='ViewPresDetail(" + data[i].medicine.medicineId + ")' >Detail</a>"+
+					"<td>" + 
+// 					"<a href='#' onclick='ViewPresDetail(" + data[i].medicine.medicineId + ")' >Detail</a>"+
 					"<a href='#' onclick='EditPres("+data[i].pmId+")'><i class='fa fa-pencil m-r-5'></i>Edit        </a>"+
 					"<a href='#' onclick='DeleteRecordPres("+data[i].pmId+")'><i class='fa fa-trash-o m-r-5'></i>Delete</a>"+
 					"</tr>";

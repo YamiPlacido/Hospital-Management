@@ -1,9 +1,12 @@
 package com.hospital.controller.admin;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -68,13 +71,16 @@ public class TreatmentController {
 	}
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public ModelAndView SaveData(Treatment tm) {
+	public ModelAndView SaveData(@ModelAttribute("treatment") Treatment tm) {
+		Timestamp stamp = new Timestamp(System.currentTimeMillis());
+		Date date = new Date(stamp.getTime());
+		tm.setTreatmentTime(date);
 		try {
 			service.SaveData(tm);
 		}catch(Exception ex){
 			throw ex;
 		}
-		return new ModelAndView("redirect:/admin/treatment/treatment-index");
+		return new ModelAndView("redirect:/admin/procedure/profile/"+tm.getAppointment().getAppId());
 	}
 	
 	@RequestMapping(value="/delete", method = RequestMethod.POST)

@@ -2,6 +2,9 @@ package com.hospital.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 
@@ -31,6 +34,7 @@ public class Treatment implements Serializable {
 	private Date createdDate;
 
 	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name="followup_date")
 	private Date followupDate;
 	
@@ -46,6 +50,7 @@ public class Treatment implements Serializable {
 	private Date modifiedDate;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name="treatment_time")
 	private Date treatmentTime;
 

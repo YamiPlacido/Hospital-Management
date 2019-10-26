@@ -20,12 +20,6 @@ table#dataTable tbody tr:hover {
 				<li class="nav-item"><a class="nav-link active"
 					href="#bottom-justified-tab1" data-toggle="tab">Patients in
 						charge</a></li>
-				<li class="nav-item"><a class="nav-link"
-					href="#bottom-justified-tab2" data-toggle="tab">Doctor
-						Diagnosis</a></li>
-				<li class="nav-item"><a class="nav-link"
-					href="#bottom-justified-tab3" data-toggle="tab">Doctor
-						Treatment</a></li>
 			</ul>
 			<div class="tab-content">
 				<div class="tab-pane show active" id="bottom-justified-tab1">
@@ -46,7 +40,7 @@ table#dataTable tbody tr:hover {
 								<button class="btn btn-primary" id="patientDetail">Detail</button>
 								<button class="btn btn-primary" id="patientProfile">Illness
 									Profile</button>
-								<button class="btn btn-primary" id="create">Reject
+								<button class="btn btn-primary" id="profileReject">Reject
 									Profile</button>
 								<table
 									class="table table-border table-striped custom-table mb-0"
@@ -57,15 +51,15 @@ table#dataTable tbody tr:hover {
 											<th>Patient</th>
 											<th>Doctor</th>
 											<th>Date</th>
-											<th>Time</th>
-											<th>Location</th>
+											<th>Shift</th>
 											<th>Status</th>
+											<th>Stage</th>										
 											<th>Note</th>
-											<th>Created Date</th>
 											<th>Created By</th>
-											<th>Modified Date</th>
+											<th>Created Date</th>
 											<th>Modified By</th>
-											<th class="text-right">Action</th>
+											<th>Modified Date</th>
+<!-- 											<th class="text-right">Action</th> -->
 										</tr>
 									</thead>
 									<tbody id="SetList">
@@ -81,17 +75,13 @@ table#dataTable tbody tr:hover {
 											<td></td>
 											<td></td>
 											<td></td>
-											<td></td>
+											<td></td>											
 										</tr>
 									</tbody>
 								</table>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="tab-pane" id="bottom-justified-tab2">Tab content 2
-				</div>
-				<div class="tab-pane" id="bottom-justified-tab3">Tab content 3
 				</div>
 			</div>
 		</div>
@@ -114,9 +104,9 @@ table#dataTable tbody tr:hover {
                         <h4 class="page-title">Patient Profile</h4>
                     </div>
 
-                    <div class="col-sm-5 col-6 text-right m-b-30">
-                        <a href="edit-profile.html" class="btn btn-primary btn-rounded"><i class="fa fa-plus"></i> Edit Profile</a>
-                    </div>
+<!--                     <div class="col-sm-5 col-6 text-right m-b-30"> -->
+<!--                         <a href="edit-profile.html" class="btn btn-primary btn-rounded"><i class="fa fa-plus"></i> Edit Profile</a> -->
+<!--                     </div> -->
                 </div>
                 <div class="card-box profile-header">
                     <div class="row">
@@ -132,9 +122,8 @@ table#dataTable tbody tr:hover {
                                         <div class="col-md-5">
                                             <div class="profile-info-left">
                                                 <h3 class="user-name m-t-0 mb-0" id="PatientName">Cristina Groves</h3>
-                                                <small class="text-muted">Gynecologist</small>
+<!--                                                 <small class="text-muted">Gynecologist</small> -->
                                                 <div class="staff-id" id="PatientID">Employee ID : DR-0001</div>
-                                                <div class="staff-msg"><a href="chat.html" class="btn btn-primary">Send Message</a></div>
                                             </div>
                                         </div>
                                         <div class="col-md-7">
@@ -170,8 +159,6 @@ table#dataTable tbody tr:hover {
 				<div class="profile-tabs">
 					<ul class="nav nav-tabs nav-tabs-bottom">
 						<li class="nav-item"><a class="nav-link active" href="#about-cont" data-toggle="tab">About</a></li>
-						<li class="nav-item"><a class="nav-link" href="#bottom-tab2" data-toggle="tab">Profile</a></li>
-						<li class="nav-item"><a class="nav-link" href="#bottom-tab3" data-toggle="tab">Messages</a></li>
 					</ul>
 
 					<div class="tab-content">
@@ -202,54 +189,48 @@ table#dataTable tbody tr:hover {
                                 </ul>
                             </div>
                         </div>
-                        <div class="card-box mb-0">
-                            <h3 class="card-title">Experience</h3>
-                            <div class="experience-box">
-                                <ul class="experience-list">
-                                    <li>
-                                        <div class="experience-user">
-                                            <div class="before-circle"></div>
-                                        </div>
-                                        <div class="experience-content">
-                                            <div class="timeline-content">
-                                                <a href="#/" class="name">Consultant Gynecologist</a>
-                                                <span class="time">Jan 2014 - Present (4 years 8 months)</span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="experience-user">
-                                            <div class="before-circle"></div>
-                                        </div>
-                                        <div class="experience-content">
-                                            <div class="timeline-content">
-                                                <a href="#/" class="name">Consultant Gynecologist</a>
-                                                <span class="time">Jan 2009 - Present (6 years 1 month)</span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="experience-user">
-                                            <div class="before-circle"></div>
-                                        </div>
-                                        <div class="experience-content">
-                                            <div class="timeline-content">
-                                                <a href="#/" class="name">Consultant Gynecologist</a>
-                                                <span class="time">Jan 2004 - Present (5 years 2 months)</span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+<!--                         <div class="card-box mb-0"> -->
+<!--                             <h3 class="card-title">Experience</h3> -->
+<!--                             <div class="experience-box"> -->
+<!--                                 <ul class="experience-list"> -->
+<!--                                     <li> -->
+<!--                                         <div class="experience-user"> -->
+<!--                                             <div class="before-circle"></div> -->
+<!--                                         </div> -->
+<!--                                         <div class="experience-content"> -->
+<!--                                             <div class="timeline-content"> -->
+<!--                                                 <a href="#/" class="name">Consultant Gynecologist</a> -->
+<!--                                                 <span class="time">Jan 2014 - Present (4 years 8 months)</span> -->
+<!--                                             </div> -->
+<!--                                         </div> -->
+<!--                                     </li> -->
+<!--                                     <li> -->
+<!--                                         <div class="experience-user"> -->
+<!--                                             <div class="before-circle"></div> -->
+<!--                                         </div> -->
+<!--                                         <div class="experience-content"> -->
+<!--                                             <div class="timeline-content"> -->
+<!--                                                 <a href="#/" class="name">Consultant Gynecologist</a> -->
+<!--                                                 <span class="time">Jan 2009 - Present (6 years 1 month)</span> -->
+<!--                                             </div> -->
+<!--                                         </div> -->
+<!--                                     </li> -->
+<!--                                     <li> -->
+<!--                                         <div class="experience-user"> -->
+<!--                                             <div class="before-circle"></div> -->
+<!--                                         </div> -->
+<!--                                         <div class="experience-content"> -->
+<!--                                             <div class="timeline-content"> -->
+<!--                                                 <a href="#/" class="name">Consultant Gynecologist</a> -->
+<!--                                                 <span class="time">Jan 2004 - Present (5 years 2 months)</span> -->
+<!--                                             </div> -->
+<!--                                         </div> -->
+<!--                                     </li> -->
+<!--                                 </ul> -->
+<!--                             </div> -->
+<!--                         </div> -->
                     </div>
                 </div>
-						</div>
-						<div class="tab-pane" id="bottom-tab2">
-							Tab content 2
-						</div>
-						<div class="tab-pane" id="bottom-tab3">
-							Tab content 3
 						</div>
 					</div>
 				</div>          
@@ -278,19 +259,14 @@ table#dataTable tbody tr:hover {
 												json[i][1] = json[i].patient.name;
 												json[i][2] = json[i].employee.firstName;
 												json[i][3] = json[i].date;
-												json[i][4] = json[i].time;
-												json[i][5] = json[i].location;
-												json[i][6] = json[i].status;
+												json[i][4] = json[i].shiftId;
+												json[i][5] = json[i].status;
+												json[i][6] = json[i].stage;
 												json[i][7] = json[i].note;
 												json[i][8] = json[i].createdBy;
 												json[i][9] = json[i].createdDate;
 												json[i][10] = json[i].modifiedBy;
 												json[i][11] = json[i].modifiedDate;
-												json[i][12] = json[i].status;
-												// 												json[i][5] = "<a href='/admin/illness/illness/update/"+json[i].illnessId+"'><i class='fa fa-pencil m-r-5'></i>Edit        </a>"
-												// 														+ "<a href='#' onclick='DeleteRecord("
-												// 														+ json[i].illnessId
-												// 														+ ")'><i class='fa fa-trash-o m-r-5'></i>Delete</a>";
 											}
 											return json;
 										}
@@ -310,62 +286,74 @@ table#dataTable tbody tr:hover {
 		        });
 				
 				$('#patientDetail').click( function () {
-		            var tr = $(this).closest('tr');
-		            var row = table.row(tr);
-					var url = "/admin/patient/getPatientDetailByID/" + table.row('.selected').data().patient.patientId;
-		            var url2 = "/admin/patient/getAllPatientIllnessByPatientID/" + table.row('.selected').data().patient.patientId;		            
-// 					var url2 = "/admin/patient/getPatientDetailByID/1";
+		            if(table.$('tr').hasClass('selected')==false){
+		            	alert("Please select patient to continue the process!");
+		            }else{
+			            var tr = $(this).closest('tr');
+			            var row = table.row(tr);
+						var url = "/admin/patient/getPatientDetailByID/" + table.row('.selected').data().patient.patientId;
+			            var url2 = "/admin/patient/getAllPatientIllnessByPatientID/" + table.row('.selected').data().patient.patientId;		            
+//	 					var url2 = "/admin/patient/getPatientDetailByID/1";
 
-		            $("#ModalTitle").html("Patient Detail");
-		            $("#MyModal").modal();
-		            $.ajax({
-		                type: "GET",
-		                url: url,
-		                success: function (data) {		                    
-			                $("#PatientName").html(data.name);
-			                $("#PatientID").html("Patient ID: "+data.patientId);
-			                $("#Phone").html(data.phone);
-			                $("#Email").html(data.email);
-			                $("#DOB").html(data.dob);
-			                $("#Address").html(data.address);
-				            $.ajax({
-				                type: "GET",
-				                url: url2,
-				                success: function (data) {
-				                	var SetData = $("#IllnessList");
-				                	for (var i = 0; i < data.length; i++) {
-				                		
-				                        var list = 
-		                             "<li>"+
-		                                "<div class='experience-user'>"+
-		                                    "<div class='before-circle'></div>"+
-		                                "</div>"+
-		                                "<div class='experience-content'>"+
-		                                    "<div class='timeline-content'>"+
-		                                        "<a href='#/' class='name'>Illness: "+data[i].name+"</a>"+
-		                                        "<div>Degree: "+data[i].degree+"</div>"+
-		                                        "<span class='time'>"+data[i].dianogsisTime+"</span>"+
-		                                    "</div>"+
-		                                "</div>"+
-		                            "</li>";
-				                	
-//		 		                        $("#LoadingStatus").remove();
-				                        SetData.append(list);
-//		 		                        $("#LoadingStatus").html(" ");
-				                }
-				                }
-				            })
-
-		                }
-		            });
-
+			            $("#ModalTitle").html("Patient Detail");
+			            $("#MyModal").modal();
+			            $.ajax({
+			                type: "GET",
+			                url: url,
+			                success: function (data) {		                    
+				                $("#PatientName").html(data.name);
+				                $("#PatientID").html("Patient ID: "+data.patientId);
+				                $("#Phone").html(data.phone);
+				                $("#Email").html(data.email);
+				                $("#DOB").html(data.dob);
+				                $("#Address").html(data.address);
+					            $.ajax({
+					                type: "GET",
+					                url: url2,
+					                success: function (data) {
+					                	var SetData = $("#IllnessList");
+					                	for (var i = 0; i < data.length; i++) {
+					                		
+					                        var list = 
+			                             "<li>"+
+			                                "<div class='experience-user'>"+
+			                                    "<div class='before-circle'></div>"+
+			                                "</div>"+
+			                                "<div class='experience-content'>"+
+			                                    "<div class='timeline-content'>"+
+			                                        "<a href='#/' class='name'>Illness: "+data[i].name+"</a>"+
+			                                        "<div>Degree: "+data[i].degree+"</div>"+
+			                                        "<span class='time'>"+data[i].dianogsisTime+"</span>"+
+			                                    "</div>"+
+			                                "</div>"+
+			                            "</li>";
+					                	
+//			 		                        $("#LoadingStatus").remove();
+					                        SetData.append(list);
+//			 		                        $("#LoadingStatus").html(" ");
+					                }
+					                }
+					            })
+			                }
+			            });
+		            }
 		        });
 				
 				$('#patientProfile').click( function () {
-		            var tr = $(this).closest('tr');
-		            var row = table.row(tr);
-					var url = "/admin/procedure/profile/" + table.row('.selected').data().appId;
-					window.location.href = url;
+		            if(table.$('tr').hasClass('selected')==false){
+		            	alert("Please select patient to continue the process!");
+		            }else{
+		            	var tr = $(this).closest('tr');
+		            	var row = table.row(tr);
+						var url = "/admin/procedure/profile/" + table.row('.selected').data().appId;
+						window.location.href = url;
+		            }
+		        });
+				
+				$('#profileReject').click( function () {
+		            
+					alert("This function is currently in development!");
+
 		        });
 			}
 			

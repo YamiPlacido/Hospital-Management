@@ -51,7 +51,7 @@ public class ExaminatorController {
     @ResponseBody
     @PostMapping("/api/examination/content")
     public void editExamContent(
-            @RequestParam("ex_id") long ex_id,
+            @RequestParam("ex_id") Long ex_id,
             @RequestParam(value = "content", required = false) String content) {
         Examination ex = examinationRepository.findById(ex_id).get();
         ex.setContent(content);
@@ -62,7 +62,7 @@ public class ExaminatorController {
 	@ResponseBody
 	@PostMapping("/api/examination/result")
 	public void editExamResult(
-			@RequestParam("ex_id") long ex_id,
+			@RequestParam("ex_id") Long ex_id,
 			@RequestParam(value = "content", required = false) String content) {
 		Examination ex = examinationRepository.findById(ex_id).get();
 		ex.setResult(content);
@@ -73,7 +73,7 @@ public class ExaminatorController {
     @ResponseBody
     @PostMapping("/api/examination")
     public void finishExamination(
-            @RequestParam("ex_id") long ex_id,
+            @RequestParam("ex_id") Long ex_id,
             @RequestParam(value = "content", required = false) String content) {
         Examination ex = examinationRepository.findById(ex_id).get();
         ex.setStage("FINISHED");

@@ -99,7 +99,7 @@
 												json[i][4] = json[i].phone;
 												json[i][5] = json[i].email;
 												json[i][6] = json[i].identityCard;
-												json[i][7] = json[i].status == 1 ? 'Active' : 'Inactive';
+												json[i][7] = json[i].status == 1 ? '<span class="custom-badge status-green">Active</span>' : '<span class="custom-badge status-red">Inactive</span>';
 												json[i][8] = "<a href='/admin/patient/update/"+json[i].patientId+"' class='btn btn-primary btn-outline'><i class='fa fa-pencil'></i></a>"
 														+ " "
 														+ "<a href='#' onclick='DisableRecord("+ json[i].patientId+")' class='btn btn-danger btn-outline'><i class='fa fa-trash'></i></a>";

@@ -18,7 +18,7 @@
 				<form class="form-horizontal" th:object="${infor}" method="post"
 					enctype="multipart/form-data">
 					<div class="panel-body">
-					<h5>Export Doctor schedule <a id="export" class='btn btn-primary btn-outline'><i class='fa fa-calendar'></i></a></h5>
+<!-- 					<h5>Export Doctor schedule <a id="export" class='btn btn-primary btn-outline'><i class='fa fa-calendar'></i></a></h5> -->
 					<h5>Export Doctor schedule <a th:href="@{'/admin/appointment/addAppointment?SelectedDoctor=' + ${infor.employee.employeeId}}" class='btn btn-primary btn-outline'><i class='fa fa-calendar-o'></i></a></h5>
 						<table id="table-compare" style="align-content: center;">
 							<tr style="height: 28px">

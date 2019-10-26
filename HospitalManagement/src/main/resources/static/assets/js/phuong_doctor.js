@@ -1,17 +1,68 @@
 $(document).ready(function () {
     $("#load-more").click();
+    currentDoctor = $('#userSessionId').val();
     currentDoctor = 3;
     currentExaminator = 9;
     loadAppointments(currentDoctor);
-    loadExaminations(currentExaminator);
     callCKEditor();
+
+    $("#employee-form").validate({
+        rules: {
+            firstName: {
+                required: true,
+                minlength: 2
+            },
+            lastName: {
+                required: true,
+                minlength: 2
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            address: {
+                required: true,
+                minlength: 5
+            },
+            phone: {
+                required: true,
+                digits: true
+            },
+            file: {
+                required: true
+            }
+        },
+        messages: {
+            firstName: {
+                required: "First name is required",
+                minlength: "Name need more than 2 characters"
+            },
+            lastName: {
+                required: "Last name is required",
+                minlength: "Name need more than 2 characters"
+            },
+            email: {
+                required: "Email is required",
+                email: "Please enter valid email"
+            },
+            address: {
+                required: "Address is required",
+                minlength: "Name need more than 5 characters"
+            },
+            phone: {
+                required: "Phone is required",
+                digits: "Phone must be a number"
+            },
+            file: {
+                required: "Image is required"
+            }
+        }
+    });
 });
 
 var currentPage = 1;
 //value on frontend
 var currentDoctor;
-var currentExaminator;
-var currentExamination;
 var currentAppointment;
 var symptomSelections;
 var examinationSelections;
@@ -22,19 +73,9 @@ var symptomValueSelected = [];
 var examinationValueSelected = [];
 var finishedExamList  = [];
 var currentSender;
+const CONTEXTPATH = "http://localhost:8080";
 
-$("#examination-perform").click(
-    function (event) {
-        event.preventDefault();
-        if (currentExamination==null){
-            alert("Please select one exam to perform.");
-            return false;
-        } else {
-            this.click();
-            return true;
-        }
-    }
-);
+
 $("#appointment-perform").click(
     function (event) {
         event.preventDefault();
@@ -66,11 +107,6 @@ $("#load-more").click(function () {
                     + '"></a>';
                 insert_content += '</div>';
                 insert_content += '<div class="dropdown profile-action">';
-                // insert_content += '<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>';
-                // insert_content += '<div class="dropdown-menu dropdown-menu-right">';
-                // insert_content += '<a class="dropdown-item" href="/doctor/edit/' + val.employeeId + '"><i class="fa fa-pencil m-r-5"></i> Edit</a>';
-                // insert_content += '<a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_doctor"><i class="fa fa-trash-o m-r-5"></i> Delete</a>';
-                // insert_content += '</div>';
                 insert_content += '</div>';
                 insert_content += '<h4 class="doctor-name text-ellipsis"><a href="#">'
                     + val.firstName + ' ' + val.lastName
@@ -145,69 +181,29 @@ function loadAppointments(doctor_id) {
     });
 }
 
-function loadExaminations(examinator_id) {
-    $.ajax({
-        type: "GET",
-        url: '/admin/examinator/api/examinations/' + examinator_id,
-        contentType: 'application/json',
-        success: function (data, status) {
-            $('#exams-container').empty();
-
-            var insert_content;
-
-            jQuery.each(data, function (i, val) {
-                var age = calculateAge(val.patient.dob);
-                var date = changeSpringDateToJSDate(val.date).toShortFormat();
-                insert_content = '<tr>';
-                insert_content += '<td>' + val.id + '</td>';
-                insert_content += '<td><a href="#" onclick="performExamination('+ val.id +')">' + val.patient.name + '</a></td>';
-                insert_content += '<td>' + age + '</td>';
-                insert_content += '<td>'+val.examinationType.name+'</td>';
-                insert_content += '<td>' + date + '</td>';
-                insert_content += '<td>10:00am - 11:00am</td>';
-                insert_content += '<td><span class="custom-badge status-red">' + val.stage + '</span></td>';
-                insert_content += '</tr>';
-
-                $("#exams-container")
-                    .append(insert_content);
-                insert_content = '';
-            });
-            examTable = $('#exam-datatables').DataTable({
-                destroy: true,
-                retrieve: true,
-                "fnDrawCallback": function (oSettings) {
-                    if ($('#exams-container tr').length < 11) {
-                        $('.dataTables_paginate').hide();
-                    }
-                }
-            });
-        }
-    });
-}
-
 function deleteDoctor(id) {
     $.ajax({
         type: "DELETE",
         url: '/admin/api/doctor?id=' + id,
         //				contentType : 'application/json',
         success: function (data, status) {
-            window.location.replace("http://localhost:8080/doctor");
+            window.location.replace(CONTEXTPATH+"/admin/doctor");
         }
     });
 }
 
-$("#position").change(function () {
-    var id = $("#position").val();
+$("#positionId").change(function () {
+    var id = $("#positionId").val();
     $.ajax({
         type: "GET",
         url: '/system/speciality?position_id=' + id,
         success: function (data, status) {
-            $("#speciality").empty();
+            $("#specialityId").empty();
             var insert_content;
             jQuery.each(data, function (i, val) {
                 insert_content = '<option value="' + val.specialityId + '">' + val.name + '</option>';
 
-                $("#speciality")
+                $("#specialityId")
                     .append(
                         insert_content);
                 insert_content = '';
@@ -300,7 +296,7 @@ function renewExaminationSelection(){
 function loadSymptomsToModal() { //ok
     $.ajax({
         type: "GET",
-        url: '/system/symptoms',
+        url: '/system/symptoms/type_one',
         contentType: 'application/json',
         success: function (data, status) {
             jQuery.each(data, function (i, val) {
@@ -468,7 +464,9 @@ function loadExaminationToAppointment(app_id) {
                 }
                 else if (val.stage == "FINISHED"){
                     $("#examinations")
-                        .append('<li>'+ val.examinationType.name+'  <a href="#" class="custom-badge status-green">FINISHED</a></li>');
+                        .append('<li>'+ val.examinationType.name+'  <a href="#" class="custom-badge status-green" ' +
+                            'data-toggle="modal" data-target="#exampleModalExamFinish" ' +
+                            'id="finish-test" onclick="loadExaminationToModal('+val.id+')">FINISHED</a></li>');
                 }
                 //gán giá trị cho examinationValueSelected
                 examinationValueSelected.push(val.examinationType.id.toString());
@@ -477,13 +475,7 @@ function loadExaminationToAppointment(app_id) {
     });
 }
 
-//doctor: lấy các giá trị đã được gán vào examinationValueSelected để gán vào multiselect
-// $("#examination-edit").click(function(){
-//     console.log(examinationValueSelected);
-//     $('#select-examination').multiSelect('select', examinationValueSelected);
-// });
-
-//chuyển sang tab appointment perform
+//doctor: chuyển sang tab appointment perform
 function performAppointment(id) {
     if (currentAppointment == null && id == null){
         alert("Please chose one appointment you want to perform.");
@@ -522,111 +514,7 @@ function getAppointmentById(id) {
         }
     });
 }
-//examinator: chuyển sang tab perform
-function performExamination(id) {
-    if (currentExamination == null && id == null){
-        alert("Please chose one examination you want to perform.");
-    } else if (id != null) {
-        currentExamination = id;
-    }
-    // console.log(currentExamination);
-    getExaminationById(currentExamination);
-}
 
-//examinator: lấy thông tin đổ vào examination perform
-function getExaminationById(id) {
-    $.ajax({
-        type: "GET",
-        url: '/admin/examinator/api/examination/' + id,
-        contentType: 'application/json',
-        success: function (data, status) {
-            currentAppointment = data.appointment.appId;
-            $("#patient-name").text(data.patient.name);
-            $("#patient-age").text("Age: "+calculateAge(data.patient.dob));
-            // console.log(data.patient.patientId);
-            $("#patient-id").text("Patient Id: "+data.patient.patientId);
-            $("#patient-phone").text(data.patient.phone);
-            $("#patient-email").text(data.patient.email);
-            $("#patient-address").text(data.patient.address);
-            if (data.patient.gender == "f"){
-                $("#patient-gender").text("Female");
-            } else {
-                $("#patient-gender").text("Male");
-            }
-            $("#exam-name").text(data.examinationType.name);
-            // $("#exam-sender").text(data.examinationType.name);
-            $("#exam-id").text(data.id);
-            $("#exam-time").text(new Date(data.date).toUTCString());
-            $("#exam-content").html(data.content);
-            $("#exam-result").html(data.result);
-            //click vào tab
-            $("#examination-perform").click();
-        }
-    });
-}
-//examinator: lưu lại content
-function saveContentOfExam() {
-    var content = CKEDITOR.instances['editor1'].getData();
-    // var content = $("#editor1").val();
-    $.ajax({
-        type: "POST",
-        data : {
-            ex_id : currentExamination,
-            content: content
-        },
-        url: '/admin/examinator/api/examination/content',
-        // contentType: 'application/json',
-        success: function (data, status) {
-            getExaminationById(currentExamination);
-            $('#exampleModalContent').modal('hide');
-        }
-    });
-}
-
-//lưu lại result
-function saveResultOfExam() {
-    var content = CKEDITOR.instances['editor2'].getData();
-    $.ajax({
-        type: "POST",
-        data : {
-            ex_id : currentExamination,
-            content: content
-        },
-        url: '/admin/examinator/api/examination/result',
-        // contentType: 'application/json',
-        success: function (data, status) {
-            getExaminationById(currentExamination);
-            $('#exampleModalResult').modal('hide');
-        }
-    });
-}
-function loadContentOfExamToCKEditor() {
-    $.ajax({
-        type: "GET",
-        url: '/admin/examinator/api/examination/' + currentExamination,
-        contentType: 'application/json',
-        success: function (data, status) {
-            CKEDITOR.instances['editor1'].setData(data.content);
-        }
-    });
-}
-
-function loadResultOfExamToCKEditor() {
-    $.ajax({
-        type: "GET",
-        url: '/admin/examinator/api/examination/' + currentExamination,
-        contentType: 'application/json',
-        success: function (data, status) {
-            CKEDITOR.instances['editor2'].setData(data.result);
-        }
-    });
-}
-
-$("#finish-test").click(function(){
-    if (currentExamination != null){
-     loadExaminationToModal(currentExamination);
-    }
-});
 
 //hiển thị toàn bộ exam dạng modal trước khi lưu
 function loadExaminationToModal(id) {
@@ -686,322 +574,4 @@ function loadExaminationToModal(id) {
             // $("#examination-detail-examination-perform").click();
         }
     });
-}
-
-//kết thúc examination
-function saveExamination() {
-    $.ajax({
-        type: "POST",
-        data : {
-            ex_id: currentExamination,
-            content: "OK"
-        },
-        url: '/admin/examinator/api/examination',
-        success: function (data, status) {
-            examTable.destroy();
-            $('#exams-container').empty();
-            loadExaminations(currentExaminator);
-            $('#exampleModalExamFinish').modal('hide');
-            $("#examination-today").click();
-            //send message để bên doctor update lại examination
-            sendBroadcast(currentExaminator,"LOADEXAMINATIONTOAPPOINTMENT",currentDoctor);
-        }
-    });
-}
-
-//upload nhiều ảnh cùng lúc
-function ajaxSubmitForm() {
-    if (allFilesIsEmpty()){
-        setResult(" You need at least one file to upload","text-danger");
-        return false;
-    } else {
-                // Get form
-                $("#ex_id").val(currentExamination);
-                var form = $('#fileUploadForm')[0];
-
-                var data = new FormData(form);
-
-                // $("#submitButton").prop("disabled", true);
-
-                $.ajax({
-                    type: "POST",
-                    enctype: 'multipart/form-data',
-                    url: "/admin/api/uploadMultiFiles/examination",
-                    data: data,
-
-                    // prevent jQuery from automatically transforming the data into a query string
-                    processData: false,
-                    contentType: false,
-                    cache: false,
-                    timeout: 1000000,
-                    success: function(data, textStatus, jqXHR) {
-                        setResult(" Upload success","text-success");
-
-                        console.log("SUCCESS : ", data);
-                        // $("#submitButton").prop("disabled", false);
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        $("#result").html(jqXHR.responseText);
-                        console.log("ERROR : ", jqXHR.responseText);
-                    }
-                });
-            }
-}
-
-function setResult(text, status) {
-    $("#result").removeClass();
-    $("#result").addClass(status);
-    $("#result").hide();
-    $("#result").text(text);
-    $('#result').fadeIn(500);
-    $('#result').delay(2000).fadeOut(400);
-}
-
-$('.files').on('change', function() {
-    if (!fileSizeOK(this)){
-        setResult(" File must be between less than 4 MB to upload","text-danger");
-        this.value = '';
-    }
-    if (!filesNameAreUnique(getAllFilename())) {
-        setResult(" You have duplicated files","text-danger");
-        this.value = '';
-    }
-});
-// function allFilesSizeIsOK() {
-//     var files = (".files");
-//     var checked = true;
-//     $(files).each(function () {
-//         if (!fileSizeOK(this)){
-//             checked = false;
-//             return false;
-//         }
-//     });
-//     // console.log(checked);
-//     return checked;
-// }
-
-function allFilesIsEmpty() {
-    var files = (".files");
-    var checked = true;
-    $(files).each(function () {
-        if (!fileIsEmpty(this)){
-            checked = false;
-            return false;
-        }
-    });
-    // console.log(checked);
-    return checked;
-}
-function fileSizeOK(input_file) {
-    const size =
-        (input_file.files[0].size / 1024 / 1024).toFixed(2);
-    if (size > 4) {
-        return false;
-    } else {
-        return true;
-    }
-}
-function fileIsEmpty(name) {
-    if ($(name).get(0).files.length === 0) {
-        console.log("No files selected.");
-        return true;
-    } else {
-        return false;
-    }
-}
-
-function getAllFilename() {
-    var items = [];
-    var files = $(".files").get();
-    for (var i =0;i<files.length;i++){
-        if (files[i].files[0]!=null){
-            items.push(files[i].files[0].name);
-        }
-    }
-    return items;
-}
-
-function filesNameAreUnique(items) {
-    var uniqueItems = Array.from(new Set(items));
-    if (items.length == uniqueItems.length){
-        return true;
-    } else {
-        return false;
-    }
-}
-
-
-
-
-//UTILITY
-function getElementByXpath(path) {
-    return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-}
-Date.prototype.toShortFormat = function () {
-
-    var month_names = ["Jan", "Feb", "Mar",
-        "Apr", "May", "Jun",
-        "Jul", "Aug", "Sep",
-        "Oct", "Nov", "Dec"];
-
-    var day = this.getDate();
-    var month_index = this.getMonth();
-    var year = this.getFullYear();
-
-    return "" + day + " " + month_names[month_index] + " " + year;
-}
-
-Date.prototype.addHours = function(h) {
-    this.setTime(this.getTime() + (h*60*60*1000));
-    return this;
-}
-
-function changeSpringDateToJSDate(springDateString) {
-    var dateStr = JSON.stringify(springDateString).substr(1, 10);
-    var date = new Date(dateStr.replace(/-/g, '\/'));
-    date.addHours(8);
-    return date;
-}
-
-function calculateAge(springDateString) {
-    return new Date().getFullYear() - changeSpringDateToJSDate(springDateString).getFullYear();
-}
-
-
-
-//LIBRARY
-function callCKEditor(){
-    if($("#" + "editor1").length != 0  &&
-        $("#" + "editor2").length != 0 ) {
-        CKEDITOR.replace('editor1', {
-            height: 260,
-            width: 700,
-        });
-        CKEDITOR.replace('editor2', {
-            height: 260,
-            width: 700,
-        });
-    }
-}
-
-$('#carouselExampleIndicators').carousel({
-    interval: false
-});
-
-
-
-
-
-
-// PUSH NOTIFICATION
-var header = $('#header');
-var content = $('#content');
-var input = $('#input');
-var status = $('#status');
-var myName = false;
-var author = null;
-var logged = false;
-var socket = atmosphere;
-var subSocket;
-var transport = 'websocket';
-
-// We are now ready to cut the request
-var request = {
-    url : '/chat',
-    contentType : "application/json",
-    logLevel : 'debug',
-    transport : transport,
-    trackMessageLength : true,
-    reconnectInterval : 5000
-};
-
-request.onOpen = function(response) {
-    console.log('Atmosphere connected using ' + response.transport);
-    transport = response.transport;
-
-    // Carry the UUID. This is required if you want to call
-    // subscribe(request) again.
-    request.uuid = response.request.uuid;
-};
-
-request.onClientTimeout = function(r) {
-    console.log('Client closed the connection after a timeout. Reconnecting in '
-        + request.reconnectInterval);
-    subSocket
-        .push(atmosphere.util
-            .stringifyJSON({
-                author : author,
-                message : 'is inactive and closed the connection. Will reconnect in '
-                    + request.reconnectInterval
-            }));
-    input.attr('disabled', 'disabled');
-    setTimeout(function() {
-        subSocket = socket.subscribe(request);
-    }, request.reconnectInterval);
-};
-
-request.onReopen = function(response) {
-    console.log('Atmosphere re-connected using ' + response.transport);
-};
-
-// For demonstration of how you can customize the fallbackTransport using
-// the onTransportFailure function
-request.onTransportFailure = function(errorMsg, request) {
-    atmosphere.util.info(errorMsg);
-    console.log('Atmosphere Chat. Default transport is WebSocket, fallback is '
-        + request.fallbackTransport);
-
-    request.fallbackTransport = "long-polling";
-};
-
-request.onClose = function(response) {
-    console.log('Server closed the connection after a timeout');
-    if (subSocket) {
-        subSocket.push(JSON.stringify({
-            author : author,
-            message : 'disconnecting'
-        }));
-    }
-    input.attr('disabled', 'disabled');
-};
-
-request.onError = function(response) {
-    console.log('Sorry, but there\'s some problem with your '
-        + 'socket or the server is down');
-    logged = false;
-};
-
-request.onReconnect = function(request, response) {
-    console.log('Connection lost, trying to reconnect. Trying to reconnect '
-        + request.reconnectInterval);
-};
-
-//react dựa trên nội dung message
-request.onMessage = function(response) {
-
-    var message = response.responseBody;
-    try {
-        var json = JSON.parse(message);
-    } catch (e) {
-        console.log('This doesn\'t look like a valid JSON: ', message);
-        return;
-    }
-
-    if (json.receiver == currentExaminator && json.message == "LOADEXAMINATIONS"){
-            loadExaminations(currentExaminator);
-    } else if (json.receiver == currentDoctor  && json.message == "LOADEXAMINATIONTOAPPOINTMENT") {
-            loadExaminationToAppointment(currentAppointment);
-            loadExaminationsToModal();
-    }
-};
-
-subSocket = socket.subscribe(request);
-
-//gửi message đến tất cả các client
-function sendBroadcast(sender, message, receiver){
-    subSocket.push(JSON.stringify({
-        sender : sender,
-        receiver: receiver,
-        message : message
-     }));
 }

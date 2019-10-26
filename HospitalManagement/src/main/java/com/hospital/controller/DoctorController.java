@@ -60,7 +60,7 @@ public class DoctorController {
 
 	@ResponseBody
 	@GetMapping(value = "/api/appointment/{app_id}")
-	public Appointment viewExaminationById(@PathVariable("app_id") long id) {
+	public Appointment viewExaminationById(@PathVariable("app_id") Long id) {
 //		Appointment appointment  = new Appointment();
 //		appointment = appointmentRepository.findById(id).get();
 //		Patient patient = patientRepository.findById(appointment.getPatientId()).get();
@@ -102,7 +102,7 @@ public class DoctorController {
 	@ResponseBody
 	@PostMapping("/api/examination")
 	public String editAppointmentExaminations(
-			@RequestParam("appId") long appId,
+			@RequestParam("appId") Long appId,
 			@RequestParam(value="selectedValue[]",required = false) String[] selectedValue) {
 		List<AppointmentExamination> list = new ArrayList<>();
 		AppointmentExamination entity;
@@ -112,7 +112,7 @@ public class DoctorController {
 		if (list.size()>0){
 			for (int i = 0; i < list.size(); i++) {
 				AppointmentExamination appointmentExamination = list.get(i);
-				long ex_id = appointmentExamination.getExaminationId();
+				Long ex_id = appointmentExamination.getExaminationId();
 				//check examination stage
 				String stage = examinationRepository.findById(ex_id).get().getStage();
 				if (stage != "FINISHED"){ //stage khác finished thì delete ở 2 bảng
@@ -131,11 +131,11 @@ public class DoctorController {
 			for (int i = 0; i < selectedValue.length; i++) {
 				int examination_type_id = Integer.parseInt(selectedValue[i]);
 				System.out.println("EXAMINATION_TYPE_ID "+ examination_type_id);
-				long examination_id;
+				Long examination_id;
 				//kiểm tra xem có chưa, chưa có thì insert
 				if (examinationRepository.findExaminationByAppointmentAndExaminationType(appId,examination_type_id).size()==0){
-						long examinator_id = employeeRepository.findExaminatorsByExaminationType(examination_type_id).get(0).getEmployeeId();
-						long patient_id = appointmentRepository.findById(appId).get().getPatient().getPatientId();
+						Long examinator_id = employeeRepository.findExaminatorsByExaminationType(examination_type_id).get(0).getEmployeeId();
+						Long patient_id = appointmentRepository.findById(appId).get().getPatient().getPatientId();
 						System.out.println("EXAMINATOR_ID"+examinator_id+"PATIENT_ID"+patient_id);
 						//điền mới vào bảng examination
 						examinationRepository.insertExamination(appId,examination_type_id,examinator_id,patient_id);
@@ -163,7 +163,7 @@ public class DoctorController {
 
 	@ResponseBody
 	@GetMapping(value = "/api/appointments/symptom/{app_id}")
-	public List<Symptom> getSymptomsByAppointment(@PathVariable("app_id") long id){
+	public List<Symptom> getSymptomsByAppointment(@PathVariable("app_id") Long id){
 		List<AppointmentSymptom> list = appointmentSymptomRepository.findSymptomByAppointmentId(id);
 		List<Symptom> result = new ArrayList<>();
 		for (int i = 0; i < list.size(); i++) {
@@ -205,7 +205,7 @@ public class DoctorController {
 		System.out.println("Map: " + map.toString());
 		System.out.println("DTO size: " + examinationDTOS.size());
 		for (int i = 0; i < examinationDTOS.size(); i++) {
-			long key = examinationDTOS.get(i).getId();
+			Long key = examinationDTOS.get(i).getId();
 
 			if (map.containsKey(key)){
 				String stage = map.get(key).getStage();

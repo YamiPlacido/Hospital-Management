@@ -121,10 +121,10 @@
 															<textarea cols="80" id="editor1" name="editor1" rows="10" data-sample-short></textarea>
 														</div>
 														<div class="modal-footer">
-															<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-															<button type="button" class="btn btn-primary" id="add-symptom"
-																	onclick="saveContentOfExam()"
-															>Update content</button>
+																	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+																	<button type="button" class="btn btn-primary" id="add-symptom"
+																			onclick="saveContentOfExam()"
+																	>Update content</button>
 														</div>
 													</div>
 												</div>
@@ -224,6 +224,9 @@
 										<div class="modal-content">
 											<div class="modal-header">
 												<h5 class="modal-title" >Save this examinations?</h5>
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
 											</div>
 											<div class="modal-body">
 												<div class="card-box profile-header">
@@ -294,8 +297,8 @@
 												</div>
 											</div>
 											<div class="modal-footer">
-												<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-												<button type="button" class="btn btn-primary" onclick="saveExamination()">Save changes</button>
+												<button type="button" class="btn btn-outline-secondary" data-dismiss="modal" onclick="createPdfResult()">PDF</button>
+												<button type="button" class="btn btn-primary" onclick="finishExamination()">Finish</button>
 											</div>
 										</div>
 									</div>

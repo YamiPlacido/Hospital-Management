@@ -6,9 +6,10 @@ import java.util.List;
 
 public class PatientRecordDTO {
     Patient patient;
-    List<Appointment> appointments;
+    Appointment appointment;
     List<Illness> illnesses;
     List<Symptom> symptoms;
+    List<Examination> examinations;
     List<Prescription> prescriptions;
 
     public Patient getPatient() {
@@ -19,12 +20,20 @@ public class PatientRecordDTO {
         this.patient = patient;
     }
 
-    public List<Appointment> getAppointments() {
-        return appointments;
+    public Appointment getAppointment() {
+        return appointment;
     }
 
-    public void setAppointments(List<Appointment> appointments) {
-        this.appointments = appointments;
+    public void setAppointment(Appointment appointment) {
+        this.appointment = appointment;
+    }
+
+    public List<Examination> getExaminations() {
+        return examinations;
+    }
+
+    public void setExaminations(List<Examination> examinations) {
+        this.examinations = examinations;
     }
 
     public List<Illness> getIllnesses() {

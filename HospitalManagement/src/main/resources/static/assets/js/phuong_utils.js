@@ -1,5 +1,22 @@
 
 //UTILITY
+$( document ).ready(function() {
+    if (window.currentDoctor == null){
+        $.ajax({
+            type: "GET",
+            url: '/admin/api/get-current-id',
+            contentType: 'application/json',
+            success: function (data, status) {
+                window.currentDoctor = parseInt(data);
+                $("#doctor-person-info").attr("href", "/admin/doctor/personal-info/"+window.currentDoctor);
+            }
+        });
+    }
+    // currentDoctor = $('#userSessionId').val();
+    // currentDoctor = 3;
+    // window.currentExaminator = 10;
+    $("#examinator-person-info").attr("href", "/admin/doctor/personal-info/"+window.currentExaminator);
+});
 function getElementByXpath(path) {
     return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 }
@@ -32,7 +49,19 @@ function changeSpringDateToJSDate(springDateString) {
 function calculateAge(springDateString) {
     return new Date().getFullYear() - changeSpringDateToJSDate(springDateString).getFullYear();
 }
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
 
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
 
 
 //LIBRARY
@@ -153,21 +182,86 @@ request.onMessage = function(response) {
         return;
     }
 
-    if (json.receiver == currentExaminator && json.message == "LOADEXAMINATIONS"){
-            loadExaminations(currentExaminator);
-    } else if (json.receiver == currentDoctor  && json.message == "LOADEXAMINATIONTOAPPOINTMENT") {
-            loadExaminationToAppointment(currentAppointment);
-            loadExaminationsToModal();
+    if (json.receiver == window.currentExaminator && json.flag == "LOADEXAMINATIONS"){
+        loadExaminations(window.currentExaminator);
+        createNotify(json.message);
+    } else if (json.receiver == window.currentDoctor  && json.flag == "ONGOING") {
+        loadExaminationToAppointment(currentAppointment);
+        loadExaminationsToModal();
+        createNotify(json.message);
+    } else if (json.receiver == window.currentDoctor  && json.flag == "FINISHED") {
+        loadExaminationToAppointment(currentAppointment);
+        loadExaminationsToModal();
+        createNotify(json.message,"success");
     }
 };
 
 subSocket = socket.subscribe(request);
 
 //gửi message đến tất cả các client
-function sendBroadcast(sender, message, receiver){
+function sendBroadcast(flag, sender, message, receiver){
     subSocket.push(JSON.stringify({
         sender : sender,
         receiver: receiver,
+        flag: flag,
         message : message
      }));
+}
+
+//toast notify
+function createNotify(mesage, option) {
+    $.notify({
+        message: mesage
+    },{
+        type: option,
+        allow_dismiss: false,
+        delay: 3500,
+        offset: {
+            x: 20,
+            y: 60
+        }
+    });
+}
+
+function createTopCenterNotify(mesage, option) {
+    $.notify({
+        message: mesage
+    },{
+        type: option,
+        allow_dismiss: false,
+        z_index: 10000,
+        delay: 3500,
+        offset: {
+            x: 20,
+            y: 60
+        },
+        placement: {
+            from: "top",
+            align: "center"
+        }
+    });
+}
+
+function createTopCenterWarrning(mesage, option) {
+    $.notify({
+        message: mesage
+    },{
+        type: option,
+        allow_dismiss: false,
+        z_index: 10000,
+        delay: 3500,
+        offset: {
+            x: 20,
+            y: 40
+        },
+        placement: {
+            from: "top",
+            align: "center"
+        }
+    });
+}
+
+function openInNewTab(url) {
+    var win = window.open(url, '_blank');
+    win.focus();
 }

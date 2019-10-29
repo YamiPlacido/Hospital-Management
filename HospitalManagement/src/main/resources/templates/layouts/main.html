@@ -16,7 +16,7 @@
 <link rel="stylesheet" type="text/css"
 	href="/assets/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
-
+<link rel="stylesheet" type="text/css" href="/assets/css/animate.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/fullcalendar.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
 <link rel="stylesheet"
@@ -53,6 +53,7 @@
 	<script src="/assets/js/jquery.dataTables.min.js"></script>
 	<script src="/assets/js/dataTables.bootstrap4.min.js"></script>
 	<script src="/assets/js/atmosphere.js"></script>
+	<script src="/assets/js/bootstrap-notify.js"></script>
 	<script src="/assets/js/patient.js"></script>
 	<script src="/assets/js/phuong_utils.js"></script>
 <!-- 	<script src="/assets/js/jquery.quicksearch.js"></script> -->
@@ -243,7 +244,7 @@
 							<span> Doctor </span> <span class="menu-arrow"></span></a>
 							<ul style="display: none;">
 								<li><a th:href="${'/admin/doctor/appointments/'}">Today appointments</a></li>
-								<li><a th:href="${'/admin/doctor/1'}">Personal info</a></li>
+								<li><a th:href="${'/admin/doctor/1'}" id="doctor-person-info">Personal info</a></li>
 								<li><a th:href="${'/admin/procedure/index/'}">Medical Procedure</a></li>	
 							</ul>
 						</li>
@@ -251,7 +252,7 @@
 							<span> Examinator </span> <span class="menu-arrow"></span></a>
 							<ul style="display: none;">
 								<li><a th:href="${'/admin/examinator/examinations/'}">Today examinations</a></li>
-								<li><a th:href="${'/admin/doctor/1'}">Personal info</a></li>
+								<li><a th:href="${'/admin/doctor/1'}" id="examinator-person-info">Personal info</a></li>
 							</ul>
 						</li>
 						<li class="menu-title">Administration</li>

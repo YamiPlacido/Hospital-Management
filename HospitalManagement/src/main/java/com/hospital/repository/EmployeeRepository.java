@@ -1,10 +1,8 @@
 package com.hospital.repository;
 
-import com.hospital.model.ExaminationType;
-import com.hospital.model.Symptom;
+import com.hospital.model.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.hospital.model.Employee;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -27,4 +25,17 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>, Emplo
     public List<Symptom> fillSymptomTypeOne();
     @Query("SELECT s FROM Symptom s where s.symptomTypeId = 2")
     public List<Symptom> fillSymptomTypeTwo();
+    @Query("SELECT et.id FROM SymptomExaminationType se " +
+            "left join ExaminationType et " +
+            "on se.examinationTypeId = et.id " +
+            "WHERE se.symptomId = :id")
+    public List<Long> findExaminationTypeBySymptomId(@Param("id") long symptom_id);
+    @Query(value = "SELECT a.app_id FROM Appointment a where a.patient_id = :patient_id " +
+            "and a.stage = 'FINISHED'",nativeQuery = true)
+    public List<Long> findAllFinishedAppByPatientId(@Param("patient_id") long patient_id);
+    @Query(value = "SELECT e.ex_id FROM Examination e where e.app_id = :app_id " +
+            "and e.stage = 'FINISHED'",nativeQuery = true)
+    public List<Long> findExaminationByAppId(@Param("app_id") long app_id);
+    @Query(value = "SELECT s.symptom_id FROM appointment_symptom s where s.app_id = :app_id",nativeQuery = true)
+    public List<Long> findSymptomIdByAppId(@Param("app_id") long app_id);
 }

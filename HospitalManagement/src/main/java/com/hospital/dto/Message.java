@@ -22,6 +22,8 @@ public class Message {
 
 	private String message;
 
+	private String flag;
+
 	private int sender;
 
 	private int receiver;
@@ -58,5 +60,13 @@ public class Message {
 
 	public void setTime(long time) {
 		this.time = time;
+	}
+
+	public String getFlag() {
+		return flag;
+	}
+
+	public void setFlag(String flag) {
+		this.flag = flag;
 	}
 }

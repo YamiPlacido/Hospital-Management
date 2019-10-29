@@ -59,6 +59,7 @@
                                     <div class="form-group">
                                         <label>Date of Birth</label>
                                         <div class="cal-icon">
+<!--                                            <input type="text" class="form-control datetimepicker" th:field="*{dob}">-->
                                             <input type="date" class="form-control" th:field="*{dob}">
                                             <span class="error" th:if="${#fields.hasErrors('dob')}"
                                                   th:errors="*{dob}">Date Error</span>
@@ -112,7 +113,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label>Avatar</label>
+                                        <label>Avatar <span class="text-danger">*</span></label>
                                         <div class="profile-upload">
                                             <div class="upload-img">
                                                 <img alt="" src="../../static/assets/img/user.jpg">

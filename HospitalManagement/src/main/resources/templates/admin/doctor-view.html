@@ -18,31 +18,90 @@
 						class="fa fa-plus"></i> Add Doctor</a>
 				</div>
 			</div>
-			<div class="row employee-grid" id="employee-container">
-
-				<!-- dynamic content -->
-
-			</div>
+<!--			<div class="row" id="employee-container">-->
 			<div class="row">
-				<div class="col-sm-12">
-					<div class="see-all">
-						<button type="button" class="btn btn-secondary" id="load-more">Load
-							More</button>
+				<div class="col-md-12">
+					<div class="table-responsive">
+						<table
+								class="table table-border table-striped custom-table mb-0" id="dataTable">
+							<thead>
+							<tr>
+								<th></th>
+								<th>Name</th>
+								<th>Age</th>
+								<th>Address</th>
+								<th>Phone</th>
+								<th>Email</th>
+								<th>Status</th>
+								<th></th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+
+							</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
-
-			<!-- <nav aria-label="Page navigation example">
-				<ul class="pagination justify-content-end" id="pagination">
-					<li class="page-item disabled"><a class="page-link" href="#"
-						tabindex="-1">Previous</a></li>
-					<li class="page-item disabled"><a class="page-link" href="#">1</a></li>
-					<li class="page-item"><a class="page-link" href="#">2</a></li>
-					<li class="page-item"><a class="page-link" href="#">Next</a></li>
-				</ul>
-			</nav> -->
+<!--			<div class="row">-->
+<!--				<div class="col-sm-12">-->
+<!--					<div class="see-all">-->
+<!--						<button type="button" class="btn btn-secondary" id="load-more">Load-->
+<!--							More</button>-->
+<!--					</div>-->
+<!--				</div>-->
+<!--			</div>-->
 
 		</div>
+		<script type="text/javascript">
+			$(document).ready(loaddata);
+			function loaddata() {
+				$("#dataTable")
+						.DataTable(
+								{
+									"ajax" : {
+										"url" : '/admin/api/doctor?current_page=' + currentPage,
+										"type" : "GET",
+										"datatype" : "json",
+										"dataSrc" : function(json) {
+											currentPage += 1;
+											var today = new Date();
+											for (var i = 0; i < json.length; i++) {
+												json[i][0] = '<img alt="" class= "avatar" src="/upload/employee/'
+														+ json[i].imagePath
+														+ '">';
+												json[i][1] = "<a href='/admin/doctor/"+json[i].employeeId+"'>" +json[i].firstName + ' '+ json[i].lastName+'</a>';
+												json[i][2] = parseInt(today.getFullYear()) - parseInt(json[i].dob);
+												json[i][3] = json[i].address;
+												json[i][4] = json[i].phone;
+												json[i][5] = json[i].email;
+												json[i][6] = json[i].status == 1 ? '<span class="custom-badge status-green">ACTIVE</span>' : '<span class="custom-badge status-red">INACTIVE</span>';
+												json[i][7] = "<a href='/admin/employee/edit/"+json[i].employeeId+"' class='btn btn-primary btn-outline'><i class='fa fa-pencil'></i></a>";
+											}
+											return json;
+										}
+									},
+									"language" : {
+										"emptyTable" : "No data found, please add new"
+									}
+								});
+			}
+			//Disable
+			// var id;
+			//
+			function ToJavaScriptDate() {
+				var dt = new Date(parseFloat(json[i].dob));
+				return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
+			}
+		</script>
 		<script src="/assets/js/jquery.quicksearch.js"></script>
 		<script src="/assets/js/jquery.multi-select.js"></script>
 		<script src="/assets/js/phuong_doctor.js"></script>

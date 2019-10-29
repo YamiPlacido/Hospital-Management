@@ -154,14 +154,21 @@
 		<script src="/assets/js/appointment.js"></script>
 		<script type="text/javascript">
 		$(document).ready(function() {
+			
 	        $("#form").validate({
 	        	rules: {
 	        			SelectedDoctor: { valueNotEquals: 0 },
-	        			SelectedPatient: { valueNotEquals: 0 }
+	        			SelectedPatient: { valueNotEquals: 0 },
+	        			date : {
+	        				min: "2019-10-31"
+	        			}
 	        		  },
 	        		  messages: {
 	        			  SelectedDoctor: { valueNotEquals: "Doctor is required!" },
-	        			  SelectedPatient: { valueNotEquals: "Patient is required!" }
+	        			  SelectedPatient: { valueNotEquals: "Patient is required!" },
+	        			  date : {
+	        				  min: "Date must be later from now!!!"
+	        			  }
 	        		  }  
 	        });
 	        function alertMessageSave(message) {

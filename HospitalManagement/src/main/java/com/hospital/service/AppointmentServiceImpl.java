@@ -101,7 +101,6 @@ public class AppointmentServiceImpl implements AppointmentService {
 		DoctorScheduleSearchDto doctorScheduleSearchDto = new DoctorScheduleSearchDto();
 		doctorScheduleSearchDto.setEmployeeId(employeeId);
 		doctorScheduleSearchDto.setDateFrom(dateFrom);
-		doctorScheduleSearchDto.setDateTo(addDays(dateFrom, 6));
 		List<DoctorScheduleDetailDto> listDetail = new ArrayList();
 		List<DoctorScheduleDetailDto> listShift1 = new ArrayList();
 		List<DoctorScheduleDetailDto> listShift2 = new ArrayList();
@@ -133,7 +132,6 @@ public class AppointmentServiceImpl implements AppointmentService {
 		infor.setListShift5(listShift5);
 		infor.setListDetail(listDetail);
 		infor.setDateFrom(doctorScheduleSearchDto.getDateFrom());
-		infor.setDateTo(doctorScheduleSearchDto.getDateTo());
 
 		appointmentRepository.exportSchedule(infor);
 
@@ -175,7 +173,6 @@ public class AppointmentServiceImpl implements AppointmentService {
 		infor.setListShift5(listShift5);
 		infor.setListDetail(listDetail);
 		infor.setDateFrom(doctorScheduleSearchDto.getDateFrom());
-		infor.setDateTo(doctorScheduleSearchDto.getDateTo());
 		return infor;
 	}
 

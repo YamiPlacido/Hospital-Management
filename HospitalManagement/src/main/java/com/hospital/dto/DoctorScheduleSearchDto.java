@@ -24,9 +24,6 @@ public class DoctorScheduleSearchDto implements Serializable {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date dateFrom;
 
-	@Temporal(TemporalType.TIMESTAMP) 
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date dateTo;
 
 	public Long getEmployeeId() {
 		return employeeId;
@@ -42,14 +39,6 @@ public class DoctorScheduleSearchDto implements Serializable {
 
 	public void setDateFrom(Date dateFrom) {
 		this.dateFrom = dateFrom;
-	}
-
-	public Date getDateTo() {
-		return dateTo;
-	}
-
-	public void setDateTo(Date dateTo) {
-		this.dateTo = dateTo;
 	}
 
 

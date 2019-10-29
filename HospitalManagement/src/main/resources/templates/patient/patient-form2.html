@@ -20,10 +20,10 @@
 					<div class="col-md-12" style="margin-bottom: 40px;">
 						<div class="profile-img-wrap">
 							<img class="inline-block"
-								th:src="@{'/assets/img/'+ ${patientForm2.imageUrl}}" alt="user">
+								th:src="@{'/upload/patient/'+ ${patientForm2.imageUrl}}" id="path-image" alt="user">
 							<div class="fileupload btn">
 								<span class="btn-text">edit</span>
-								<!--     <input class="upload" type="hidden" th:field="*{imageUrl}"> -->
+								    <input class="upload" id="image-file" type="file" th:field="*{imageUrl}">
 							</div>
 						</div>
 						<div class="profile-basic">
@@ -170,20 +170,59 @@
 			 
 	        //Khi bàn phím được nhấn và thả ra thì sẽ chạy phương thức này
 	        $("#form").validate({
-
 	            rules: {
+	            	name : {
+	            		minlength: 4,
+	            		maxlength: 50
+	            	},
+	            	dob: {
+	            		max: "2019-10-29"
+	            	},
 	                email: {
 	                    email: true
-	                  }
+	                  },
+	                identityCard: {
+	                	digits: true,
+	                	minlength: 9
+	                },
+	                phone: {
+	                	digits: true,
+	                	minlength: 10
+	                }
 	            },
 	            messages: {
+	            	dob: {
+	            		max: "Dob must be less than today!!!"
+	            	},
 	            	email: {
 	                    email: "Invalid email format!!!"
-	                  }
-	            }
-	        
+	                  },
+	                  identityCard: {
+		                	digits: "Identity card does not include alphabet characters!!!"
+		                },
+		                identityCard: {
+		                	digits: "Phone does not include alphabet characters!!!"
+		                }
+		            }
 	        });
+			$("#image-file").change(function() {
+				readURL(this);
+			});
 	    });
+
+		function readURL(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					displayImage(e.target.result);
+				}
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+		function displayImage(src) {
+			$('#path-image').attr('src', src);
+			$('#path-image').css('display', "block");
+		}
 		</script>
 	</div>
 

@@ -1,6 +1,5 @@
 package com.hospital.controller;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -33,7 +32,8 @@ public class PatientController {
 
 	@Autowired
 	PatientService patientService;
-	
+	private static String UPLOADED_FOLDER = "upload/";
+
 	@RequestMapping(value = "/patient/patient", method = RequestMethod.GET)
 	public ModelAndView appointment() {
 		ModelAndView model = new ModelAndView();
@@ -48,7 +48,6 @@ public class PatientController {
 
 		return patientList;
 	}
-
 
 	@InitBinder
 	public void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) {
@@ -71,7 +70,7 @@ public class PatientController {
 
 	@RequestMapping(value = "/patient/update/{patientId}", method = RequestMethod.GET)
 	public ModelAndView editArticle(@PathVariable long patientId) {
-		ModelAndView model = new ModelAndView(); 
+		ModelAndView model = new ModelAndView();
 		Patient patient = patientService.getPatientById(patientId);
 		model.addObject("patientForm2", patient);
 		model.setViewName("patient/patient-form2");
@@ -84,25 +83,22 @@ public class PatientController {
 	@RequestMapping(value = "/patient/savePatient", method = RequestMethod.POST)
 	public ModelAndView save(@ModelAttribute("patientForm") Patient patient,
 			@RequestParam("imageUrl") MultipartFile file, RedirectAttributes redirectAttributes) {
-		// Get the file and save it somewhere
-//			byte[] bytes = file.getBytes();
-//			Path path = Paths.get(
-//					"E:\\Hospital-Trang\\Hospital-Trang\\img\\"
-//							+ file.getOriginalFilename());
-//			Files.write(path, bytes);
-//
-//			redirectAttributes.addFlashAttribute("message",
-//					"You successfully uploaded '" + file.getOriginalFilename() + "'");
-//			patient.setImageUrl(path.toString());
+		patient.setImageUrl(file.getOriginalFilename());
+		try {
+			byte[] bytes = file.getBytes();
+			Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+			Files.write(path, bytes);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		patientService.save(patient);
-		
 		ModelAndView model1 = new ModelAndView();
 		model1.setViewName("patient/patient-list");
 
 		return model1;
-		
+
 	}
-	
+
 	@RequestMapping(value = "/patient/saveUpdate", method = RequestMethod.POST)
 	public ModelAndView save(@ModelAttribute("patientForm2") Patient patient) {
 		patientService.saveUpdate(patient);
@@ -113,13 +109,12 @@ public class PatientController {
 		return model;
 	}
 
-	
-	@RequestMapping(value="/patient/disable", method = RequestMethod.POST)
+	@RequestMapping(value = "/patient/disable", method = RequestMethod.POST)
 	@ResponseBody
 	public Object disable(Long patientId) {
 		try {
 			patientService.disablePatient(patientId);
-		}catch(Exception ex) {
+		} catch (Exception ex) {
 			throw ex;
 		}
 		return null;

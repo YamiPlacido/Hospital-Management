@@ -27,9 +27,6 @@ public class DoctorScheduleInforDto implements Serializable {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date dateFrom;
 
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date dateTo;
-
 	private List<DoctorScheduleDetailDto> listDetail;
 	
 	private List<DoctorScheduleDetailDto> listShift1;
@@ -97,14 +94,6 @@ public class DoctorScheduleInforDto implements Serializable {
 
 	public void setDateFrom(Date dateFrom) {
 		this.dateFrom = dateFrom;
-	}
-
-	public Date getDateTo() {
-		return dateTo;
-	}
-
-	public void setDateTo(Date dateTo) {
-		this.dateTo = dateTo;
 	}
 
 	public Employee getEmployee() {

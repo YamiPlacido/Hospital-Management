@@ -193,7 +193,7 @@ public class AppointmentRepositoryImpl implements AppointmentBookRepository {
 				+ " a.app_id, a.status, p.name , p.identity_card, p.phone, a.shift_id, a.patient_id, a.date FROM Appointment a left join Shift s on a.shift_id = s.shift_id left join"
 				+ "  Patient p on a.patient_id = p.patient_id where (a.date between ?1 and ?2) and a.employee_id = ?3 and a.status = 1");
 		query.setParameter(1, doctorScheduleSearchDto.getDateFrom())
-				.setParameter(2, doctorScheduleSearchDto.getDateTo())
+				.setParameter(2, addDays(doctorScheduleSearchDto.getDateFrom(),6))
 				.setParameter(3, doctorScheduleSearchDto.getEmployeeId());
 		List<Object[]> results = query.getResultList();
 
@@ -231,7 +231,7 @@ public class AppointmentRepositoryImpl implements AppointmentBookRepository {
 		String pattern = "yyyy-MM-dd";
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 		String dateFrom = simpleDateFormat.format(infor.getDateFrom());
-		String dateTo = simpleDateFormat.format(infor.getDateTo());
+		String dateTo = simpleDateFormat.format(addDays(infor.getDateFrom(), 6));
 		String name = infor.getEmployee().getFirstName() + " " + infor.getEmployee().getLastName();
 		context.put("doctorName", name);
 		context.put("phone", infor.getEmployee().getPhone());

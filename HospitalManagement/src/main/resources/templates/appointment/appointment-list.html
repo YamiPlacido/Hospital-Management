@@ -67,6 +67,24 @@
 				</div>
 			</div>
 		</div>
+		
+				<div class="modal fade" id="export">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<a href="#" class="close" data-dismiss="modal">&times;</a>
+						<h4>Export appointment slip</h4>
+					</div>
+					<div class="modal-body">
+						<h4>Export waiting slip for this appointment </h4>
+					</div>
+					<div class="modal-footer">
+						<a href="#" class="btn btn-primary" data-dismiss="modal">Cancel</a>
+						<a href="#" class="btn btn-danger" onclick="ConfirmExport()">Confirm</a>
+					</div>
+				</div>
+			</div>
+		</div>
 
 		<!--  -->
 
@@ -155,8 +173,8 @@
 												json[i][5] = "<a href='#' onclick='Disable("
 														+ json[i].appId
 														+ ")' class='btn btn-danger btn-outline'><i class='fa fa-trash'></i></a>"
-// 														+ " "
-// 														+ "<a href='/admin/appointment/export/"+json[i].appId+"' class='btn btn-primary btn-outline'><i class='fa fa-envelope'></i></a>"
+														+ " "
+														+ "<a href='#' onclick='Export("+json[i].appId+")' class='btn btn-primary btn-outline'><i class='fa fa-envelope'></i></a>"
 														;
 											}
 											return json;
@@ -174,11 +192,27 @@
 				id = appId;
 				$("#deleteConfirm").modal("show");
 			}
+			
+			function Export(appId) {
+				exportId = appId;
+				$("#export").modal("show");
+			}
 
 			function ConfirmDelete() {
 				$.ajax({
 					type : "POST",
 					url : "/admin/appointment/disable?appId=" + id,
+					success : function(result) {
+						window.location.href = "/admin/appointment/appointment/";
+						$("#deleteConfirm").modal("hide");
+					}
+				})
+			}
+			
+			function ConfirmExport() {
+				$.ajax({
+					type : "GET",
+					url : "/admin/appointment/export?appId=" + exportId,
 					success : function(result) {
 						window.location.href = "/admin/appointment/appointment/";
 						$("#deleteConfirm").modal("hide");

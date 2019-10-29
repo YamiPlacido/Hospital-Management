@@ -113,20 +113,54 @@
 		<script src="/assets/js/jquery.validate.min.js"></script>
 		<script type="text/javascript">
 		$(document).ready(function() {
-			 
+			var today = new Date() ;
 	        //Khi bàn phím được nhấn và thả ra thì sẽ chạy phương thức này
 	        $("#form").validate({
 	            rules: {
+	            	name : {
+	            		minlength: 4,
+	            		maxlength: 50
+	            	},
+	            	dob: {
+	            		max: "2019-10-29"
+	            	},
 	                email: {
 	                    email: true
-	                  }
+	                  },
+	                identityCard: {
+	                	digits: true,
+	                	minlength: 9
+	                },
+	                phone: {
+	                	digits: true,
+	                	minlength: 10
+	                }
 	            },
 	            messages: {
+	            	dob: {
+	            		max: "Dob must be less than today!!!"
+	            	},
 	            	email: {
 	                    email: "Invalid email format!!!"
-	                  }
-	            }
+	                  },
+	                  identityCard: {
+		                	digits: "Identity card does not include alphabet characters!!!"
+		                },
+		                identityCard: {
+		                	digits: "Phone does not include alphabet characters!!!"
+		                }
+		            }
 	        });
+// 	        function checkDOB() {
+// 	            var dateString = $('#dob').val();
+// 	            var myDate = new Date(dateString);
+// 	            var today = new Date();
+// 	            if ( myDate > today ) { 
+// 	                $('#dob').after('<p style="color:red;">You cannot enter a date in the future!.</p>');
+// 	                return false;
+// 	            }
+// 	            return true;
+// 	        }
 	    });
 		</script>
 	</div>

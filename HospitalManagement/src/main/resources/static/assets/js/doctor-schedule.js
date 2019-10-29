@@ -4,8 +4,7 @@ $(document).ready(
 				url : "/admin/appointment/getDoctorScheduleDetail",
 				data : {
 					"employeeId" : $("#employeeId").val(),
-					"dateFrom" : $("#dateFrom").val(),
-					"dateTo" : $("#dateTo").val()
+					"dateFrom" : $("#dateFrom").val()
 				},
 				contentType : "application/json",
 				dataType : "json",
@@ -214,8 +213,6 @@ $(document).ready(
 //			$("#dateTo").val($.datepicker.formatDate('dd M yy', $("#dateTo").val()));
 			var from = $("#dateFrom").val().split("-")
 			var mon = new Date(from[0], from[1] - 1, from[2])
-			$("#tdDateFrom").text($("#dateFrom").val())
-			$("#tdDateTo").text($("#dateTo").val())
 			var tue = new Date();
 			var wed = new Date();
 			var thu = new Date();
@@ -228,7 +225,8 @@ $(document).ready(
 			fri.setDate(mon.getDate() + 4);
 			sat.setDate(mon.getDate() + 5);
 			sun.setDate(mon.getDate() + 6);
-			
+			$("#tdDateFrom").text($.datepicker.formatDate('dd M yy', mon));
+			$("#tdDateTo").text($.datepicker.formatDate('dd M yy', sun));
 			$("#sunday").text($.datepicker.formatDate('dd M yy', sun));
 			$("#monday").text($.datepicker.formatDate('dd M yy', mon));
 			$("#tuesday").text($.datepicker.formatDate('dd M yy', tue));

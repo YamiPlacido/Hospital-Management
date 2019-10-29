@@ -157,8 +157,8 @@ public class AppointmentController {
 	}
 	
 	
-	@RequestMapping(value="/appointment/export/{appId}", method = RequestMethod.GET)
-	public ModelAndView export(@PathVariable Long appId) {
+	@RequestMapping(value="/appointment/export", method = RequestMethod.GET)
+	public ModelAndView export(Long appId) {
 		ModelAndView model = new ModelAndView();
 		try {
 			appointmentService.exportSlip(appId);

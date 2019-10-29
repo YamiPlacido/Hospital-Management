@@ -102,11 +102,17 @@
 						quantity : {
 						      required: true,
 						      min: 1
-						    }
+						    },
+						stockDate : {
+							min: "2019-10-31"
+						}
 					},
 					messages : {
 						price : "Price must be greater than 0",
-						quantity : "Quantity must be greater than 0"
+						quantity : "Quantity must be greater than 0",
+						stockDate : {
+							min : "Stock date must be tomorrow or later!!!"
+						}
 					}
 				});
 			});

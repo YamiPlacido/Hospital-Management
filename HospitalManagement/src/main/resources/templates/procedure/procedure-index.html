@@ -38,9 +38,9 @@ table#dataTable tbody tr:hover {
 						<div class="col-md-12">
 							<div class="table-responsive">
 								<button class="btn btn-primary" id="patientDetail">Detail</button>
-								<button class="btn btn-primary" id="patientProfile">Illness
+								<button class="btn btn-secondary" id="patientProfile">Illness
 									Profile</button>
-								<button class="btn btn-primary" id="profileReject">Reject
+								<button class="btn btn-danger" id="profileReject">Reject
 									Profile</button>
 								<table
 									class="table table-border table-striped custom-table mb-0"
@@ -52,8 +52,8 @@ table#dataTable tbody tr:hover {
 											<th>Doctor</th>
 											<th>Date</th>
 											<th>Shift</th>
-											<th>Status</th>
-											<th>Stage</th>										
+											<th>Stage</th>	
+											<th>Status</th>																			
 											<th>Note</th>
 											<th>Created By</th>
 											<th>Created Date</th>
@@ -78,6 +78,7 @@ table#dataTable tbody tr:hover {
 											<td></td>											
 										</tr>
 									</tbody>
+									<tfoot></tfoot>
 								</table>
 							</div>
 						</div>
@@ -239,18 +240,19 @@ table#dataTable tbody tr:hover {
     </div>
 </div>
 
-		<script>
+		<script th:inline="javascript">
 			$(document).ready(function() {
 // 				$("#LoadingStatus").html("Loading....");
 				loaddata();
 			});
 
 			function loaddata() {
+				var doctorID = $('#userSessionId').val();
 				var table = $("#dataTable")
 						.DataTable(
 								{
 									"ajax" : {
-										"url" : "/admin/appointment/getAllAppointmentByDoctorID/3", //doctor should get from login session
+										"url" : "/admin/appointment/getAllAppointmentByDoctorID/"+doctorID, //doctor should get from login session
 										"type" : "GET",
 										"datatype" : "json",
 										"dataSrc" : function(json) {
@@ -260,8 +262,9 @@ table#dataTable tbody tr:hover {
 												json[i][2] = json[i].employee.firstName;
 												json[i][3] = json[i].date;
 												json[i][4] = json[i].shiftId;
-												json[i][5] = json[i].status;
-												json[i][6] = json[i].stage;
+												json[i][5] = json[i].stage;
+												json[i][6] = json[i].status ? '<span class="custom-badge status-green">Active</span>'
+														: '<span class="custom-badge status-red">Inactive</span>';
 												json[i][7] = json[i].note;
 												json[i][8] = json[i].createdBy;
 												json[i][9] = json[i].createdDate;
@@ -340,8 +343,12 @@ table#dataTable tbody tr:hover {
 		        });
 				
 				$('#patientProfile').click( function () {
+					var stage = table.row('.selected').data().stage;
+					
 		            if(table.$('tr').hasClass('selected')==false){
 		            	alert("Please select patient to continue the process!");
+		            }else if(stage == "REJECTED"){
+		            	alert("This profile was rejected!");
 		            }else{
 		            	var tr = $(this).closest('tr');
 		            	var row = table.row(tr);
@@ -352,16 +359,18 @@ table#dataTable tbody tr:hover {
 				
 				$('#profileReject').click( function () {
 		            
-					alert("This function is currently in development!");
+		            if(table.$('tr').hasClass('selected')==false){
+		            	alert("Please select patient to continue the process!");
+		            }else{
+		            	var tr = $(this).closest('tr');
+		            	var row = table.row(tr);
+						var url = "/admin/appointment/RejectProfile/" + table.row('.selected').data().appId;
+						window.location.href = url;
+		            }
 
 		        });
 			}
 			
-			
-
-			
-
-
 			// 			//Delete
 			// 			var id;
 

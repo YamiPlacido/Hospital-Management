@@ -40,7 +40,11 @@
 													<div class="staff-id">Age: 47</div>
 													<div class="staff-id" id="PatientID">Patient ID :
 														PA-0001</div>
-													<a class="btn btn-primary" th:href="@{/admin/procedure/index/}">Return to Appointment List</a>
+													<a class="btn btn-primary"
+														th:href="@{/admin/procedure/index/}">Return to
+														Appointment List</a>
+													<a th:href="@{/admin/procedure/export/{appID}(appID=${appID})}" class='btn btn-primary btn-outline'>
+													Export Profile <i class='fa fa-envelope'></i></a>
 												</div>
 											</div>
 											<div class="col-md-7">
@@ -77,39 +81,13 @@
 									<li>
 										<h4 class="mb-0">
 											<strong>Symptom(s)</strong>
-										</h4> <!-- Modal -->
-										<div class="modal fade" id="exampleModalSymptom" tabindex="-1"
-											role="dialog" aria-labelledby="exampleModalLabel"
-											aria-hidden="true">
-											<div class="modal-dialog" role="document">
-												<div class="modal-content">
-													<div class="modal-header">
-														<h5 class="modal-title" id="exampleModalLabel">Symptom
-															edit</h5>
-														<button type="button" class="close" data-dismiss="modal"
-															aria-label="Close">
-															<span aria-hidden="true">&times;</span>
-														</button>
-													</div>
-													<div class="modal-body">
-														<select multiple="multiple" id="select-symptom"
-															name="my-select[]">
-															<option value='elem_1'>Back hurt</option>
-															<option value='elem_2'>Chest hurt</option>
-															<option value='elem_3'>Chills</option>
-															<option value='elem_4'>Fever</option>
-															<option value='elem_100'>Tired</option>
-														</select>
-													</div>
-													<div class="modal-footer">
-														<button type="button" class="btn btn-secondary"
-															data-dismiss="modal">Close</button>
-														<button type="button" class="btn btn-primary">Save
-															changes</button>
-													</div>
-												</div>
-											</div>
-										</div>
+										</h4>
+										<table class="table table-bordered">
+											<tbody id="SymptomList">
+
+											</tbody>
+										</table>
+
 									</li>
 									<li></li>
 								</ul>
@@ -119,35 +97,11 @@
 										<h4 class="mb-0">
 											<strong>Examination(s)</strong>
 										</h4> <!-- Modal -->
-										<div class="modal fade" id="exampleModalExamination"
-											tabindex="-1" role="dialog"
-											aria-labelledby="exampleModalLabel" aria-hidden="true">
-											<div class="modal-dialog" role="document">
-												<div class="modal-content">
-													<div class="modal-header">
-														<h5 class="modal-title" id="exampleModalExaminationLabel">Symptom
-															edit</h5>
-														<button type="button" class="close" data-dismiss="modal"
-															aria-label="Close">
-															<span aria-hidden="true">&times;</span>
-														</button>
-													</div>
-													<div class="modal-body">
-														<select multiple="multiple" id="select-examination"
-															name="my-select[]">
-															<option value='elem_1'>Blood test</option>
-															<option value='elem_2'>X-Ray</option>
-														</select>
-													</div>
-													<div class="modal-footer">
-														<button type="button" class="btn btn-secondary"
-															data-dismiss="modal">Close</button>
-														<button type="button" class="btn btn-primary">Save
-															changes</button>
-													</div>
-												</div>
-											</div>
-										</div>
+										<table class="table table-bordered">
+											<tbody id="ExaminationList">
+
+											</tbody>
+										</table>
 									</li>
 									<li></li>
 								</ul>
@@ -356,8 +310,8 @@
 								</div>
 								<div class="col-sm-6">
 									<div class="form-group">
-										<label>Degree</label> <input class="form-control required" type="text"
-											data-msg-required="This field is required."
+										<label>Degree</label> <input class="form-control required"
+											type="text" data-msg-required="This field is required."
 											aria-required="true" th:field="*{degree}" id="degree">
 									</div>
 								</div>
@@ -427,15 +381,14 @@
 								</div>
 								<div class="col-sm-6">
 									<div class="form-group">
-										<label>Illness to treat</label>											
-										<select th:field="*{illness.illnessId}"
-											class="form-control required" id="TreatIllID"
-											data-msg-required="This field is required."
+										<label>Illness to treat</label> <select
+											th:field="*{illness.illnessId}" class="form-control required"
+											id="TreatIllID" data-msg-required="This field is required."
 											aria-required="true">
 											<option th:each="t:${diagall}"
 												th:value="${t.illness.illnessId}" th:utext=${t.illness.name} />
 										</select>
-									</div>	
+									</div>
 								</div>
 							</div>
 							<div class="row">
@@ -499,8 +452,7 @@
 										<label>Prescription for patient</label> <input type="checkbox"
 											value="Bike" id="checkSuggest"
 											onclick="suggestCheckPres(this)">Prescription
-										Suggestion 
-										<select th:field="*{medicine.medicineId}"
+										Suggestion <select th:field="*{medicine.medicineId}"
 											class="form-control required" id="pressug" disabled
 											data-msg-required="This field is required."
 											aria-required="true">
@@ -511,8 +463,8 @@
 								</div>
 								<div class="col-sm-6">
 									<div class="form-group">
-										<label>Dosage</label> <input class="form-control required" type="text"
-											th:field="*{dosage}" id="Dosage"
+										<label>Dosage</label> <input class="form-control required"
+											type="text" th:field="*{dosage}" id="Dosage"
 											data-msg-required="This field is required."
 											aria-required="true">
 									</div>
@@ -521,8 +473,8 @@
 							<div class="row">
 								<div class="col-sm-6">
 									<div class="form-group">
-										<select th:field="*{medicine.medicineId}" class="form-control required"
-											id="presall"
+										<select th:field="*{medicine.medicineId}"
+											class="form-control required" id="presall"
 											data-msg-required="This field is required."
 											aria-required="true">
 											<option th:each="t:${presall}" th:value="${t.medicineId}"
@@ -542,8 +494,8 @@
 								</div>
 								<div class="col-sm-6">
 									<div class="form-group">
-										<label>Price</label> <input class="form-control required" type="number"
-											th:field="*{price}" id="Price"
+										<label>Price</label> <input class="form-control required"
+											type="number" th:field="*{price}" id="Price"
 											data-msg-required="This field is required."
 											aria-required="true">
 									</div>
@@ -624,9 +576,12 @@
 			</div>
 		</div>
 
-		<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
+		<script type="text/javascript"
+			src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
 		<script th:inline="javascript">
 		$(document).ready(function() {
+			loadSymptom();
+			loadExamination();
 			loadPatientDetail();
 			loadDiagnosis();
 			loadTreatment();
@@ -673,6 +628,50 @@
 					Price: "required",
 				}
 			});
+		}
+		
+		
+		
+		function loadSymptom(){
+			var appID = [[${appID}]] ;
+			var url = "/admin/doctor/api/appointments/symptom/"+ appID;
+		    $.ajax({
+		    	type: "GET",
+		    	url: url,
+		    	success: function (data) {
+		        	var SetData = $("#SymptomList");
+		        	for (var i = 0; i < data.length; i++) {
+		                		
+		        	var list =                             
+					"<tr>"+
+					"<td><strong>"+ data[i].name +"</strong>"+ 
+					"<span class='float-right'>"+data[i].description+"</span></td>"+
+					"</tr>";		                	
+		         	SetData.append(list);
+		            }
+		        }
+            });	
+		}
+		
+		function loadExamination(){
+			var appID = [[${appID}]] ;
+			var url = "/admin/doctor/api/appointments/examination/"+ appID;
+		    $.ajax({
+		    	type: "GET",
+		    	url: url,
+		    	success: function (data) {
+		        	var SetData = $("#ExaminationList");
+		        	for (var i = 0; i < data.length; i++) {
+		                		
+		        	var list =                             
+					"<tr>"+
+					"<td><strong>"+ data[i].examinationType.name +"</strong>"+ 
+					"<span class='float-right'>"+""+"</span></td>"+
+					"</tr>";		                	
+		         	SetData.append(list);
+		            }
+		        }
+            });	
 		}
 		
 		function loadPatientDetail(){

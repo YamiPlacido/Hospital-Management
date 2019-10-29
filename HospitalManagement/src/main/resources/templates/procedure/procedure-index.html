@@ -343,8 +343,12 @@ table#dataTable tbody tr:hover {
 		        });
 				
 				$('#patientProfile').click( function () {
+					var stage = table.row('.selected').data().stage;
+					
 		            if(table.$('tr').hasClass('selected')==false){
 		            	alert("Please select patient to continue the process!");
+		            }else if(stage == "REJECTED"){
+		            	alert("This profile was rejected!");
 		            }else{
 		            	var tr = $(this).closest('tr');
 		            	var row = table.row(tr);

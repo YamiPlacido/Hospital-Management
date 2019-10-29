@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/main}" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css"
+	href="/assets/css/jquery.dataTables.min.css"> 
+<link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap4.min.css">
+
+</head>
+<body>
+	<div layout:fragment="content" style="margin-right: 10px; margin-left: 10px;">
+		<div class="row" style="margin-top: 20px;">
+			<div class="col-sm-4 col-3">
+				<h4 class="page-title">Appointments</h4>
+			</div>
+			<div class="col-sm-8 col-9 text-right m-b-20">
+				<a th:href="${'/admin/appointment/addAppointment'}"
+					class="btn btn btn-primary btn-rounded float-right"><i
+					class="fa fa-plus"></i> Add Appointment</a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="table-responsive">
+					<table class="table table-border table-striped custom-table mb-0"
+						id="dataTable">
+						<thead>
+							<tr>
+								<th>Patient Name</th>
+								<th>Doctor Name</th>
+								<th>Appointment Date</th>
+								<th>Shift</th>
+								<th>Status</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<!-- 	Delete confirm modal -->
+		<div class="modal fade" id="deleteConfirm">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<a href="#" class="close" data-dismiss="modal">&times;</a>
+						<h4>Disable Record</h4>
+					</div>
+					<div class="modal-body">
+						<h4>Are you sure you want to disable this appointment?</h4>
+					</div>
+					<div class="modal-footer">
+						<a href="#" class="btn btn-primary" data-dismiss="modal">Cancel</a>
+						<a href="#" class="btn btn-danger" onclick="ConfirmDelete()">Confirm</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--  -->
+
+		<div class="modal fade" id="modalItemEmail" tabindex="-1"
+			aria-hidden="true" style="display: none;">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<form action="" method="post" class="frm-item-email"
+						novalidate="novalidate">
+						<input type="hidden" name="send_email" value="1"> <input
+							type="hidden" name="id" value="6"> <input type="hidden"
+							name="from" value="baluto@mailinator.com">
+						<div class="modal-header">  
+							<h3 class="modal-title" id="myModalLabel">Send email</h3>
+						</div>
+
+						<div class="container-fluid">
+							<div class="row m-t-sm">
+								<div class="col-sm-12">
+									<div class="form-group">
+										<label class="control-label">Subject</label> <input
+											type="text" name="subject" id="confirm_subject"
+											class="form-control required" value="Booking Reminder"
+											aria-required="true">
+									</div>
+								</div>
+								<div class="col-sm-12">
+									<div class="form-group">
+										<label class="control-label">Message</label>
+
+
+										<textarea name="message" id="confirm_message"
+											class="form-control" rows="15">Dear Nathaniel Gomez <br>Your booking is coming soon! <br>Booking ID: MN1536909337 <br> Services <br> Massages:19.09.201911:30 - 12:15  <br> Regards <br> The Management
+										</textarea> 
+
+
+									</div>
+								</div>
+								<div class="col-sm-12">
+									<p>
+										<label><input class="required" type="checkbox"
+											name="to[]" value="baluto@mailinator.com" checked="checked"
+											aria-required="true"> Send to client
+											(baluto@mailinator.com)</label>
+									</p>
+									<p>
+										<label><input class="required" type="checkbox"
+											name="to[]" value="info@cairair5.com" checked="checked"
+											aria-required="true"> Send to employee
+											(info@cairair5.com)</label>
+									</p>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary btnItemEmail">Send</button>
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">Cancel</button>
+							</div>
+						</div>
+					</form>
+				</div>
+
+			</div>
+		</div>
+		
+		<script type="text/javascript">
+			$(document).ready(loaddata);
+			function loaddata() {
+				console.log("aaa");
+				$("#dataTable")
+						.DataTable(
+								{
+									"ajax" : {
+										"url" : "/admin/appointment/list",
+										"type" : "GET",
+										"datatype" : "json",
+										"dataSrc" : function(json) {
+											var d = new Date();
+											for (var i = 0; i < json.length; i++) {
+												json[i][0] = json[i].patientName;
+												json[i][1] = json[i].employeeName;
+												json[i][2] = json[i].note;
+												json[i][3] = json[i].date;
+												json[i][4] = json[i].status ? '<span class="custom-badge status-green">Active</span>'
+														: '<span class="custom-badge status-red">Inactive</span>'
+												json[i][5] = "<a href='#' onclick='Disable("
+														+ json[i].appId
+														+ ")' class='btn btn-danger btn-outline'><i class='fa fa-trash'></i></a>"
+// 														+ " "
+// 														+ "<a href='/admin/appointment/export/"+json[i].appId+"' class='btn btn-primary btn-outline'><i class='fa fa-envelope'></i></a>"
+														;
+											}
+											return json;
+										}
+									},
+									"language" : {
+										"emptyTable" : "No data found, please add new"
+									}
+								});
+			}
+			//Delete
+			var id;
+
+			function Disable(appId) {
+				id = appId;
+				$("#deleteConfirm").modal("show");
+			}
+
+			function ConfirmDelete() {
+				$.ajax({
+					type : "POST",
+					url : "/admin/appointment/disable?appId=" + id,
+					success : function(result) {
+						window.location.href = "/admin/appointment/appointment/";
+						$("#deleteConfirm").modal("hide");
+					}
+				})
+			}
+		</script>
+	</div>
+</body>
+</html>

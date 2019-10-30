@@ -1,7 +1,11 @@
 package com.hospital.controller.admin;
 
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -120,13 +124,22 @@ public class ProcedureController {
 //	}
 	
 	@RequestMapping(value="/export/{appID}", method = RequestMethod.GET)
-	public ModelAndView export(@PathVariable Long appID) throws Exception {
+	public ModelAndView export(@PathVariable Long appID, HttpSession session) throws Exception {
 		try {
+			//report
 			Appointment app = aservice.getAppointmentById(appID);
 			List<Diagnosi> alldiag = dservice.ListAllDiagnosisByAppID(appID);
 			List<Treatment> alltreat = tservice.ListAllTreatmentByAppID(appID);
 			List<PrescriptionMedicine> allpres = pmservice.ListAllPrescriptionMedicineByAppID(appID);
 			mrservice.MedicalReport(app, alldiag, alltreat, allpres);
+			//finish profile
+			app.setStage("FINISHED");
+			String modifier = session.getAttribute("usersessionname").toString();
+			app.setModifiedBy(modifier);
+			Timestamp stamp = new Timestamp(System.currentTimeMillis());
+			Date date = new Date(stamp.getTime());
+			app.setModifiedDate(date);
+			aservice.SaveData(app);
 		}catch(Exception ex) {
 			throw ex;
 		}

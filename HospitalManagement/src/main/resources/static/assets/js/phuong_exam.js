@@ -240,6 +240,24 @@ function saveResultOfExam() {
     }
 }
 
+//lưu lại symptom
+$("#symptom-type-two").change(function(){
+    var symptom_id = $("#symptom-type-two").val();
+    $.ajax({
+        type: "POST",
+        data: {
+            ex_id: currentExamination,
+            symptom_id: symptom_id
+        },
+        url: '/admin/examinator/api/examination/symptom',
+        // contentType: 'application/json',
+        success: function (data, status) {
+            getExaminationById(currentExamination);
+            $('#exampleModalResult').modal('hide');
+        }
+    });
+});
+
 function loadContentOfExamToCKEditor() {
     $.ajax({
         type: "GET",

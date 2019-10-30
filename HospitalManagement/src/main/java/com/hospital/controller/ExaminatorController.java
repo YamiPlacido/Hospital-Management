@@ -96,6 +96,17 @@ public class ExaminatorController {
 		examinationRepository.save(ex);
 	}
 
+    //edit Symptom result
+    @ResponseBody
+    @PostMapping("/api/examination/symptom")
+    public void editSymptomResult(
+            @RequestParam("ex_id") Long ex_id,
+            @RequestParam(value = "symptom_id", required = false) Long symptom_id) {
+        Examination ex = examinationRepository.findById(ex_id).get();
+        ex.setSymptomId(symptom_id);
+        examinationRepository.save(ex);
+    }
+
     //create result PDF Examination
     @ResponseBody
     @PostMapping("/api/examination/create_pdf")

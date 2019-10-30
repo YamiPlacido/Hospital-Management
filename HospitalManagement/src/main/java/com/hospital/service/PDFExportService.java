@@ -31,8 +31,8 @@ import java.util.TimeZone;
 
 @Service
 public class PDFExportService {
-    public static final String TEMPLATE_FOLDER = "upload/pdf_template/";
-    public static final String EXPORT_FOLDER = "upload/pdf/examination/";
+    public static final String TEMPLATE_FOLDER = "upload" + File.separator + "pdf_template"+ File.separator;
+    public static final String EXPORT_FOLDER = "upload"+ File.separator+"pdf"+ File.separator+"examination"+ File.separator;
     ExaminationRequestTemplateDTO examRequest;
     public boolean createExaminationRequestPDF(Examination ex, String fileName){
         examRequest = setProperties(ex);

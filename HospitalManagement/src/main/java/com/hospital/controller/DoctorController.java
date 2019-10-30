@@ -8,6 +8,7 @@ import com.hospital.model.*;
 import com.hospital.repository.*;
 import com.hospital.service.ConcurrencyService;
 import com.hospital.service.HelperService;
+import com.hospital.service.MailService;
 import com.hospital.service.PDFExportService;
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,8 @@ public class DoctorController {
     ConcurrencyService pdfExportConcurrencyService;
     @Autowired
     PDFExportService pdfExportService;
+    @Autowired
+    MailService mailService;
 
     @GetMapping("personal-info/{id}")
     public ModelAndView viewDetail(@PathVariable("id") Long id) {
@@ -234,6 +237,23 @@ public class DoctorController {
         examinationRepository.save(ex);
         String mess = PDFExportService.EXPORT_FOLDER+fileName;
         return new ResponseEntity<>(mess,HttpStatus.OK);
+    }
+
+    //send email
+    @ResponseBody
+    @PostMapping("/api/appointmet/examination/email")
+    public void finishExamination(
+            @RequestParam("appId") Long appId,
+            @RequestParam("examinationTypeId") Long examinationTypeId) {
+        Long examination_id = examinationRepository.findExaminationByAppointmentAndExaminationType(appId, examinationTypeId).get(0).getId();
+        Examination ex = examinationRepository.findById(examination_id).get();
+        String to = "diana@sharklasers.com";
+        String subtitle = "Exam code " + ex.getId() + " has been requested";
+        String msg = "You have requested to perform an exam from Dr. "
+                +ex.getAppointment().getEmployee().getFirstName() + " "
+                +ex.getAppointment().getEmployee().getLastName()
+                +". Please check your current list.";
+        mailService.sendSimpleEmail(to,subtitle,msg);
     }
 
     @ResponseBody

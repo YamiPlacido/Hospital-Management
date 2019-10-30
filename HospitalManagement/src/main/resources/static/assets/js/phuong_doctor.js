@@ -1,20 +1,19 @@
-$(document).ready(function () {
-    if (window.currentDoctor == null){
-        $.ajax({
-            type: "GET",
-            url: '/admin/api/get-current-id',
-            contentType: 'application/json',
-            success: function (data, status) {
-                window.currentDoctor = parseInt(data);
-                $("#doctor-person-info").attr("href", "/admin/doctor/personal-info/"+window.currentDoctor);
-                loadAppointments(window.currentDoctor);
-                loadAppointments(window.currentDoctor);
-            }
-        });
-    }
-    // $("#load-more").click();
+// check user name
+if (window.currentDoctor == null){
+    $.ajax({
+        type: "GET",
+        url: '/admin/api/get-current-id',
+        contentType: 'application/json',
+        success: function (data, status) {
+            window.currentDoctor = parseInt(data);
+        }
+    });
+}
 
+$(document).ready(function () {
+    $("#doctor-person-info").attr("href", "/admin/doctor/personal-info/"+window.currentDoctor);
     loadAppointments(window.currentDoctor);
+
     callCKEditor();
     var date = new Date();
     date.setFullYear( date.getFullYear() - 17 );
@@ -94,7 +93,7 @@ var symptomValueSelected = [];
 var examinationValueSelected = [];
 var finishedExamList  = [];
 var currentSender;
-const CONTEXTPATH = "http://localhost:8080/";
+const CONTEXTPATH = "https://localhost:8443/";
 const EXPORT_FOLDER = "upload/pdf/examination/"
 
 
@@ -110,46 +109,6 @@ $("#appointment-perform").click(
         }
     }
 );
-
-// $("#load-more").click(function () {
-//     $.ajax({
-//         type: "GET",
-//         url: '/admin/api/doctor?current_page=' + currentPage,
-//         contentType: 'application/json',
-//         success: function (data, status) {
-//             currentPage += 1;
-//             var insert_content;
-//             jQuery.each(data, function (i, val) {
-//                 insert_content = '<div class="col-md-4 col-sm-4 col-lg-3">';
-//                 insert_content += '<div class="profile-widget">';
-//                 insert_content += '<div class="doctor-img">';
-//                 insert_content += '<a class="avatar" href="/admin/doctor/' + val.employeeId
-//                     + '"><img alt="" src="/upload/employee/'
-//                     + val.imagePath
-//                     + '"></a>';
-//                 insert_content += '</div>';
-//                 insert_content += '<div class="dropdown profile-action">';
-//                 insert_content += '</div>';
-//                 insert_content += '<h4 class="doctor-name text-ellipsis"><a href="#">'
-//                     + val.firstName + ' ' + val.lastName
-//                     + '</a></h4>';
-//                 insert_content += '<div class="doc-prof">'
-//                     + val.speciality.name
-//                     + '</div>';
-//                 insert_content += '<div class="user-country">';
-//                 insert_content += '<i class=""></i> '
-//                     + val.code + '';
-//                 insert_content += '</div>';
-//                 insert_content += '</div>';
-//                 insert_content += '</div>';
-//
-//                 $("#employee-container")
-//                     .append(insert_content);
-//                 insert_content = '';
-//             });
-//         }
-//     });
-// });
 
 $("#symptom-edit").click(function() {
     loadSymptomsToModal();
@@ -359,13 +318,6 @@ function loadExaminationsToModal() { //chua ok
                 } else {
                     $('#select-examination').multiSelect('addOption', {value: val.id, text: val.name, index: i});
                 }
-                // if(val.stage  != null && val.stage  != 'FINISHED'){
-                //     $('#select-examination').multiSelect('addOption', {value: val.id, text: val.name, index: i,selected:true});
-                // } else if(val.stage  != null && val.stage  == 'FINISHED'){
-                //     $('#select-examination').multiSelect('addOption', {value: val.id, text: val.name, index: i,selected:true,disabled:true});
-                // } else if(val.stage  == null){
-                //     $('#select-examination').multiSelect('addOption', {value: val.id, text: val.name, index: i});
-                // }
             });
             $('#select-examination').multiSelect('select', examinationValueSelected);
         }
@@ -462,7 +414,7 @@ function saveExaminationToAppointment(appId) {
             refreshExaminationInModal();
             $('#exampleModalExamination').modal('hide');
             //push
-            sendBroadcast("LOADEXAMINATIONS",window.currentDoctor,"You have received one examination.",10);
+            sendBroadcast("LOADEXAMINATIONS",window.currentDoctor,"You have received/cancel an examination.",9);
         }
     });
 }
@@ -494,31 +446,15 @@ function loadExaminationToAppointment(app_id) {
             examinationValueSelected = [];
             $("#examinations").empty();
             jQuery.each(data, function (i, val) {
-                // if (val.stage != "FINISHED"){
-                //     if (val.stage == "CREATED"){
-                //         $("#examinations")
-                //             .append('<li>'+ val.examinationType.name+'  <span class="custom-badge status-red">CREATED</span></li>'
-                //                 + '<button type="button" class="btn btn-outline-secondary btn-sm">PDF</button>');
-                //     } else if (val.stage == "DOING"){
-                //         $("#examinations")
-                //             .append('<li>'+ val.examinationType.name+'  <span class="custom-badge status-orange">DOING</span></li>'
-                //                 + '<button type="button" class="btn btn-outline-secondary btn-sm">PDF</button>');
-                //     }
-                // }
-                // else if (val.stage == "FINISHED"){
-                //     $("#examinations")
-                //         .append('<li>'+ val.examinationType.name+'  <a href="#" class="custom-badge status-green" ' +
-                //             'data-toggle="modal" data-target="#exampleModalExamFinish" ' +
-                //             'id="finish-test" onclick="loadExaminationToModal('+val.id+')">FINISHED</a></li>'
-                //             + '<button type="button" class="btn btn-outline-secondary btn-sm">PDF</button>');
-                // }
                 if (val.stage != "FINISHED"){
                     if (val.stage == "CREATED"){
                         $("#examinations")
                             .append('<tr><td>'+ (i+1) +'</td> '+
                                 '<td>'+ val.examinationType.name+'</td> ' +
                                 '<td> <span class="custom-badge status-red">CREATED</span></td>'
-                                + '<td><button type="button" class="btn btn-outline-secondary btn-sm" onclick="exportPDF('+ val.examinationType.id+')">PDF</button><td> </tr>');
+                                + '<td><button type="button" class="btn btn-outline-secondary btn-sm" onclick="exportPDF('+ val.examinationType.id+')">PDF</button>' +
+                                '<button type="button" class="btn btn-outline-secondary btn-sm" onclick="sendEmail('+ val.examinationType.id+')">Email</button><td> ' +
+                                '</tr>');
                     } else if (val.stage == "DOING"){
                         $("#examinations")
                             .append('<tr> <td>'+ (i+1) +'</td> '+
@@ -679,6 +615,21 @@ function exportPDF(examinationTypeId) {
     });
 }
 
+//send email
+function sendEmail(examinationTypeId) {
+    $.ajax({
+        type: "POST",
+        data : {
+            appId : currentAppointment,
+            examinationTypeId: examinationTypeId
+        },
+        url: '/admin/doctor/api/appointmet/examination/email',
+        // contentType: 'application/json',
+        success: function (data, status) {
+        }
+    });
+}
+
 function getPatientHistory(patient_id) {
     $.ajax({
         type: "GET",
@@ -733,37 +684,3 @@ function getPatientHistory(patient_id) {
     });
 
 }
-//
-// $("#btn-create-employee").click(function () {
-//     preventSubmit();
-// });
-//
-// $("#btn-edit-employee").click(function () {
-//     preventSubmit();
-// });
-
-// function preventSubmit() {
-//     var checked = validateDate();
-//     if (!checked){
-//         $('form').bind('submit',function(e){
-//             validateDate();
-//             e.preventDefault();
-//         });
-//     } else {
-//         $('form').unbind('submit');
-//     }
-// }
-//
-// function validateDate() {
-//     var currentDate = new Date();
-//     var selectedDate = new Date($("#dob").val());
-//     var age = Math.floor((currentDate-selectedDate) / (365.25 * 24 * 60 * 60 * 1000));
-//     if(age<17){
-//         $('#dob').next().remove();
-//         $("#dob").after('<label class="error" for="date">The minimum age require is 17</label>');
-//         return false;
-//     } else {
-//         $('#dob + label').hide();
-//         return true;
-//     }
-// }

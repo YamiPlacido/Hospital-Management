@@ -1,22 +1,22 @@
-
+// check user name
+if (window.currentDoctor == null){
+    $.ajax({
+        type: "GET",
+        url: '/admin/api/get-current-id',
+        contentType: 'application/json',
+        success: function (data, status) {
+            window.currentDoctor = parseInt(data);
+            $("#doctor-person-info").attr("href", "/admin/doctor/personal-info/"+window.currentDoctor);
+            console.log(window.currentDoctor);
+        }
+    });
+}
 //UTILITY
 $( document ).ready(function() {
-    if (window.currentDoctor == null){
-        $.ajax({
-            type: "GET",
-            url: '/admin/api/get-current-id',
-            contentType: 'application/json',
-            success: function (data, status) {
-                window.currentDoctor = parseInt(data);
-                $("#doctor-person-info").attr("href", "/admin/doctor/personal-info/"+window.currentDoctor);
-            }
-        });
-    }
+    window.currentDoctor;
     // currentDoctor = $('#userSessionId').val();
-    // currentDoctor = 3;
-    // window.currentExaminator = 10;
-    $("#examinator-person-info").attr("href", "/admin/doctor/personal-info/"+window.currentExaminator);
 });
+var EXAMINATOR = 9;
 function getElementByXpath(path) {
     return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 }
@@ -182,8 +182,8 @@ request.onMessage = function(response) {
         return;
     }
 
-    if (json.receiver == window.currentExaminator && json.flag == "LOADEXAMINATIONS"){
-        loadExaminations(window.currentExaminator);
+    if (json.receiver == window.currentDoctor && json.flag == "LOADEXAMINATIONS"){
+        loadExaminations(window.currentDoctor);
         createNotify(json.message);
     } else if (json.receiver == window.currentDoctor  && json.flag == "ONGOING") {
         loadExaminationToAppointment(currentAppointment);

@@ -1,19 +1,28 @@
+// check user name
+if (window.currentDoctor == null){
+    $.ajax({
+        type: "GET",
+        url: '/admin/api/get-current-id',
+        contentType: 'application/json',
+        success: function (data, status) {
+            window.currentDoctor = parseInt(data);
+        }
+    });
+}
+
 $(document).ready(function () {
-    // currentExaminator = $('#userSessionId').val();
-    // currentExaminator = 9;
-    loadExaminations(window.currentExaminator);
+    $("#doctor-person-info").attr("href", "/admin/doctor/personal-info/"+window.currentDoctor);
+    loadExaminations(window.currentDoctor);
     callCKEditor();
 });
 
-// var currentExaminator;
 var currentExamination;
-var currentAppointment;
 var examTable;
 //value on backend
 var finishedExamList = [];
 var currentSender;
 var currentExaminationStage;
-const CONTEXTPATH = "http://localhost:8080/";
+const CONTEXTPATH = "https://localhost:8443/";
 
 $("#examination-perform").click(
     function (event) {
@@ -157,9 +166,9 @@ function updateExaminationStageToDoing() {
         url: '/admin/examinator/api/examination/stage',
         // contentType: 'application/json',
         success: function (data, status) {
-            loadExaminations(window.currentExaminator);
+            loadExaminations(window.currentDoctor);
             //send message để bên doctor update lại examination
-            sendBroadcast("ONGOING", window.currentExaminator, "Your examination is on going", currentSender);
+            sendBroadcast("ONGOING", window.currentDoctor, "Your examination is on going", currentSender);
         }
     });
 }
@@ -336,6 +345,22 @@ function createPdfResult() {
         }
     });
 }
+function createPdfResultWithoutOpen() {
+    var content = getPlainTextFromContent();
+    var result = getPlainTextFromResult();
+    $.ajax({
+        type: "POST",
+        data: {
+            ex_id: currentExamination,
+            content: content,
+            result: result
+        },
+        url: '/admin/examinator/api/examination/create_pdf',
+        success: function (data, status) {
+            // openInNewTab(CONTEXTPATH + data);
+        }
+    });
+}
 
 //kết thúc examination
 function finishExamination() {
@@ -349,11 +374,12 @@ function finishExamination() {
         success: function (data, status) {
             examTable.destroy();
             $('#exams-container').empty();
-            loadExaminations(window.currentExaminator);
+            loadExaminations(window.currentDoctor);
             $('#exampleModalExamFinish').modal('hide');
-            $("#examination-today").click();
+            createPdfResultWithoutOpen();
             //send message để bên doctor update lại examination
-            sendBroadcast("FINISHED", window.currentExaminator, "Your examination has finish", currentSender);
+            sendBroadcast("FINISHED", window.currentDoctor, "Your examination has finish", currentSender);
+            $("#examination-today").click();
         }
     });
 }

@@ -23,8 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping(value = "admin")
 public class UploadController {
 	//Save the uploaded file to this folder
-    private static String UPLOADED_FOLDER = "upload/employee";
-    private static String EXAMINATION_UPLOADED_FOLDER = "upload/exam";
+    private static String UPLOADED_FOLDER = "upload" + File.separator + "employee"+ File.separator;
+    private static String EXAMINATION_UPLOADED_FOLDER = "upload"+ File.separator +"exam"+ File.separator;
 
 
     @Autowired
@@ -86,7 +86,7 @@ public class UploadController {
                 continue;
             }
             String fileName = file.getOriginalFilename();
-            String uploadFilePath = EXAMINATION_UPLOADED_FOLDER + File.separator + fileName;
+            String uploadFilePath = EXAMINATION_UPLOADED_FOLDER + fileName;
 
             byte[] bytes = file.getBytes();
             Path path = Paths.get(uploadFilePath);

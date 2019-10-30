@@ -55,7 +55,7 @@ function loadExaminations(examinator_id) {
                 insert_content += '<td>' + age + '</td>';
                 insert_content += '<td>' + val.examinationType.name + '</td>';
                 insert_content += '<td>' + date + '</td>';
-                insert_content += '<td>10:00am - 11:00am</td>';
+                // insert_content += '<td>10:00am - 11:00am</td>';
                 if (val.stage == "CREATED") {
                     insert_content += '<td><span class="custom-badge status-red">' + val.stage + '</span></td>';
                 } else if (val.stage == "DOING") {

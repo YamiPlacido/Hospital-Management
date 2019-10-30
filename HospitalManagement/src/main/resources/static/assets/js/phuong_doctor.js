@@ -145,7 +145,25 @@ function loadAppointments(doctor_id) {
                 insert_content += '<td>' + age + '</td>';
                 insert_content += '<td>Cardiology</td>';
                 insert_content += '<td>' + date + '</td>';
-                insert_content += '<td>10:00am - 11:00am</td>';
+                switch(val.shiftId) {
+                    case 1:
+                        insert_content += '<td>7:00AM~9:00AM</td>';
+                        break;
+                    case 2:
+                        insert_content += '<td>9:00AM~11:00AM</td>';
+                        break;
+                    case 3:
+                        insert_content += '<td>1:00PM~3:00PM</td>';
+                        break;
+                    case 4:
+                        insert_content += '<td>3:00PM~5:00PM</td>';
+                        break;
+                    case 5:
+                        insert_content += '<td>7:00PM~9:00PM</td>';
+                        break;
+                    default:
+                    // code block
+                }
                 if (val.stage == "CREATED"){
                     insert_content += '<td><span class="custom-badge status-red">' + val.stage + '</span></td>';
                 } else if (val.stage == "DOING"){

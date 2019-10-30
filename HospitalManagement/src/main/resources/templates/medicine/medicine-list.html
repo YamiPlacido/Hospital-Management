@@ -98,7 +98,7 @@
 												json[i][2] = json[i].price;
 												json[i][3] = json[i].quantity;
 												json[i][4] = json[i].stockDate.slice(0, 10);
-												json[i][5] = json[i].status == 1 ? 'Active' : 'Inactive';
+												json[i][5] = json[i].status == 1 ? '<span class="custom-badge status-green">Active</span>' : '<span class="custom-badge status-red">Inactive</span>';
 												json[i][6] = "<a href='/admin/medicine/update/"+json[i].medicineId+"' class='btn btn-primary btn-outline'><i class='fa fa-pencil'></i></a>"
 														+ " "
 														+ "<a href='#' onclick='DisableRecord("+ json[i].medicineId+")' class='btn btn-danger btn-outline'><i class='fa fa-trash'></i></a>";

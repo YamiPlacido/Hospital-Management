@@ -100,7 +100,15 @@ public class PatientController {
 	}
 
 	@RequestMapping(value = "/patient/saveUpdate", method = RequestMethod.POST)
-	public ModelAndView save(@ModelAttribute("patientForm2") Patient patient) {
+	public ModelAndView save(@ModelAttribute("patientForm2") Patient patient,@RequestParam("imageUrl") MultipartFile file) {
+		patient.setImageUrl(file.getOriginalFilename());
+		try {
+			byte[] bytes = file.getBytes();
+			Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+			Files.write(path, bytes);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		patientService.saveUpdate(patient);
 
 		ModelAndView model = new ModelAndView();

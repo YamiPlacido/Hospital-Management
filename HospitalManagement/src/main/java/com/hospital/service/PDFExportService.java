@@ -31,8 +31,8 @@ import java.util.TimeZone;
 
 @Service
 public class PDFExportService {
-    public static final String TEMPLATE_FOLDER = "upload" + File.separator + "pdf_template"+ File.separator;
-    public static final String EXPORT_FOLDER = "upload"+ File.separator+"pdf"+ File.separator+"examination"+ File.separator;
+    public static final String TEMPLATE_FOLDER = "upload\\pdf_template\\";
+    public static final String EXPORT_FOLDER = "upload\\pdf\\examination\\";
     ExaminationRequestTemplateDTO examRequest;
     public boolean createExaminationRequestPDF(Examination ex, String fileName){
         examRequest = setProperties(ex);
@@ -59,15 +59,17 @@ public class PDFExportService {
             context.put("examRequest", object);
 
             // 3) Generate report by merging Java model with the ODT
-            Options options = Options.getFrom(DocumentKind.DOCX).to(ConverterTypeTo.PDF);
+            Options options = Options.getTo(ConverterTypeTo.PDF);
 
             // 2) Get the converter from the registry
-            IConverter converter = ConverterRegistry.getRegistry().getConverter(options);
-            OutputStream out = new FileOutputStream(new File(EXPORT_FOLDER+"result1.docx"));
-            report.process(context, out);
-            InputStream indocx= new FileInputStream(new File(EXPORT_FOLDER+"result1.docx"));
-            OutputStream outpdf = new FileOutputStream(new File(EXPORT_FOLDER+fileName));
-            converter.convert(indocx, outpdf, options);
+//            IConverter converter = ConverterRegistry.getRegistry().getConverter(options);
+//            OutputStream out = new FileOutputStream(new File(EXPORT_FOLDER+"result1.docx"));
+//            report.process(context, out);
+//            InputStream indocx= new FileInputStream(new File(EXPORT_FOLDER+"result1.docx"));
+//            OutputStream outpdf = new FileOutputStream(new File(EXPORT_FOLDER+fileName));
+            OutputStream out = new FileOutputStream(
+    				new File(EXPORT_FOLDER+fileName));
+            report.convert(context, options, out);
 
             System.out.println("Export done.");
             ok = true;

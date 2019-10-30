@@ -94,7 +94,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 	}
 
 	@Override
-	public void exportSchedule(Long employeeId, Date dateFrom) throws IOException, XDocReportException {
+	public String exportSchedule(Long employeeId, Date dateFrom) throws IOException, XDocReportException {
 		DoctorScheduleInforDto infor = new DoctorScheduleInforDto();
 		Employee emp = employeeRepository.findById(employeeId).get();
 		infor.setEmployee(emp);
@@ -133,7 +133,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 		infor.setListDetail(listDetail);
 		infor.setDateFrom(doctorScheduleSearchDto.getDateFrom());
 
-		appointmentRepository.exportSchedule(infor);
+		return appointmentRepository.exportSchedule(infor);
 
 	}
 

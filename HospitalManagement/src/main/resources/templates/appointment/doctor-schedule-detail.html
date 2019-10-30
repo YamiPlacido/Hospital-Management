@@ -127,24 +127,30 @@
 			</div>
 		
 
-		<script src="http://code.jquery.com/jquery-3.4.1.js"></script>
-		<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+		<script src="/assets/js/jquery-3.4.1.js"></script>
+		<script src="/assets/js/jquery-ui.js"></script>
 		<script src="/assets/js/bootstrap.js"></script>
 		<script src="/assets/js/doctor-schedule.js"></script>
 		<script type="text/javascript">
 		$(document).ready(function() {
+			function openInNewTab(url) {
+			    var win = window.open(url, '_blank');
+			    win.focus();
+			}
+			const CONTEXTPATH = "https://localhost:8443/";
 			$("#export").click(function() {
 				$.ajax({
 					url : "/admin/appointment/exportSchedule",
 					data : {
-						"employeeId" : $("#employeeId").val(),
-						"dateFrom" : $("#dateFrom").val()
+						employeeId : $("#employeeId").val(),
+						dateFrom : $("#dateFrom").val()
 					},
-					contentType : "application/json",
-					dataType : "json",
+// 					contentType : "application/json",
+// 					dataType : "json",
 					type : "get",
-					success : function(data) {
+					success : function(data, status) {
 						alertMessage('Export successfully');
+						openInNewTab(CONTEXTPATH+data);
 					}
 				});
 			});

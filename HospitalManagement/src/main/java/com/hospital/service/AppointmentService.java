@@ -50,6 +50,6 @@ public interface AppointmentService {
 	
 	public Long GetPatientIDByAppID(Long id );
 
-	public void exportSchedule(Long employeeId, Date dateFrom) throws IOException, XDocReportException;
+	public String exportSchedule(Long employeeId, Date dateFrom) throws IOException, XDocReportException;
 	 
 }

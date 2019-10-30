@@ -52,9 +52,10 @@ public class AppointmentRepositoryImpl implements AppointmentBookRepository {
 	public List<Shift> getListShiftAvailabelByDoctorId(AppointmentDto app) {
 		Query query1 = entityManager.createNativeQuery(
 				"SELECT * FROM Shift s WHERE s.shift_id NOT IN (SELECT a.shift_id FROM Appointment a WHERE (a.employee_id = ?1) AND (a.date = ?2) and a.status = 1"
-				+ " union all SELECT a.shift_id FROM Appointment a WHERE (a.patient_id = ?3) AND (a.date = ?2) and a.status = 1)",
+						+ " union all SELECT a.shift_id FROM Appointment a WHERE (a.patient_id = ?3) AND (a.date = ?2) and a.status = 1)",
 				Shift.class);
-		query1.setParameter(1, app.getEmployeeId()).setParameter(2, app.getDate(), TemporalType.DATE).setParameter(3, app.getPatientId());
+		query1.setParameter(1, app.getEmployeeId()).setParameter(2, app.getDate(), TemporalType.DATE).setParameter(3,
+				app.getPatientId());
 
 		return query1.getResultList();
 	}
@@ -64,13 +65,13 @@ public class AppointmentRepositoryImpl implements AppointmentBookRepository {
 		int check;
 		Query query = entityManager.createNativeQuery("select COUNT(*) FROM Appointment a Where "
 				+ "(a.employee_id = ?1 or a.patient_id = ?2) and a.shift_id = ?4 and a.date = ?3");
-		query.setParameter(1, appointmentDto.getEmployeeId()).setParameter(2, appointmentDto.getPatientId()).setParameter(3,appointmentDto.getDate(), TemporalType.DATE)
+		query.setParameter(1, appointmentDto.getEmployeeId()).setParameter(2, appointmentDto.getPatientId())
+				.setParameter(3, appointmentDto.getDate(), TemporalType.DATE)
 				.setParameter(4, appointmentDto.getShiftId());
 		check = ((Number) query.getSingleResult()).intValue();
 		return check;
 	}
-	
-	
+
 	@Override
 	@Modifying
 	public Appointment saveApp(AppointmentDto appointmentDto) {
@@ -130,8 +131,7 @@ public class AppointmentRepositoryImpl implements AppointmentBookRepository {
 			start = "7PM";
 			end = "9PM";
 		}
-		InputStream in = new FileInputStream(new File(
-				"E:\\projectsem4\\HospitalManagement\\src\\main\\resources\\templates\\docs\\WaitingSlipTemplate.docx"));
+		InputStream in = new FileInputStream(new File("upload\\docs\\WaitingSlipTemplate.docx"));
 		IXDocReport report = XDocReportRegistry.getRegistry().loadReport(in, TemplateEngineKind.Velocity);
 
 		IContext context = report.createContext();
@@ -139,8 +139,20 @@ public class AppointmentRepositoryImpl implements AppointmentBookRepository {
 //		FieldsMetadata metadata = new FieldsMetadata();
 //		metadata.addFieldAsImage("logo");
 //		report.setFieldsMetadata(metadata);
-//		//IImageProvider logo = new ByteArrayImageProvider( new FileInputStream(new File("E:\\Hospital-Trang\\Hospital-Trang\\HospitalManagement3\\src\\main\\resources\\templates\\docs\\logo.PNG")), true);
-//		IImageProvider logo = new FileImageProvider(new File("E:\\Hospital-Trang\\Hospital-Trang\\HospitalManagement3\\src\\main\\resources\\templates\\docs\\logo.PNG"));
+//		FieldsMetadata metadata = new FieldsMetadata();
+//		metadata.addFieldAsImage("logo");
+//		report.setFieldsMetadata(metadata);
+
+//		IImageProvider logo = new FileImageProvider(new File("path/to/image1"), true);
+//		context.put("chart1", logo);
+//		InputStream is = new BufferedInputStream(
+//		          new FileInputStream("E:\\projectsem4\\HospitalManagement\\src\\main\\resources\\templates\\docs\\logo.PNG"));
+//		IImageProvider originalSizeLogo = new ByteArrayImageProvider(is, true);
+//		IImageProvider logo = new FileImageProvider(
+//				new File("E:\\projectsem4\\HospitalManagement\\src\\main\\resources\\templates\\docs\\logo.PNG"), true);
+		
+//		File img=new File("E:\\projectsem4\\HospitalManagement\\src\\main\\resources\\templates\\docs\\logo.PNG");
+//		IImageProvider logo = new FileImageProvider( img,false);
 //		context.put("logo", logo);
 		context.put("patientName", appExport.getPatientName());
 		context.put("doctorName", appExport.getEmployeeName());
@@ -150,8 +162,8 @@ public class AppointmentRepositoryImpl implements AppointmentBookRepository {
 
 		Options options = Options.getTo(ConverterTypeTo.PDF);
 		OutputStream out = new FileOutputStream(
-				new File("E:\\projectsem4\\HospitalManagement\\src\\main\\resources\\templates\\pdf\\WaitingSlip"
-						+ appExport.getPatientName() + ".pdf"));
+				new File("upload\\pdf\\WaitingSlip"
+						+ appExport.getPatientName() + appExport.getDate().toString().substring(0, 10).replaceAll("\\s", "") + ".pdf"));
 		report.convert(context, options, out);
 
 	}
@@ -193,7 +205,7 @@ public class AppointmentRepositoryImpl implements AppointmentBookRepository {
 				+ " a.app_id, a.status, p.name , p.identity_card, p.phone, a.shift_id, a.patient_id, a.date FROM Appointment a left join Shift s on a.shift_id = s.shift_id left join"
 				+ "  Patient p on a.patient_id = p.patient_id where (a.date between ?1 and ?2) and a.employee_id = ?3 and a.status = 1");
 		query.setParameter(1, doctorScheduleSearchDto.getDateFrom())
-				.setParameter(2, addDays(doctorScheduleSearchDto.getDateFrom(),6))
+				.setParameter(2, addDays(doctorScheduleSearchDto.getDateFrom(), 6))
 				.setParameter(3, doctorScheduleSearchDto.getEmployeeId());
 		List<Object[]> results = query.getResultList();
 
@@ -222,9 +234,9 @@ public class AppointmentRepositoryImpl implements AppointmentBookRepository {
 	}
 
 	@Override
-	public void exportSchedule(DoctorScheduleInforDto infor) throws IOException, XDocReportException {
+	public String exportSchedule(DoctorScheduleInforDto infor) throws IOException, XDocReportException {
 		InputStream in = new FileInputStream(new File(
-				"E:\\projectsem4\\HospitalManagement\\src\\main\\resources\\templates\\docs\\TemplateSchedule.docx"));
+				"upload\\docs\\TemplateSchedule.docx"));
 		IXDocReport report = XDocReportRegistry.getRegistry().loadReport(in, TemplateEngineKind.Velocity);
 
 		IContext context = report.createContext();
@@ -237,12 +249,12 @@ public class AppointmentRepositoryImpl implements AppointmentBookRepository {
 		context.put("phone", infor.getEmployee().getPhone());
 		context.put("start", dateFrom);
 		context.put("end", dateTo);
-		String tue = simpleDateFormat.format(addDays(infor.getDateFrom(),1));
-		String wed = simpleDateFormat.format(addDays(infor.getDateFrom(),2));
-		String thu = simpleDateFormat.format(addDays(infor.getDateFrom(),3));
-		String fri = simpleDateFormat.format(addDays(infor.getDateFrom(),4));
-		String sat = simpleDateFormat.format(addDays(infor.getDateFrom(),5));
-		String sun = simpleDateFormat.format(addDays(infor.getDateFrom(),6));
+		String tue = simpleDateFormat.format(addDays(infor.getDateFrom(), 1));
+		String wed = simpleDateFormat.format(addDays(infor.getDateFrom(), 2));
+		String thu = simpleDateFormat.format(addDays(infor.getDateFrom(), 3));
+		String fri = simpleDateFormat.format(addDays(infor.getDateFrom(), 4));
+		String sat = simpleDateFormat.format(addDays(infor.getDateFrom(), 5));
+		String sun = simpleDateFormat.format(addDays(infor.getDateFrom(), 6));
 		context.put("mon", dateFrom);
 		context.put("tue", tue);
 		context.put("wed", wed);
@@ -251,7 +263,7 @@ public class AppointmentRepositoryImpl implements AppointmentBookRepository {
 		context.put("sat", sat);
 		context.put("sun", sun);
 		for (DoctorScheduleDetailDto detail : infor.getListShift1()) {
-			String textDetail = detail.getName() + " "+detail.getPhone()+ " " + detail.getIdentityCard();
+			String textDetail = detail.getName() + " " + detail.getPhone() + " " + detail.getIdentityCard();
 			switch (detail.getDateOfWeek()) {
 			case 1:
 				context.put("s17", textDetail);
@@ -277,7 +289,7 @@ public class AppointmentRepositoryImpl implements AppointmentBookRepository {
 			}
 		}
 		for (DoctorScheduleDetailDto detail : infor.getListShift2()) {
-			String textDetail = detail.getName() + " "+detail.getPhone()+ " " + detail.getIdentityCard();
+			String textDetail = detail.getName() + " " + detail.getPhone() + " " + detail.getIdentityCard();
 			switch (detail.getDateOfWeek()) {
 			case 1:
 				context.put("s27", textDetail);
@@ -303,7 +315,7 @@ public class AppointmentRepositoryImpl implements AppointmentBookRepository {
 			}
 		}
 		for (DoctorScheduleDetailDto detail : infor.getListShift3()) {
-			String textDetail = detail.getName() + " "+detail.getPhone()+ " " + detail.getIdentityCard();
+			String textDetail = detail.getName() + " " + detail.getPhone() + " " + detail.getIdentityCard();
 			switch (detail.getDateOfWeek()) {
 			case 1:
 				context.put("s37", textDetail);
@@ -329,7 +341,7 @@ public class AppointmentRepositoryImpl implements AppointmentBookRepository {
 			}
 		}
 		for (DoctorScheduleDetailDto detail : infor.getListShift4()) {
-			String textDetail = detail.getName() + " "+detail.getPhone()+ " " + detail.getIdentityCard();
+			String textDetail = detail.getName() + " " + detail.getPhone() + " " + detail.getIdentityCard();
 			switch (detail.getDateOfWeek()) {
 			case 1:
 				context.put("s47", textDetail);
@@ -355,7 +367,7 @@ public class AppointmentRepositoryImpl implements AppointmentBookRepository {
 			}
 		}
 		for (DoctorScheduleDetailDto detail : infor.getListShift5()) {
-			String textDetail = detail.getName() + " "+detail.getPhone()+ " " + detail.getIdentityCard();
+			String textDetail = detail.getName() + " " + detail.getPhone() + " " + detail.getIdentityCard();
 			switch (detail.getDateOfWeek()) {
 			case 1:
 				context.put("s57", textDetail);
@@ -382,17 +394,21 @@ public class AppointmentRepositoryImpl implements AppointmentBookRepository {
 		}
 		Options options = Options.getTo(ConverterTypeTo.PDF);
 		OutputStream out = new FileOutputStream(
-				new File("E:\\projectsem4\\HospitalManagement\\src\\main\\resources\\templates\\pdf\\TemplateSchedule"
-						+ infor.getEmployee().getFirstName() + ".pdf"));
+				new File("upload\\pdf\\TemplateSchedule"
+						+ infor.getEmployee().getFirstName()
+						+ infor.getDateFrom().toString().substring(0, 10).replaceAll("\\s", "") + ".pdf"));
 		report.convert(context, options, out);
+		
+		return "upload/pdf/TemplateSchedule"
+				+ infor.getEmployee().getFirstName()
+				+ infor.getDateFrom().toString().substring(0, 10).replaceAll("\\s", "") + ".pdf";
 
 	}
-	
-	 public static Date addDays(Date date, int days)
-	    {
-	        Calendar cal = Calendar.getInstance();
-	        cal.setTime(date);
-	        cal.add(Calendar.DATE, days); //minus number would decrement the days
-	        return cal.getTime();
-	    }
+
+	public static Date addDays(Date date, int days) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.add(Calendar.DATE, days); // minus number would decrement the days
+		return cal.getTime();
+	}
 }

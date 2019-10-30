@@ -27,5 +27,5 @@ public interface AppointmentBookRepository{
 
 	public List<DoctorScheduleDetailDto> getDoctorSchedule(DoctorScheduleSearchDto doctorScheduleSearchDto); 
 	
-	public void exportSchedule(DoctorScheduleInforDto infor) throws IOException, XDocReportException;
+	public String exportSchedule(DoctorScheduleInforDto infor) throws IOException, XDocReportException;
 }

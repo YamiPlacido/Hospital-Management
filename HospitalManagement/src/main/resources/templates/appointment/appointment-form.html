@@ -3,7 +3,7 @@
 	layout:decorate="~{layouts/main}">
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Appointment Form</title>
 </head>
 <body>
 	<div layout:fragment="content"
@@ -154,13 +154,27 @@
 		<script src="/assets/js/appointment.js"></script>
 		<script type="text/javascript">
 		$(document).ready(function() {
-			
+			function formatDate(date) {
+			    var d = new Date(date),
+			        month = '' + (d.getMonth() + 1),
+			        day = '' + d.getDate(),
+			        year = d.getFullYear();
+
+			    if (month.length < 2) 
+			        month = '0' + month;
+			    if (day.length < 2) 
+			        day = '0' + day;
+
+			    return [year, month, day].join('-');
+			}
+			var today = new Date();
+			var stringToday = formatDate(today);
 	        $("#form").validate({
 	        	rules: {
 	        			SelectedDoctor: { valueNotEquals: 0 },
 	        			SelectedPatient: { valueNotEquals: 0 },
 	        			date : {
-	        				min: "2019-10-31"
+	        				min: stringToday
 	        			}
 	        		  },
 	        		  messages: {

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/main}" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<br />
+		<div class="content">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2">
+					<h4 class="page-title">Illness Category Form</h4>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2">
+					<form th:object="${illnessType}"
+						th:action="@{/admin/illness/category/save}" method="post">
+						<input type="hidden" th:field="*{illnessTypeId}" />
+
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="form-group">
+									<label>Category Name <span class="text-danger">*</span></label>
+									<input class="form-control" type="text" th:field="*{name}">
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="form-group">
+									<label>Note</label> <input class="form-control" type="text"
+										th:field="*{note}">
+								</div>
+							</div>
+						</div>
+
+						<div class="m-t-20 text-center">
+							<button class="btn btn-primary submit-btn" type="submit">Save
+								Illness Category</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

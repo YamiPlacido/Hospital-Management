@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/main}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Examinations today</title>
+</head>
+<body>
+<div layout:fragment="content">
+	<div class="container pt-4 pb-4">
+		<div class="row">
+			<div class="col-sm-4 col-3">
+				<h4 class="page-title">Examination list</h4>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="table-responsive">
+					<table class="table table-striped custom-table">
+						<thead>
+						<tr>
+							<th>Appointment ID</th>
+							<th>Patient Name</th>
+							<th>Age</th>
+	<!--						<th>Doctor Name</th>-->
+							<th>Department</th>
+							<th>Sent Date</th>
+							<th>Sent Time</th>
+							<th>Status</th>
+							<th class="text-right">Action</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr>
+							<td>EXM0001</td>
+							<td><img width="28" height="28" src="assets/img/user.jpg" class="rounded-circle m-r-5" alt=""> Denise Stevens</td>
+							<td>35</td>
+	<!--						<td>Henry Daniels</td>-->
+							<td>Cardiology</td>
+							<td>30 Dec 2018</td>
+							<td>10:00am - 11:00am</td>
+							<td><span class="custom-badge status-red">SENT</span></td>
+							<td class="text-right">
+								<button type="button" class="btn btn-outline-primary btn-sm">Accept</button>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

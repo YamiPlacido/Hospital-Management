@@ -2,6 +2,7 @@ package com.hospital.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.Date;
 
 
@@ -19,14 +20,19 @@ public class SpecialityIllnessType implements Serializable {
 	@Column(name="speciality_illness_type_id")
 	private Integer specialityIllnessTypeId;
 
+	@Column(name="created_by")
 	private String createdBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
+
+	@Column(name="created_date")
 	private Date createdDate;
 
+	@Column(name="modified_by")
 	private String modifiedBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="modified_date")
 	private Date modifiedDate;
 
 	//uni-directional many-to-one association to IllnessType

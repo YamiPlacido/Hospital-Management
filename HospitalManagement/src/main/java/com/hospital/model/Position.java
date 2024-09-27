@@ -17,7 +17,7 @@ public class Position implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="position_id")
-	private int positionId;
+	private Long positionId;
 	private String name;
 
 	private String description;
@@ -25,11 +25,11 @@ public class Position implements Serializable {
 	private byte status;
 
 
-	public int getPositionId() {
+	public Long getPositionId() {
 		return positionId;
 	}
 
-	public void setPositionId(int positionId) {
+	public void setPositionId(Long positionId) {
 		this.positionId = positionId;
 	}
 

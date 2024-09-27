@@ -50,7 +50,7 @@ public class Employee implements Serializable {
 
 	private String phone;
 
-	private String status;
+	private boolean status;
 	
 	//bi-directional many-to-one association to DoctorPosition
 	@JoinColumn(name="position_id")
@@ -122,11 +122,11 @@ public class Employee implements Serializable {
 		this.phone = phone;
 	}
 
-	public String getStatus() {
+	public boolean getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(boolean status) {
 		this.status = status;
 	}
 

@@ -16,7 +16,7 @@
 		<div class="row">
 			<div class="col-lg-8 offset-lg-2">
 				<form class="form-horizontal" th:object="${searchDto}"
-					th:action="@{/admin/appointment/doctorGetSchedule}" method="post"
+					th:action="@{/admin/appointment/doctorGetSchedule}" method="post" id="form"
 					enctype="multipart/form-data">
 					<div class="panel-body">
 						<div class="row">
@@ -24,7 +24,6 @@
 								<div class="form-group">
 									<label>Doctor</label> <select class="form-control"
 										th:field="*{employeeId}" id="SelectedDoctor">
-										<option th:value="0" th:text="Select"></option>
 										<option th:each="p : ${employeeList}"
 											th:value="${p.employeeId}" selected="selected"
 											th:text="${p.firstName}"></option>
@@ -35,14 +34,10 @@
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-									<label>From</label> <input type="date" class="form-control"
-										th:field="*{dateFrom}" id="selectdate">
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<label>To</label> <input type="date" class="form-control"
-										th:field="*{dateTo}" id="selectdate">
+									<label>Week</label> <input type="week" class="form-control required"
+										data-msg-required="Week is required." aria-required="true"
+										 id="week">
+										<input type="hidden" th:field="*{dateFrom}" >
 								</div>
 							</div>
 						</div>
@@ -54,9 +49,28 @@
 				</form>
 			</div>
 		</div>
-		
+		<script src="/assets/js/jquery.validate.min.js"></script>
 		<script type="text/javascript">
-		
+		$(document).ready(function() {
+	        $("#form").validate({
+	        });
+	        $("#week").change(function() {
+	        	var year = $("#week").val().substring(0,4);
+	        	var week = $("#week").val().slice(8 -2);
+	        	$("#dateFrom").val(convert(getDateOfWeek(week,year)));
+	        	console.log($("#dateFrom").val());
+	        	});
+	    });
+		function getDateOfWeek(w, y) {
+		    var d = ((w - 1) * 7); // 1st of January + 7 days for each week
+		    return new Date(y, 0, d);
+		}
+		function convert(str) {
+			  var date = new Date(str),
+			    mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+			    day = ("0" + date.getDate()).slice(-2);
+			  return [date.getFullYear(), mnth, day].join("-");
+			}
 	</script>
 	</div>
 	

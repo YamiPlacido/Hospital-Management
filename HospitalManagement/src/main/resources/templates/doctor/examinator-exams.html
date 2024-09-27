@@ -27,7 +27,7 @@
 										<th>Age</th>
 										<th>Test</th>
 										<th>Appointment Date</th>
-										<th>Appointment Time</th>
+<!--										<th>Appointment Time</th>-->
 										<th>Status</th>
 <!--										<th class="text-right">Action</th>-->
 									</tr>
@@ -121,10 +121,10 @@
 															<textarea cols="80" id="editor1" name="editor1" rows="10" data-sample-short></textarea>
 														</div>
 														<div class="modal-footer">
-															<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-															<button type="button" class="btn btn-primary" id="add-symptom"
-																	onclick="saveContentOfExam()"
-															>Update content</button>
+																	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+																	<button type="button" class="btn btn-primary" id="add-symptom"
+																			onclick="saveContentOfExam()"
+																	>Update content</button>
 														</div>
 													</div>
 												</div>
@@ -158,6 +158,22 @@
 													</div>
 												</div>
 											</div>
+										</li>
+									</ul>
+									<ul class="list-unstyled">
+<!--										<li>-->
+<!--											<h4 class="mb-0"><strong>Symptom</strong></h4>-->
+<!--										</li>-->
+										<li >
+
+												<div class="form-group">
+
+													<label><h4 class="mb-0"><strong>Symptom</strong></h4></label>
+													<select class="form-control form-control-sm col-sm-4" id="symptom-type-two">
+
+													</select>
+												</div>
+
 										</li>
 									</ul>
 								</div>
@@ -208,6 +224,9 @@
 										<div class="modal-content">
 											<div class="modal-header">
 												<h5 class="modal-title" >Save this examinations?</h5>
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
 											</div>
 											<div class="modal-body">
 												<div class="card-box profile-header">
@@ -243,9 +262,11 @@
 																</ul>
 																<ul class="list-unstyled">
 																	<li>
-																		<h4 class="mb-0"><strong>Result</strong></h4></li>
+																		<h4 class="mb-0"><strong>Result</strong></h4>
+																	</li>
 																	<li id="examination-detail-exam-result"></li>
 																</ul>
+
 															</div>
 
 														</div>
@@ -276,8 +297,8 @@
 												</div>
 											</div>
 											<div class="modal-footer">
-												<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-												<button type="button" class="btn btn-primary" onclick="saveExamination()">Save changes</button>
+												<button type="button" class="btn btn-outline-secondary" data-dismiss="modal" onclick="createPdfResult()">PDF</button>
+												<button type="button" class="btn btn-primary" onclick="finishExamination()">Finish</button>
 											</div>
 										</div>
 									</div>
@@ -290,10 +311,11 @@
 			</div>
 		</div>
 	</div>
+
 	<script src="/assets/js/jquery.quicksearch.js"></script>
 	<script src="/assets/js/jquery.multi-select.js"></script>
-	<script src="/assets/js/atmosphere.js"></script>
-	<script src="/assets/js/phuong.js"></script>
+	<script src="/assets/js/ckeditor.js"></script>
+	<script src="/assets/js/phuong_exam.js"></script>
 </div>
 </body>
 </html>

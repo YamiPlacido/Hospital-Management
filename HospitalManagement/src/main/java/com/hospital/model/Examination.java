@@ -34,6 +34,11 @@ public class Examination implements Serializable {
 	private String image_path_2;
 	@Column(name = "image_path_3")
 	private String image_path_3;
+	@Column(name = "pdf_request_path")
+	private String pdfRequestPath;
+
+	@Column(name = "pdf_result_path")
+	private String pdfResultPath;
 
 	private String stage;
 	private int status;
@@ -185,5 +190,21 @@ public class Examination implements Serializable {
 
 	public void setImage_path_3(String image_path_3) {
 		this.image_path_3 = image_path_3;
+	}
+
+	public String getPdfRequestPath() {
+		return pdfRequestPath;
+	}
+
+	public void setPdfRequestPath(String pdfRequestPath) {
+		this.pdfRequestPath = pdfRequestPath;
+	}
+
+	public String getPdfResultPath() {
+		return pdfResultPath;
+	}
+
+	public void setPdfResultPath(String pdfResultPath) {
+		this.pdfResultPath = pdfResultPath;
 	}
 }

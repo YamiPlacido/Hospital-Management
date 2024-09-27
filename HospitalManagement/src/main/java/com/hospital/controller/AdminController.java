@@ -4,24 +4,29 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import com.hospital.model.Employee;
+import com.hospital.model.Users;
+import com.hospital.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.hospital.model.Employee;
 import com.hospital.model.Position;
 import com.hospital.model.Speciality;
 import com.hospital.repository.EmployeeRepository;
@@ -43,6 +48,17 @@ public class AdminController {
 	
 	private static String UPLOADED_FOLDER = "upload/";
 	boolean edited = false;
+
+	@Autowired
+	UserRepository userRepository;
+
+	@ResponseBody
+	@GetMapping(value = "api/get-current-id")
+	public Long adminIndex(Principal principal) {
+		Users userid = userRepository.findUserid(principal.getName()).get(0);
+		Long id = userid.getUserId();
+		return id;
+	}
 	
 	@GetMapping("doctor")
 	public ModelAndView createFirstView() {
@@ -72,14 +88,8 @@ public class AdminController {
 		cal.add(Calendar.YEAR, -18);
 		Date dateBefore18Years = cal.getTime();
 		employee.setDob(dateBefore18Years);
-		employee.setStatus("1");
-		//bo sung do thieu mapping
-//		Long specialityId = employee.getSpecialityId();
-//		Long positionId = employee.getPositionId();
-//		Speciality speciality = specialityRepository.findById(specialityId).get();
-//		Position position = positionRepository.findById(positionId).get();
-//		employee.setSpeciality(speciality);
-//		employee.setPosition(position);
+		employee.setStatus(true);
+		employee.setGender('m');
 		
 		List<Speciality> specialities =  specialityRepository.findByPositionId((long) 1);
 		List<Position> positions =  positionRepository.findAll();
@@ -116,7 +126,6 @@ public class AdminController {
             return "admin/employee-create";
         } else {
         	employee.setImagePath(file.getOriginalFilename());
-//        	doctor.setPosition(positionRepository.getOne(1));
         	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         	Calendar cal = Calendar.getInstance();
         	try {
@@ -130,13 +139,14 @@ public class AdminController {
         		e.printStackTrace();
         	}
         	if (file.isEmpty()) {
-              return "redirect:error.html";
-        	}
+//              return "redirect:error.html";
+				return "admin/employee-create";
+			}
   
           try {
               // Get the file and save it somewhere
               byte[] bytes = file.getBytes();
-              Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+              Path path = Paths.get(UPLOADED_FOLDER +"employee/"+ file.getOriginalFilename());
               Files.write(path, bytes);
           } catch (IOException e) {
               e.printStackTrace();
@@ -189,7 +199,7 @@ public class AdminController {
         		}
         	}
         	employeeRepository.save(employee);
-        	return "redirect:admin/admin/doctor";
+        	return "redirect:/admin/doctor";
         }
 
 	}
@@ -198,7 +208,7 @@ public class AdminController {
 	@GetMapping("api/doctor")
 	public List<Employee> viewallDoctor(@RequestParam(defaultValue = "1") String current_page) {
 		int current = Integer.parseInt(current_page);
-		Page<Employee> pages = employeeRepository.findAll(PageRequest.of(current-1, 8));
+		Page<Employee> pages = employeeRepository.findAll(PageRequest.of(current-1, 30));
 		List<Employee> list = pages.getContent();
 		for (int i = 0; i < list.size(); i++) {
 			Long specialityId = list.get(i).getSpecialityId();
@@ -223,7 +233,9 @@ public class AdminController {
 			Long intId = Long.valueOf(id);
 			Employee employee = employeeRepository.findById(intId).get();
 			if (employee !=null) {
-				employeeRepository.delete(employee);
+				employee.setStatus(false);
+				employeeRepository.save(employee);
+//				employeeRepository.delete(employee);
 				return true;
 			} else {
 				return false;

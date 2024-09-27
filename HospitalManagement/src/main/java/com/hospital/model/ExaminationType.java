@@ -21,6 +21,8 @@ public class ExaminationType implements Serializable {
 	private long specialityId;
 //	private byte disable;
 
+	@Transient
+	boolean suggested = false;
 
 
 	public long getId() {
@@ -45,5 +47,13 @@ public class ExaminationType implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public boolean isSuggested() {
+		return suggested;
+	}
+
+	public void setSuggested(boolean suggested) {
+		this.suggested = suggested;
 	}
 }
